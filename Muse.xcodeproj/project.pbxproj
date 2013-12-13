@@ -38,6 +38,9 @@
 		21ABB20D18587E5C00BBCA8B /* last_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ABB20C18587E5C00BBCA8B /* last_icon.png */; };
 		21ABB20F18587F1A00BBCA8B /* pause_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ABB20E18587F1A00BBCA8B /* pause_icon.png */; };
 		21D8B0D9185718950013559A /* MenuButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 21D8B0D8185718950013559A /* MenuButton.png */; };
+		7A3E0002185B30C7000F5B6C /* SignInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E0001185B30C7000F5B6C /* SignInView.m */; };
+		7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */; };
+		7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +91,12 @@
 		21ABB20C18587E5C00BBCA8B /* last_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = last_icon.png; path = Muse/last_icon.png; sourceTree = "<group>"; };
 		21ABB20E18587F1A00BBCA8B /* pause_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_icon.png; path = Muse/pause_icon.png; sourceTree = "<group>"; };
 		21D8B0D8185718950013559A /* MenuButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MenuButton.png; path = Muse/MenuButton.png; sourceTree = "<group>"; };
+		7A3E0000185B30C7000F5B6C /* SignInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInView.h; sourceTree = "<group>"; };
+		7A3E0001185B30C7000F5B6C /* SignInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInView.m; sourceTree = "<group>"; };
+		7A3EFFFA185B0C57000F5B6C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		7A3EFFFD185B2C67000F5B6C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +174,7 @@
 		21371F8E1850956700BB2A4F /* Muse */ = {
 			isa = PBXGroup;
 			children = (
+				7A3EFFF9185B0C3C000F5B6C /* Library */,
 				215C384D185ABB42007D3452 /* ServerConnection */,
 				21371F971850956700BB2A4F /* AppDelegate.h */,
 				21371F981850956700BB2A4F /* AppDelegate.m */,
@@ -173,6 +183,10 @@
 				21371F9E1850956700BB2A4F /* PlayerViewController.m */,
 				21371FA01850956700BB2A4F /* Images.xcassets */,
 				21371F8F1850956700BB2A4F /* Supporting Files */,
+				7A3EFFFD185B2C67000F5B6C /* SettingsViewController.h */,
+				7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */,
+				7A3E0000185B30C7000F5B6C /* SignInView.h */,
+				7A3E0001185B30C7000F5B6C /* SignInView.m */,
 			);
 			path = Muse;
 			sourceTree = "<group>";
@@ -238,6 +252,15 @@
 				21ABB203185873BF00BBCA8B /* icon */,
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		7A3EFFF9185B0C3C000F5B6C /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				7A3EFFFA185B0C57000F5B6C /* SWRevealViewController.h */,
+				7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */,
+			);
+			name = Library;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,7 +374,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				215C3853185ABC09007D3452 /* ServerConnection.m in Sources */,
+				7A3E0002185B30C7000F5B6C /* SignInView.m in Sources */,
 				21371F9F1850956700BB2A4F /* PlayerViewController.m in Sources */,
+				7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */,
+				7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */,
 				21371F991850956700BB2A4F /* AppDelegate.m in Sources */,
 				21371F951850956700BB2A4F /* main.m in Sources */,
 			);

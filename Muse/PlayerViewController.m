@@ -8,6 +8,7 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 #import "PlayerViewController.h"
+#import "SWRevealViewController.h"
 
 @interface PlayerViewController ()
 @property int playStatus;
@@ -25,7 +26,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *artistNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *loveButton;
 @property (weak, nonatomic) IBOutlet UIButton *hateButton;
-
 
 @end
 
@@ -54,6 +54,14 @@
     
 
     [_moviePlayer play];
+    
+    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
+    
+    [_settingButton addTarget:self.revealViewController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // Set the gesture
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+
 }
 
 - (void) viewWillAppear:(BOOL)animated
