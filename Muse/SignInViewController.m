@@ -9,6 +9,7 @@
 #import "SignInViewController.h"
 #import "SWRevealViewController.h"
 #import "User.h"
+#import "ServerConnection.h"
 
 @interface SignInViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *emailView;
@@ -37,6 +38,9 @@
     
     // Set the gesture
     //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    if ([User getUser]) {
+        _emailView.text = [User getUser].email;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,45 +86,25 @@
     
     User * user = [User userWithEmail:_emailView.text password:_passwordView.text];
     if ([user signin]) {
-        NSLog(@"%@",user.name);
-        NSString *error;
-        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];
-        NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:
-                                   [NSArray arrayWithObjects: user.user_id, user.name, user.email,user.avatar, user.remembrer_token, nil]
-                                                              forKeys:[NSArray arrayWithObjects: @"user_id", @"Name", @"Email",@"Avatar", @"Remember_token", nil]];
-        NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistDict
-                                                                       format:NSPropertyListXMLFormat_v1_0
-                                                             errorDescription:&error];
-        if(plistData) {
-            [plistData writeToFile:plistPath atomically:YES];
-        }
-        else {
-            NSLog(@"%@",error);
+        UIView *tableView = self.revealViewController.rightViewController.view.subviews[0];
+        UITableViewCell *tableCell = tableView.subviews[0];
+        UIView *scrollView = tableCell.subviews[0];
+        UIView *content = scrollView.subviews[1];
+        UIImageView *imageView = content.subviews[0];
+        UILabel *labelView = content.subviews[1];
+        
+        if ([User getUser]) {
+            NSData *data = [ServerConnection getRequestToURL:[NSString stringWithFormat:@"%@/%@", SERVER_URL, [User getUser].avatar]];
+            UIImage *avatar = [UIImage imageWithData:data];
+            imageView.image = avatar;
+            labelView.text = [User getUser].name;
         }
         
-        NSString *errorDesc = nil;
-        NSPropertyListFormat format;
-        if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
-            plistPath = [[NSBundle mainBundle] pathForResource:@"UserProfile" ofType:@"plist"];
-        }
-        NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
-        NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization
-                                              propertyListFromData:plistXML
-                                              mutabilityOption:NSPropertyListMutableContainersAndLeaves
-                                              format:&format
-                                              errorDescription:&errorDesc];
-        if (!temp) {
-            NSLog(@"Error reading plist: %@, format: %d", errorDesc, format);
-        }
-        NSLog(@"%@",[temp objectForKey:@"Name"]);
-        NSLog(@"%@",[temp objectForKey:@"Email"]);
-        NSLog(@"%@",[temp objectForKey:@"Avatar"][@"url"]);
-        NSLog(@"%@",[temp objectForKey:@"Remember_token"]);
+        [self performSegueWithIdentifier:@"backToPlayer" sender:self];
     }
     else{
         NSLog(@"failed");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"email/password incorrect" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Email/Password Incorrect" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
 }

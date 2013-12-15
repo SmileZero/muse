@@ -10,18 +10,62 @@
 #import "ServerConnection.h"
 
 static NSString *CSRFToken;
+static User *current_user;
 
 @implementation User
++ (User *) getUser
+{
+    if (current_user) {
+        return current_user;
+    }
+    else{
+        NSString *errorDesc = nil;
+        NSPropertyListFormat format;
+        NSString *plistPath;
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+            plistPath = [[NSBundle mainBundle] pathForResource:@"UserProfile" ofType:@"plist"];
+        }
+        NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
+        NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization
+                                              propertyListFromData:plistXML
+                                              mutabilityOption:NSPropertyListMutableContainersAndLeaves
+                                              format:&format
+                                              errorDescription:&errorDesc];
+
+        if (!temp) {
+            NSLog(@"Error reading plist: %@, format: %d", errorDesc, format);
+            return nil;
+        }
+        else{
+            [self userWithEmail:[temp objectForKey:@"Email"] password:nil name:[temp objectForKey:@"Name"] avatar:[temp objectForKey:@"Avatar"] remembrer_token:[temp objectForKey:@"Remember_token"] user_id:[temp objectForKey:@"User_id"]];
+            return current_user;
+        }
+    }
+}
+
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password name:(NSString *)name avatar:(NSString *)avatar remembrer_token:(NSString *)remembrer_token user_id:(NSNumber *)user_id
 {
-    User *user = [[User alloc] init];
-    user.email = email;
-    user.password = password;
-    user.name = name;
-    user.avatar = avatar;
-    user.remembrer_token = remembrer_token;
-    user.user_id = user_id;
-    return user;
+    if (current_user) {
+        current_user.email = email;
+        current_user.password = password;
+        current_user.name = name;
+        current_user.avatar = avatar;
+        current_user.remembrer_token = remembrer_token;
+        current_user.user_id = user_id;
+    }
+    else{
+        current_user= [[User alloc] init];
+        current_user.email = email;
+        current_user.password = password;
+        current_user.name = name;
+        current_user.avatar = avatar;
+        current_user.remembrer_token = remembrer_token;
+        current_user.user_id = user_id;
+    }
+    return current_user;
 }
 
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password name:(NSString *)name
@@ -42,32 +86,87 @@ static NSString *CSRFToken;
     }
     
     NSError *error = nil;
-    NSDictionary *todosDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    if (!todosDictionary) {
+    NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    if (!userDictionary) {
         NSLog(@"NSJSONSerialization error:%@ ", error);
         return;
     }
-    CSRFToken = todosDictionary[@"csrf_token"];
+    CSRFToken = userDictionary[@"csrf_token"];
 }
 
 -(BOOL)signin
 {
-    NSLog(@"--- save %@ %@", _email, _password);
+    NSLog(@"--- save %@ %@", current_user.email, current_user.password);
     [self getCSRFToken];
     NSError *error = nil;
-    NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signin", SERVER_URL] method:@"POST" JSONObject:@{@"session": @{@"email" : _email, @"password" : _password}, @"authenticity_token": CSRFToken}];
+    NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signin", SERVER_URL] method:@"POST" JSONObject:@{@"session": @{@"email" : current_user.email, @"password" : current_user.password}, @"authenticity_token": CSRFToken}];
     // set todo_id
     NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     if ([userDictionary[@"status"]  isEqual: @"ok"]) {
-        _user_id = userDictionary[@"user"][@"id"];
-        _name = userDictionary[@"user"][@"name"];
-        _avatar = userDictionary[@"user"][@"avatar"];
-        _remembrer_token = userDictionary[@"user"][@"remember_token"];
+        current_user.user_id = userDictionary[@"user"][@"id"];
+        current_user.name = userDictionary[@"user"][@"name"];
+        current_user.avatar = userDictionary[@"user"][@"avatar"][@"url"];
+        current_user.remembrer_token = userDictionary[@"user"][@"remember_token"];
+        current_user.password = nil;
+        NSString *error;
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];
+        NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:
+                                   [NSArray arrayWithObjects: current_user.user_id, current_user.name, current_user.email,current_user.avatar, current_user.remembrer_token, nil]
+                                                              forKeys:[NSArray arrayWithObjects: @"User_id", @"Name", @"Email",@"Avatar", @"Remember_token", nil]];
+        NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistDict
+                                                                       format:NSPropertyListXMLFormat_v1_0
+                                                             errorDescription:&error];
+        if(plistData) {
+            [plistData writeToFile:plistPath atomically:YES];
+        }
+        else {
+            NSLog(@"%@",error);
+        }
         return YES;
     }
     else{
         return NO;
     }
+}
+
+-(BOOL)signinWithRememberToken
+{
+    if (current_user.remembrer_token) {
+        NSLog(@"--- save %@ %@", current_user.email, current_user.remembrer_token);
+        [self getCSRFToken];
+        NSError *error = nil;
+        NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signin", SERVER_URL] method:@"POST" JSONObject:@{@"session": @{@"remember_token" : current_user.remembrer_token}, @"authenticity_token": CSRFToken}];
+        // set todo_id
+        NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if ([userDictionary[@"status"]  isEqual: @"ok"]) {
+            current_user.user_id = userDictionary[@"user"][@"id"];
+            current_user.name = userDictionary[@"user"][@"name"];
+            current_user.avatar = userDictionary[@"user"][@"avatar"][@"url"];
+            current_user.remembrer_token = userDictionary[@"user"][@"remember_token"];
+            current_user.password = nil;
+            NSString *error;
+            NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];
+            NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:
+                                       [NSArray arrayWithObjects: current_user.user_id, current_user.name, current_user.email,current_user.avatar, current_user.remembrer_token, nil]
+                                                                  forKeys:[NSArray arrayWithObjects: @"User_id", @"Name", @"Email",@"Avatar", @"Remember_token", nil]];
+            NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistDict
+                                                                           format:NSPropertyListXMLFormat_v1_0
+                                                                 errorDescription:&error];
+            if(plistData) {
+                [plistData writeToFile:plistPath atomically:YES];
+            }
+            else {
+                NSLog(@"%@",error);
+            }
+            return YES;
+        }
+        else{
+            return NO;
+        }
+    }
+    else return NO;
 }
 
 @end

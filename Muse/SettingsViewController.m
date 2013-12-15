@@ -8,6 +8,8 @@
 
 #import "SettingsViewController.h"
 #import "SWRevealViewController.h"
+#import "User.h"
+#import "ServerConnection.h"
 
 @interface SettingsViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
@@ -38,7 +40,7 @@
     self.tableView.separatorColor = [UIColor colorWithWhite:0.15f alpha:0.2f];
     
     _menuItems = @[@"user"];
-
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,10 +72,16 @@
         UIView *scrollView = cell.subviews[0];
         UIView *content = scrollView.subviews[0];
         UIImageView *imageView = content.subviews[0];
-        NSLog(@"%@",imageView.image);
+        UILabel *labelView = content.subviews[1];
         
-        //NSData *data = [ServerConnection getRequestToURL:url];
-        //UIImage *avatar = [UIImage imageWithData:data];
+        if ([User getUser]) {
+            
+            NSData *data = [ServerConnection getRequestToURL:[NSString stringWithFormat:@"%@/%@", SERVER_URL, [User getUser].avatar]];
+            UIImage *avatar = [UIImage imageWithData:data];
+            imageView.image = avatar;
+            labelView.text = [User getUser].name;
+            //cell.userInteractionEnabled = NO;
+        }
     }
     
     return cell;

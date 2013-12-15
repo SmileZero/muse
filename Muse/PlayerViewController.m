@@ -7,6 +7,7 @@
 //
 #import "PlayerViewController.h"
 #import "SWRevealViewController.h"
+#import "User.h"
 
 @interface PlayerViewController ()
 @property int playStatus;
@@ -61,6 +62,15 @@
 
 - (void)viewDidLoad
 {
+    
+    if ([User getUser]) {
+        if ([[User getUser] signinWithRememberToken]) {
+        }
+        else{
+            NSLog(@"remember_token is incorrent");
+        }
+    }
+
     [super viewDidLoad];
     [self initPlayer];
     [self loadMusic];
@@ -70,8 +80,6 @@
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
-
 }
 
 - (void) viewWillAppear:(BOOL)animated
