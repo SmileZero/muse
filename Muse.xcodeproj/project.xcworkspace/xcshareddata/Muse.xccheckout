@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>9AA8E59D-1217-4C02-A420-14BABBF52C37</string>
+	<string>2941AC4D-793D-437A-8A70-5C368675B543</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Muse</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>5C53A2C1-1488-4BE8-B1D6-DDEC96C71844</key>
-		<string>ssh://git.drecom.jp:10022/rookies/muse.git</string>
+		<key>898F8278-8C78-48F8-A1F3-A612BC16DBD7</key>
+		<string>https://github.com/SmileZero/muse.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Muse.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>5C53A2C1-1488-4BE8-B1D6-DDEC96C71844</key>
+		<key>898F8278-8C78-48F8-A1F3-A612BC16DBD7</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://git.drecom.jp:10022/rookies/muse.git</string>
+	<string>https://github.com/SmileZero/muse.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>5C53A2C1-1488-4BE8-B1D6-DDEC96C71844</string>
+	<string>898F8278-8C78-48F8-A1F3-A612BC16DBD7</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>5C53A2C1-1488-4BE8-B1D6-DDEC96C71844</string>
+			<string>898F8278-8C78-48F8-A1F3-A612BC16DBD7</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Muse</string>
+			<string>muse</string>
 		</dict>
 	</array>
 </dict>

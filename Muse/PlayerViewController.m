@@ -5,8 +5,6 @@
 //  Created by zhu peijun on 2013/12/05.
 //  Copyright (c) 2013年 zhu peijun. All rights reserved.
 //
-
-#import <MediaPlayer/MediaPlayer.h>
 #import "PlayerViewController.h"
 #import "SWRevealViewController.h"
 
@@ -26,41 +24,53 @@
 @property (weak, nonatomic) IBOutlet UILabel *artistNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *loveButton;
 @property (weak, nonatomic) IBOutlet UIButton *hateButton;
+@property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
+
 
 @end
 
 @implementation PlayerViewController
 
 
-- (void)setup
+- (void)initPlayer
 {
+    _moviePlayer = [[MPMoviePlayerController alloc] init];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:   self
+     selector:      @selector(moviePlaybackDidFinish:)
+     name:          MPMoviePlayerPlaybackDidFinishNotification
+     object         :_moviePlayer];
+    
     self.playStatus = 0;
 }
 
-- (void)setupView
+
+
+- (void)loadMusic
 {
+    XiamiConnection * conn = [[XiamiConnection alloc] init];
+    
+    _currentMusic = [conn getMusicWithIdentifier:[NSString stringWithFormat:@"%d", rand() % 5000]];
+    _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
+    _musicNameLabel.text = _currentMusic.title;
+    _musicPictureImageView.image = _currentMusic.cover;
+    _artistNameLabel.text = _currentMusic.artist;
+    [_moviePlayer play];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initPlayer];
+    [self loadMusic];
     
-    _moviePlayer = [[MPMoviePlayerController alloc] init];
-    
-    [self.view addSubview:_moviePlayer.view];
-    
-    _moviePlayer.contentURL = [NSURL URLWithString:@"http://m1.file.xiami.com/1/664/56664/310797/3441531_248862_l.mp3"];
-    
-    
-
-    [_moviePlayer play];
-    
-    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     
     [_settingButton addTarget:self.revealViewController action:@selector(rightRevealToggle:) forControlEvents:UIControlEventTouchUpInside];
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
 
 }
 
@@ -84,6 +94,18 @@
         [_moviePlayer play];
     }
     
+}
+- (IBAction)nextButtonClicked:(id)sender {
+    
+    [self loadMusic];
+}
+
+
+- (void)moviePlaybackDidFinish:(NSNotification *)notification {
+    NSLog(@"moviePlaybackDidFinish = %@",[notification userInfo]);
+    if ([[[notification userInfo] objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] intValue] == MPMoviePlaybackStateStopped) {
+        [self loadMusic];
+    }
 }
 
 @end

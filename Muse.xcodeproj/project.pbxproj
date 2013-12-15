@@ -25,6 +25,8 @@
 		21371FB21850956700BB2A4F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 21371FB01850956700BB2A4F /* InfoPlist.strings */; };
 		21371FB41850956700BB2A4F /* MuseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21371FB31850956700BB2A4F /* MuseTests.m */; };
 		215C3853185ABC09007D3452 /* ServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3852185ABC09007D3452 /* ServerConnection.m */; };
+		215C3863185DA908007D3452 /* XiamiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3862185DA908007D3452 /* XiamiObject.m */; };
+		215C3867185DA927007D3452 /* XiamiConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3866185DA927007D3452 /* XiamiConnection.m */; };
 		21ABB1F818576C9300BBCA8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21ABB1F718576C9300BBCA8B /* AVFoundation.framework */; };
 		21ABB1FA18576CB600BBCA8B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21ABB1F918576CB600BBCA8B /* MediaPlayer.framework */; };
 		21ABB1FC1857736100BBCA8B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21ABB1FB1857736100BBCA8B /* CoreVideo.framework */; };
@@ -79,6 +81,10 @@
 		21371FB31850956700BB2A4F /* MuseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MuseTests.m; sourceTree = "<group>"; };
 		215C3851185ABC09007D3452 /* ServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnection.h; sourceTree = "<group>"; };
 		215C3852185ABC09007D3452 /* ServerConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerConnection.m; sourceTree = "<group>"; };
+		215C3861185DA908007D3452 /* XiamiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiamiObject.h; sourceTree = "<group>"; };
+		215C3862185DA908007D3452 /* XiamiObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiamiObject.m; sourceTree = "<group>"; };
+		215C3865185DA927007D3452 /* XiamiConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiamiConnection.h; sourceTree = "<group>"; };
+		215C3866185DA927007D3452 /* XiamiConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiamiConnection.m; sourceTree = "<group>"; };
 		21ABB1F718576C9300BBCA8B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		21ABB1F918576CB600BBCA8B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		21ABB1FB1857736100BBCA8B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -177,6 +183,8 @@
 		21371F8E1850956700BB2A4F /* Muse */ = {
 			isa = PBXGroup;
 			children = (
+				215C3864185DA916007D3452 /* XiamiConnection */,
+				215C3860185DA8F0007D3452 /* Model */,
 				7A3EFFF9185B0C3C000F5B6C /* Library */,
 				215C384D185ABB42007D3452 /* ServerConnection */,
 				21371F971850956700BB2A4F /* AppDelegate.h */,
@@ -232,6 +240,24 @@
 				7A3E000A185B5F49000F5B6C /* User.m */,
 			);
 			name = ServerConnection;
+			sourceTree = "<group>";
+		};
+		215C3860185DA8F0007D3452 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				215C3861185DA908007D3452 /* XiamiObject.h */,
+				215C3862185DA908007D3452 /* XiamiObject.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		215C3864185DA916007D3452 /* XiamiConnection */ = {
+			isa = PBXGroup;
+			children = (
+				215C3865185DA927007D3452 /* XiamiConnection.h */,
+				215C3866185DA927007D3452 /* XiamiConnection.m */,
+			);
+			name = XiamiConnection;
 			sourceTree = "<group>";
 		};
 		21ABB203185873BF00BBCA8B /* icon */ = {
@@ -378,6 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				215C3867185DA927007D3452 /* XiamiConnection.m in Sources */,
 				7A3E000B185B5F49000F5B6C /* User.m in Sources */,
 				7A3E0005185B3EAA000F5B6C /* SignInViewController.m in Sources */,
 				215C3853185ABC09007D3452 /* ServerConnection.m in Sources */,
@@ -386,6 +413,7 @@
 				7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */,
 				21371F991850956700BB2A4F /* AppDelegate.m in Sources */,
 				21371F951850956700BB2A4F /* main.m in Sources */,
+				215C3863185DA908007D3452 /* XiamiObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

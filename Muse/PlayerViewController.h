@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MediaPlayer/MediaPlayer.h>
 
-@interface PlayerViewController : UIViewController<UITextFieldDelegate>
+#import "XiamiObject.h"
+#import "XiamiConnection.h"
+
+@interface PlayerViewController : UIViewController
 
 @property (strong, nonatomic) MPMoviePlayerController * moviePlayer;
+
+@property (weak, nonatomic) XiamiObject * currentMusic;
 @end
