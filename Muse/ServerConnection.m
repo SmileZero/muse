@@ -10,12 +10,9 @@
 
 @implementation ServerConnection
 
-#define SERVER_URL @"http://localhost:3000/"
-#define CSRF_TOKEN @"LjbMzJ+J9NBxrYxEp+UzOzIU9qTAXIipqU356UhRcmI="
-
 + (NSData *)sendRequestToURL:(NSString *)url method:(NSString *)method JSONObject:(id)jsonObject
 {
-    NSLog(@"--- requestTodoToURL: %@ %@", url, method);
+    NSLog(@"--- sendRequestToURL: %@ %@", url, method);
     
     NSError *error = nil;
     NSData *requestData = [NSJSONSerialization dataWithJSONObject:jsonObject options:0 error:&error];
@@ -35,7 +32,7 @@
     NSHTTPURLResponse *response = nil;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
-    if (!responseData || (response.statusCode != 201 && response.statusCode != 204)) {
+    if (!responseData || (response.statusCode != 201 && response.statusCode != 204 && response.statusCode != 200)) {
         NSLog(@"NSURLConnection error:%@ status:%d", error, response.statusCode);
     }
     return responseData;

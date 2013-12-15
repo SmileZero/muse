@@ -1,5 +1,5 @@
 //
-//  SignInView.h
+//  SignInViewController.h
 //  Muse
 //
 //  Created by yan runchen on 2013/12/13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SignInView : UIView
+@interface SignInViewController : UIViewController
 
 @end

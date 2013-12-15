@@ -38,7 +38,8 @@
 		21ABB20D18587E5C00BBCA8B /* last_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ABB20C18587E5C00BBCA8B /* last_icon.png */; };
 		21ABB20F18587F1A00BBCA8B /* pause_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ABB20E18587F1A00BBCA8B /* pause_icon.png */; };
 		21D8B0D9185718950013559A /* MenuButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 21D8B0D8185718950013559A /* MenuButton.png */; };
-		7A3E0002185B30C7000F5B6C /* SignInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E0001185B30C7000F5B6C /* SignInView.m */; };
+		7A3E0005185B3EAA000F5B6C /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E0004185B3EAA000F5B6C /* SignInViewController.m */; };
+		7A3E000B185B5F49000F5B6C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E000A185B5F49000F5B6C /* User.m */; };
 		7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */; };
 		7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */; };
 /* End PBXBuildFile section */
@@ -91,8 +92,10 @@
 		21ABB20C18587E5C00BBCA8B /* last_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = last_icon.png; path = Muse/last_icon.png; sourceTree = "<group>"; };
 		21ABB20E18587F1A00BBCA8B /* pause_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_icon.png; path = Muse/pause_icon.png; sourceTree = "<group>"; };
 		21D8B0D8185718950013559A /* MenuButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MenuButton.png; path = Muse/MenuButton.png; sourceTree = "<group>"; };
-		7A3E0000185B30C7000F5B6C /* SignInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInView.h; sourceTree = "<group>"; };
-		7A3E0001185B30C7000F5B6C /* SignInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInView.m; sourceTree = "<group>"; };
+		7A3E0003185B3EAA000F5B6C /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		7A3E0004185B3EAA000F5B6C /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		7A3E0009185B5F49000F5B6C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		7A3E000A185B5F49000F5B6C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		7A3EFFFA185B0C57000F5B6C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		7A3EFFFD185B2C67000F5B6C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -185,8 +188,8 @@
 				21371F8F1850956700BB2A4F /* Supporting Files */,
 				7A3EFFFD185B2C67000F5B6C /* SettingsViewController.h */,
 				7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */,
-				7A3E0000185B30C7000F5B6C /* SignInView.h */,
-				7A3E0001185B30C7000F5B6C /* SignInView.m */,
+				7A3E0003185B3EAA000F5B6C /* SignInViewController.h */,
+				7A3E0004185B3EAA000F5B6C /* SignInViewController.m */,
 			);
 			path = Muse;
 			sourceTree = "<group>";
@@ -225,6 +228,8 @@
 			children = (
 				215C3851185ABC09007D3452 /* ServerConnection.h */,
 				215C3852185ABC09007D3452 /* ServerConnection.m */,
+				7A3E0009185B5F49000F5B6C /* User.h */,
+				7A3E000A185B5F49000F5B6C /* User.m */,
 			);
 			name = ServerConnection;
 			sourceTree = "<group>";
@@ -373,8 +378,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A3E000B185B5F49000F5B6C /* User.m in Sources */,
+				7A3E0005185B3EAA000F5B6C /* SignInViewController.m in Sources */,
 				215C3853185ABC09007D3452 /* ServerConnection.m in Sources */,
-				7A3E0002185B30C7000F5B6C /* SignInView.m in Sources */,
 				21371F9F1850956700BB2A4F /* PlayerViewController.m in Sources */,
 				7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */,
 				7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */,

@@ -14,7 +14,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="Itg-6f-xE6" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegue" id="ejY-MQ-EcK"/>
+                        <segue destination="Itg-6f-xE6" kind="custom" identifier="sw_right" customClass="SWRevealViewControllerSegue" id="ejY-MQ-EcK"/>
                         <segue destination="EhJ-Kf-QiO" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegue" id="U8K-Ap-for"/>
                     </connections>
                 </viewController>
@@ -39,7 +39,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Example.jpg" id="nMR-U8-vpy">
-                                            <rect key="frame" x="20" y="11" width="79" height="80"/>
+                                            <rect key="frame" x="80" y="11" width="80" height="80"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                     </subviews>
@@ -61,11 +61,11 @@
             </objects>
             <point key="canvasLocation" x="142" y="-150"/>
         </scene>
-        <!--View Controller-->
+        <!--Sign In View Controller-->
         <scene sceneID="G9a-Rc-iQy">
             <objects>
-                <viewController id="zLs-xX-NuE" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="FOc-uR-ivx" customClass="SignInView">
+                <viewController id="zLs-xX-NuE" customClass="SignInViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FOc-uR-ivx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -74,12 +74,18 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                <connections>
+                                    <outlet property="delegate" destination="zLs-xX-NuE" id="wAb-Xf-DyA"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" id="UIS-2R-7hk">
                                 <rect key="frame" x="66" y="240" width="196" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="zLs-xX-NuE" id="FZQ-bM-dng"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="m18-PD-REz">
                                 <rect key="frame" x="66" y="353" width="88" height="34"/>
@@ -90,6 +96,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="signIn:" destination="zLs-xX-NuE" eventType="touchUpInside" id="Wyz-VP-0bx"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TbY-af-JPE">
                                 <rect key="frame" x="171" y="353" width="91" height="34"/>
@@ -100,10 +109,18 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="custom" customClass="SWRevealViewControllerSegue" id="lKl-yw-CIH"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="cancelBtn" destination="TbY-af-JPE" id="2qg-rD-kqP"/>
+                        <outlet property="emailView" destination="BuR-mk-ALQ" id="aui-0j-mM5"/>
+                        <outlet property="passwordView" destination="UIS-2R-7hk" id="frz-4R-FSU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="seL-Lj-ale" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -215,7 +232,6 @@
                         <color key="backgroundColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="kwd-jr-CLb"/>
-                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="artistNameLabel" destination="qmx-1U-kjV" id="10z-1t-4zl"/>
                         <outlet property="hateButton" destination="xKc-1x-7dE" id="7Yt-2j-5Ke"/>
@@ -238,7 +254,6 @@
     </scenes>
     <resources>
         <image name="Example.jpg" width="960" height="960"/>
-        <image name="Example.jpg" width="960" height="960"/>
         <image name="MenuButton.png" width="94" height="74"/>
         <image name="PictureBorder.png" width="600" height="600"/>
         <image name="PictureMask.png" width="600" height="600"/>
@@ -255,4 +270,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="lKl-yw-CIH"/>
+    </inferredMetricsTieBreakers>
 </document>

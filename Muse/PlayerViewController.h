@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PlayerViewController : UIViewController
+@interface PlayerViewController : UIViewController<UITextFieldDelegate>
 
 @property (strong, nonatomic) MPMoviePlayerController * moviePlayer;
 @end

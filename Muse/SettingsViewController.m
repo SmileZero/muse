@@ -8,7 +8,6 @@
 
 #import "SettingsViewController.h"
 #import "SWRevealViewController.h"
-#import "SignInView.h"
 
 @interface SettingsViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
@@ -67,6 +66,16 @@
     NSString *CellIdentifier = [self.menuItems objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    if (indexPath.row == 0) {
+        UIView *scrollView = cell.subviews[0];
+        UIView *content = scrollView.subviews[0];
+        UIImageView *imageView = content.subviews[0];
+        NSLog(@"%@",imageView.image);
+        
+        //NSData *data = [ServerConnection getRequestToURL:url];
+        //UIImage *avatar = [UIImage imageWithData:data];
+    }
+    
     return cell;
 }
 
@@ -95,7 +104,6 @@
     }
     
 }
-
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
