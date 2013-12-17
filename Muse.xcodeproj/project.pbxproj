@@ -24,6 +24,7 @@
 		21371FAA1850956700BB2A4F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21371F8C1850956700BB2A4F /* UIKit.framework */; };
 		21371FB21850956700BB2A4F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 21371FB01850956700BB2A4F /* InfoPlist.strings */; };
 		21371FB41850956700BB2A4F /* MuseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21371FB31850956700BB2A4F /* MuseTests.m */; };
+		214D6D071860A7DA00BDCF0B /* love_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 214D6D061860A7DA00BDCF0B /* love_v2.png */; };
 		215C3853185ABC09007D3452 /* ServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3852185ABC09007D3452 /* ServerConnection.m */; };
 		215C3863185DA908007D3452 /* XiamiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3862185DA908007D3452 /* XiamiObject.m */; };
 		215C3867185DA927007D3452 /* XiamiConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3866185DA927007D3452 /* XiamiConnection.m */; };
@@ -83,6 +84,7 @@
 		21371FAF1850956700BB2A4F /* MuseTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MuseTests-Info.plist"; sourceTree = "<group>"; };
 		21371FB11850956700BB2A4F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		21371FB31850956700BB2A4F /* MuseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MuseTests.m; sourceTree = "<group>"; };
+		214D6D061860A7DA00BDCF0B /* love_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = love_v2.png; path = Muse/love_v2.png; sourceTree = "<group>"; };
 		215C3851185ABC09007D3452 /* ServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnection.h; sourceTree = "<group>"; };
 		215C3852185ABC09007D3452 /* ServerConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerConnection.m; sourceTree = "<group>"; };
 		215C3861185DA908007D3452 /* XiamiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiamiObject.h; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 		21ABB203185873BF00BBCA8B /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				214D6D061860A7DA00BDCF0B /* love_v2.png */,
 				215C386C185DFE0D007D3452 /* pause_icon_v3.png */,
 				215C386A185DFC0E007D3452 /* pause_icon_v2.png */,
 				2104C6DA18597D4D008ED8BE /* 58.png */,
@@ -399,6 +402,7 @@
 				21ABB20B185875D500BBCA8B /* next_icon.png in Resources */,
 				215C386D185DFE0D007D3452 /* pause_icon_v3.png in Resources */,
 				21ABB20D18587E5C00BBCA8B /* last_icon.png in Resources */,
+				214D6D071860A7DA00BDCF0B /* love_v2.png in Resources */,
 				21ABB20218586DCA00BBCA8B /* Example.jpg in Resources */,
 				2104C6DF18597D4D008ED8BE /* 120.png in Resources */,
 				21ABB1FE18586AB000BBCA8B /* PictureBorder.png in Resources */,

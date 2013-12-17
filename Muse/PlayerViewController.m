@@ -13,9 +13,6 @@
 #define degreesToRadians(x) -(M_PI * x / 180.0)
 
 @interface PlayerViewController ()
-@property int playStatus;
-
-
 @property (weak, nonatomic) IBOutlet UIImageView *musicPictureImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *musicPictureMaskImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *musicPictureBorderImageView;
@@ -32,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *pauseImageV3;
 @property (weak, nonatomic) IBOutlet UIImageView *pauseImageV2;
 @property (weak, nonatomic) IBOutlet UILabel *musicTimeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *disloveButton;
 
 
 @end
@@ -63,7 +61,7 @@
     [_rotateTimer fire];
     
     
-    self.playStatus = 0;
+    self.currentPlayStatus = 0;
 }
 
 
@@ -101,6 +99,23 @@
     _musicNameLabel.text = _currentMusic.title;
     _musicPictureImageView.image = _currentMusic.cover;
     _artistNameLabel.text = _currentMusic.artist;
+    
+    NSString * isLike = _currentMusic.mark;
+    
+    //NSLog(@"%@", isLike);
+    
+    [self setMarkButtonWithStatus:[isLike isEqualToString:@"0"]];
+}
+
+- (void)setMarkButtonWithStatus: (BOOL) status
+{
+    if (status) {
+        _loveButton.hidden = YES;
+        _disloveButton.hidden = NO;
+    } else {
+        _loveButton.hidden = NO;
+        _disloveButton.hidden = YES;
+    }
 }
 
 - (void)loadMusic
@@ -112,15 +127,35 @@
     [Player setCurrentMusic:_currentMusic];
     
     _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
-    _musicNameLabel.text = _currentMusic.title;
-    _musicPictureImageView.image = _currentMusic.cover;
-    _artistNameLabel.text = _currentMusic.artist;
+    
+    [self loadCurrentMusicInformation];
     
     [self.moviePlayer play];
     
-    _playStatus = 1;
+    _currentPlayStatus = 1;
     
-    [Player setCurrentPlayStatus:_playStatus];
+    [Player setCurrentPlayStatus:_currentPlayStatus];
+}
+- (IBAction)unLoveMusicButtonClicked:(id)sender {
+    
+    XiamiConnection * conn = [[XiamiConnection alloc] init];
+    BOOL result = [conn disLoveSongWithIdentifier:_currentMusic.identifier];
+    
+    
+    if (result) {
+        [self setMarkButtonWithStatus:YES];
+    }
+    
+}
+- (IBAction)loveMusicButtonClicked:(id)sender {
+    
+    XiamiConnection * conn = [[XiamiConnection alloc] init];
+    BOOL result = [conn disLoveSongWithIdentifier:_currentMusic.identifier];
+    
+    
+    if (result) {
+        [self setMarkButtonWithStatus:NO];
+    }
 }
 
 - (void)viewDidLoad
@@ -141,9 +176,9 @@
         [self loadMusic];
     } else {
         _currentMusic = [Player getCurrentMusic];
-        _playStatus = [Player getCurrentPlayStatus];
+        _currentPlayStatus = [Player getCurrentPlayStatus];
         
-        NSLog(@"%d", _playStatus);
+        NSLog(@"Load %d", _currentPlayStatus);
         [self loadCurrentMusicInformation];
     }
     
@@ -160,6 +195,9 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    _pauseImageV2.hidden = NO;
+    _pauseImageV3.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -171,15 +209,17 @@
     
     NSLog(@"clicked");
     
-    if (self.playStatus == 0) {
-        [Player setCurrentPlayStatus:_playStatus];
-        self.playStatus = 1;
+    if (self.currentPlayStatus == 0) {
+        self.currentPlayStatus = 1;
+        [Player setCurrentPlayStatus:_currentPlayStatus];
         [self moviePlay];
     } else {
-        [Player setCurrentPlayStatus:_playStatus];
-        self.playStatus = 0;
+        self.currentPlayStatus = 0;
+        [Player setCurrentPlayStatus:_currentPlayStatus];
         [self moviePause];
     }
+    
+    NSLog(@"statuse change to %d", _currentPlayStatus);
     
 }
 - (IBAction)nextButtonClicked:(id)sender {
@@ -195,9 +235,10 @@
     }
 }
 
+
 - (void)moviePlaybackStateDidChange:(NSNotification *)notification {
     
-    NSLog(@"state change");
+    //NSLog(@"state change");
     
     //NSLog(@"moviePlaybackStateDidChange = %f", [_moviePlayer currentPlaybackTime]);
     
@@ -213,12 +254,12 @@
     }
     
     
-    NSLog(@"C: %d M:%d", _playStatus, isPlay);
+    NSLog(@"C: %d M:%d", _currentPlayStatus, isPlay);
     
-    if (isPlay == 2 && _playStatus == 1) {
+    if (isPlay == 2 && _currentPlayStatus == 1) {
         NSLog(@"try once!");
         
-        [self performSelector: @selector(moviePlay) withObject:nil afterDelay:3];
+      //  [self performSelector: @selector(moviePlay) withObject:nil afterDelay:3];
     }
 }
 

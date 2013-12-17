@@ -19,7 +19,7 @@ static int currentPlayStatus = 0;
 {
     if (moviePlayer == NULL) {
         moviePlayer = [[MPMoviePlayerController alloc] init];
-        [moviePlayer prepareToPlay];
+        //[moviePlayer prepareToPlay];
         NSLog(@"player init");
     }
     return moviePlayer;
