@@ -13,6 +13,7 @@
 
 static MPMoviePlayerController * moviePlayer = NULL;
 static XiamiObject * currentMusic = NULL;
+static int currentPlayStatus = 0;
 
 + (MPMoviePlayerController *) getMoviePlayer
 {
@@ -35,6 +36,18 @@ static XiamiObject * currentMusic = NULL;
     NSLog(@"set: %@", currentMusic.title);
     
 }
+
+
++ (int) getCurrentPlayStatus
+{
+    return currentPlayStatus;
+}
+
++ (void) setCurrentPlayStatus:(int)playStatus
+{
+    currentPlayStatus = playStatus;
+}
+
 
 
 
