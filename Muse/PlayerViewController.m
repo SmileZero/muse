@@ -7,12 +7,10 @@
 //
 #import "PlayerViewController.h"
 #import "SWRevealViewController.h"
+#import "User.h"
 #import "Player.h"
 
-
 #define degreesToRadians(x) -(M_PI * x / 180.0)
-
-
 
 @interface PlayerViewController ()
 @property int playStatus;
@@ -119,11 +117,22 @@
     _artistNameLabel.text = _currentMusic.artist;
     
     [self.moviePlayer play];
-    self.playStatus = 1;
+    
+    _playStatus = 1;
+    [Player setCurrentPlayStatus:_playStatus];
 }
 
 - (void)viewDidLoad
 {
+    
+    if ([User getUser]) {
+        if ([[User getUser] signinWithRememberToken]) {
+        }
+        else{
+            NSLog(@"remember_token is incorrent");
+        }
+    }
+
     [super viewDidLoad];
     [self initPlayer];
     
@@ -131,6 +140,7 @@
         [self loadMusic];
     } else {
         _currentMusic = [Player getCurrentMusic];
+        _playStatus = [Player getCurrentPlayStatus];
         [self loadCurrentMusicInformation];
     }
     
@@ -141,8 +151,6 @@
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
-
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -195,7 +203,7 @@
     }
     
     
-    NSLog(@"%d%d", self.playStatus, isPlay);
+    NSLog(@"C: %d M:%d", self.playStatus, isPlay);
     
     if (self.playStatus == 1 && isPlay == 2) {
         NSLog(@"try once!");
