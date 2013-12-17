@@ -18,4 +18,6 @@
 @property (nonatomic,retain) NSString *thumbnailURL;
 @property (nonatomic,retain) NSString *musicURL;
 @property (nonatomic,retain) UIImage * cover;
+@property (nonatomic,retain) NSString * mark;
+
 @end

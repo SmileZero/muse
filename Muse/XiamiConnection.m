@@ -45,6 +45,7 @@
     musicInfo.musicURL = [dic objectForKey:@"location"];
     musicInfo.cover = [self getCoverWithURL:coverURL];
     musicInfo.artist = [dic objectForKey:@"artist_name"];
+    musicInfo.mark = [NSString stringWithFormat: @"%@", [dic objectForKey:@"mark"]];
     
     
     return musicInfo;
@@ -57,6 +58,40 @@
     UIImage * cover = [UIImage imageWithData:data];
     return cover;
 }
+
+
+- (BOOL) loveSongWithIdentifier: (NSString *)identifier
+{
+    NSString * url = [NSString stringWithFormat: @"%@/%@/like", SERVER_URL, identifier];
+    NSData * data = [ServerConnection getRequestToURL:url];
+    
+    NSError * error = NULL;
+    NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    
+    if ([dic[@"status"] isEqualToString:@"ok"] == YES) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL) disLoveSongWithIdentifier: (NSString *)identifier
+{
+    NSString * url = [NSString stringWithFormat: @"%@/%@/unmark", SERVER_URL, identifier];
+    NSData * data = [ServerConnection getRequestToURL:url];
+    
+    NSError * error = NULL;
+    NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    
+    if ([dic[@"status"] isEqualToString:@"ok"] == YES) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+
+
 
 
 
