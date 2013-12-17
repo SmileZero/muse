@@ -7,6 +7,12 @@
 //
 #import "PlayerViewController.h"
 #import "SWRevealViewController.h"
+#import "Player.h"
+
+
+#define degreesToRadians(x) -(M_PI * x / 180.0)
+
+
 
 @interface PlayerViewController ()
 @property int playStatus;
@@ -37,7 +43,7 @@
 
 - (void)initPlayer
 {
-    _moviePlayer = [[MPMoviePlayerController alloc] init];
+    _moviePlayer = [Player getMoviePlayer];
     
     [[NSNotificationCenter defaultCenter]
      addObserver:   self
@@ -54,9 +60,25 @@
     _timer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(updateTimeLine) userInfo:nil repeats:true];
     [_timer fire];
     
+    
+    _rotateTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(rotateLoadPicture) userInfo:nil repeats:true];
+    [_rotateTimer fire];
+    
+    
     self.playStatus = 0;
 }
 
+
+- (void)rotateLoadPicture
+{
+    [_loadingImage setTransform:CGAffineTransformMakeRotation(degreesToRadians(_rotated))];
+    
+    _rotated += 1;
+    
+    if (_rotated > 360) {
+        _rotated = 0;
+    }
+}
 
 - (void)updateTimeLine
 {
@@ -76,19 +98,27 @@
     _musicTimeLabel.text = [NSString stringWithFormat:@"%d:%02d", minute, second];
 }
 
+- (void)loadCurrentMusicInformation
+{
+    _musicNameLabel.text = _currentMusic.title;
+    _musicPictureImageView.image = _currentMusic.cover;
+    _artistNameLabel.text = _currentMusic.artist;
+}
 
 - (void)loadMusic
 {
     XiamiConnection * conn = [[XiamiConnection alloc] init];
-    
     srand((int)conn);
     
     _currentMusic = [conn getMusicWithIdentifier:[NSString stringWithFormat:@"%d", rand() % 5000]];
+    [Player setCurrentMusic:_currentMusic];
+    
     _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
     _musicNameLabel.text = _currentMusic.title;
     _musicPictureImageView.image = _currentMusic.cover;
     _artistNameLabel.text = _currentMusic.artist;
-    [_moviePlayer play];
+    
+    [self.moviePlayer play];
     self.playStatus = 1;
 }
 
@@ -96,7 +126,15 @@
 {
     [super viewDidLoad];
     [self initPlayer];
-    [self loadMusic];
+    
+    if ([Player getCurrentMusic] == NULL) {
+        [self loadMusic];
+    } else {
+        _currentMusic = [Player getCurrentMusic];
+        [self loadCurrentMusicInformation];
+    }
+    
+    
     
     
     [_settingButton addTarget:self.revealViewController action:@selector(rightRevealToggle:) forControlEvents:UIControlEventTouchUpInside];
@@ -165,7 +203,6 @@
         [self performSelector: @selector(moviePlay) withObject:nil afterDelay:3];
     }
 }
-
 
 - (void)moviePlay
 {
