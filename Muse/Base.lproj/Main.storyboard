@@ -258,6 +258,7 @@
                         <outlet property="artistNameLabel" destination="qmx-1U-kjV" id="10z-1t-4zl"/>
                         <outlet property="hateButton" destination="xKc-1x-7dE" id="7Yt-2j-5Ke"/>
                         <outlet property="lastButton" destination="crE-Rc-0vw" id="O8w-S3-X5Q"/>
+                        <outlet property="loadingImage" destination="4II-HI-K1g" id="Ij0-hp-Cio"/>
                         <outlet property="loveButton" destination="VuQ-qG-kLv" id="dox-5J-pyQ"/>
                         <outlet property="menuButton" destination="Tcc-l0-Qkm" id="zOh-EG-mPb"/>
                         <outlet property="musicNameLabel" destination="HVR-W0-eFt" id="Mrv-Cb-PXQ"/>
@@ -278,6 +279,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Example.jpg" width="960" height="960"/>
         <image name="Example.jpg" width="960" height="960"/>
         <image name="LoadPic.png" width="640" height="640"/>
         <image name="MenuButton.png" width="94" height="74"/>

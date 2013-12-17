@@ -9,6 +9,11 @@
 #import "SWRevealViewController.h"
 #import "Player.h"
 
+
+#define degreesToRadians(x) -(M_PI * x / 180.0)
+
+
+
 @interface PlayerViewController ()
 @property int playStatus;
 
@@ -55,9 +60,25 @@
     _timer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(updateTimeLine) userInfo:nil repeats:true];
     [_timer fire];
     
+    
+    _rotateTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(rotateLoadPicture) userInfo:nil repeats:true];
+    [_rotateTimer fire];
+    
+    
     self.playStatus = 0;
 }
 
+
+- (void)rotateLoadPicture
+{
+    [_loadingImage setTransform:CGAffineTransformMakeRotation(degreesToRadians(_rotated))];
+    
+    _rotated += 1;
+    
+    if (_rotated > 360) {
+        _rotated = 0;
+    }
+}
 
 - (void)updateTimeLine
 {
