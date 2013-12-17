@@ -40,6 +40,7 @@
 - (void)initPlayer
 {
     _moviePlayer = [Player getMoviePlayer];
+
     
     [[NSNotificationCenter defaultCenter]
      addObserver:   self
@@ -175,15 +176,15 @@
     if ([Player getCurrentMusic] == NULL) {
         [self loadMusic];
     } else {
+        
+        _moviePlayer = [Player getMoviePlayer];
+        
         _currentMusic = [Player getCurrentMusic];
         _currentPlayStatus = [Player getCurrentPlayStatus];
         
         NSLog(@"Load %d", _currentPlayStatus);
         [self loadCurrentMusicInformation];
     }
-    
-    
-    
     
     [_settingButton addTarget:self.revealViewController action:@selector(rightRevealToggle:) forControlEvents:UIControlEventTouchUpInside];
     [_menuButton addTarget:self.revealViewController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
@@ -198,6 +199,22 @@
     
     _pauseImageV2.hidden = NO;
     _pauseImageV3.hidden = YES;
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:   self
+     name:          MPMoviePlayerPlaybackDidFinishNotification
+     object         :_moviePlayer];
+    
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:   self
+     name:          MPMoviePlayerPlaybackStateDidChangeNotification
+     object:        _moviePlayer];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -259,7 +276,7 @@
     if (isPlay == 2 && _currentPlayStatus == 1) {
         NSLog(@"try once!");
         
-      //  [self performSelector: @selector(moviePlay) withObject:nil afterDelay:3];
+        [self performSelector: @selector(moviePlay) withObject:nil afterDelay:5];
     }
 }
 
