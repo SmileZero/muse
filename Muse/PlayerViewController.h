@@ -14,7 +14,7 @@
 
 @interface PlayerViewController : UIViewController
 
-@property (strong, nonatomic) MPMoviePlayerController * moviePlayer;
+@property (weak, nonatomic) MPMoviePlayerController * moviePlayer;
 
 @property (weak, nonatomic) XiamiObject * currentMusic;
 @property (weak, nonatomic) NSTimer * timer;

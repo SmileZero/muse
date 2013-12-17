@@ -8,7 +8,7 @@
 #import "PlayerViewController.h"
 #import "SWRevealViewController.h"
 #import "User.h"
-
+#import "Player.h"
 @interface PlayerViewController ()
 @property int playStatus;
 
@@ -38,7 +38,7 @@
 
 - (void)initPlayer
 {
-    _moviePlayer = [[MPMoviePlayerController alloc] init];
+    _moviePlayer = [Player getMoviePlayer];
     
     [[NSNotificationCenter defaultCenter]
      addObserver:   self
@@ -77,19 +77,27 @@
     _musicTimeLabel.text = [NSString stringWithFormat:@"%d:%02d", minute, second];
 }
 
+- (void)loadCurrentMusicInformation
+{
+    _musicNameLabel.text = _currentMusic.title;
+    _musicPictureImageView.image = _currentMusic.cover;
+    _artistNameLabel.text = _currentMusic.artist;
+}
 
 - (void)loadMusic
 {
     XiamiConnection * conn = [[XiamiConnection alloc] init];
-    
     srand((int)conn);
     
     _currentMusic = [conn getMusicWithIdentifier:[NSString stringWithFormat:@"%d", rand() % 5000]];
+    [Player setCurrentMusic:_currentMusic];
+    
     _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
     _musicNameLabel.text = _currentMusic.title;
     _musicPictureImageView.image = _currentMusic.cover;
     _artistNameLabel.text = _currentMusic.artist;
-    [_moviePlayer play];
+    
+    [self.moviePlayer play];
     self.playStatus = 1;
 }
 
@@ -106,7 +114,15 @@
 
     [super viewDidLoad];
     [self initPlayer];
-    [self loadMusic];
+    
+    if ([Player getCurrentMusic] == NULL) {
+        [self loadMusic];
+    } else {
+        _currentMusic = [Player getCurrentMusic];
+        [self loadCurrentMusicInformation];
+    }
+    
+    
     
     
     [_settingButton addTarget:self.revealViewController action:@selector(rightRevealToggle:) forControlEvents:UIControlEventTouchUpInside];
@@ -173,7 +189,6 @@
         [self performSelector: @selector(moviePlay) withObject:nil afterDelay:3];
     }
 }
-
 
 - (void)moviePlay
 {

@@ -30,6 +30,7 @@
 		215C3869185DEFEF007D3452 /* LoadPic.png in Resources */ = {isa = PBXBuildFile; fileRef = 215C3868185DEFEF007D3452 /* LoadPic.png */; };
 		215C386B185DFC0E007D3452 /* pause_icon_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 215C386A185DFC0E007D3452 /* pause_icon_v2.png */; };
 		215C386D185DFE0D007D3452 /* pause_icon_v3.png in Resources */ = {isa = PBXBuildFile; fileRef = 215C386C185DFE0D007D3452 /* pause_icon_v3.png */; };
+		21660584185F3A3500560812 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 21660583185F3A3500560812 /* Player.m */; };
 		21ABB1F818576C9300BBCA8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21ABB1F718576C9300BBCA8B /* AVFoundation.framework */; };
 		21ABB1FA18576CB600BBCA8B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21ABB1F918576CB600BBCA8B /* MediaPlayer.framework */; };
 		21ABB1FC1857736100BBCA8B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21ABB1FB1857736100BBCA8B /* CoreVideo.framework */; };
@@ -91,6 +92,8 @@
 		215C3868185DEFEF007D3452 /* LoadPic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoadPic.png; sourceTree = "<group>"; };
 		215C386A185DFC0E007D3452 /* pause_icon_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_icon_v2.png; path = Muse/pause_icon_v2.png; sourceTree = "<group>"; };
 		215C386C185DFE0D007D3452 /* pause_icon_v3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_icon_v3.png; path = Muse/pause_icon_v3.png; sourceTree = "<group>"; };
+		21660582185F3A3500560812 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		21660583185F3A3500560812 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		21ABB1F718576C9300BBCA8B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		21ABB1F918576CB600BBCA8B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		21ABB1FB1857736100BBCA8B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -252,6 +255,8 @@
 		215C3860185DA8F0007D3452 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				21660582185F3A3500560812 /* Player.h */,
+				21660583185F3A3500560812 /* Player.m */,
 				215C3861185DA908007D3452 /* XiamiObject.h */,
 				215C3862185DA908007D3452 /* XiamiObject.m */,
 			);
@@ -422,6 +427,7 @@
 				215C3853185ABC09007D3452 /* ServerConnection.m in Sources */,
 				21371F9F1850956700BB2A4F /* PlayerViewController.m in Sources */,
 				7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */,
+				21660584185F3A3500560812 /* Player.m in Sources */,
 				7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */,
 				21371F991850956700BB2A4F /* AppDelegate.m in Sources */,
 				21371F951850956700BB2A4F /* main.m in Sources */,
