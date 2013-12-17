@@ -19,6 +19,7 @@ static int currentPlayStatus = 0;
 {
     if (moviePlayer == NULL) {
         moviePlayer = [[MPMoviePlayerController alloc] init];
+        [moviePlayer prepareToPlay];
         NSLog(@"player init");
     }
     return moviePlayer;
@@ -26,7 +27,6 @@ static int currentPlayStatus = 0;
 
 + (XiamiObject *) getCurrentMusic
 {
-   
     return currentMusic;
 }
 

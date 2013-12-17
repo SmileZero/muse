@@ -119,6 +119,7 @@
     [self.moviePlayer play];
     
     _playStatus = 1;
+    
     [Player setCurrentPlayStatus:_playStatus];
 }
 
@@ -141,6 +142,8 @@
     } else {
         _currentMusic = [Player getCurrentMusic];
         _playStatus = [Player getCurrentPlayStatus];
+        
+        NSLog(@"%d", _playStatus);
         [self loadCurrentMusicInformation];
     }
     
@@ -148,6 +151,7 @@
     
     
     [_settingButton addTarget:self.revealViewController action:@selector(rightRevealToggle:) forControlEvents:UIControlEventTouchUpInside];
+    [_menuButton addTarget:self.revealViewController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
@@ -165,10 +169,14 @@
 }
 - (IBAction)pauseButtonClicked:(id)sender {
     
+    NSLog(@"clicked");
+    
     if (self.playStatus == 0) {
+        [Player setCurrentPlayStatus:_playStatus];
         self.playStatus = 1;
         [self moviePlay];
     } else {
+        [Player setCurrentPlayStatus:_playStatus];
         self.playStatus = 0;
         [self moviePause];
     }
@@ -189,6 +197,8 @@
 
 - (void)moviePlaybackStateDidChange:(NSNotification *)notification {
     
+    NSLog(@"state change");
+    
     //NSLog(@"moviePlaybackStateDidChange = %f", [_moviePlayer currentPlaybackTime]);
     
     int isPlay = [_moviePlayer playbackState];
@@ -203,9 +213,9 @@
     }
     
     
-    NSLog(@"C: %d M:%d", self.playStatus, isPlay);
+    NSLog(@"C: %d M:%d", _playStatus, isPlay);
     
-    if (self.playStatus == 1 && isPlay == 2) {
+    if (isPlay == 2 && _playStatus == 1) {
         NSLog(@"try once!");
         
         [self performSelector: @selector(moviePlay) withObject:nil afterDelay:3];

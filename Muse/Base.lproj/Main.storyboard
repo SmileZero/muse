@@ -16,11 +16,26 @@
                     <connections>
                         <segue destination="Itg-6f-xE6" kind="custom" identifier="sw_right" customClass="SWRevealViewControllerSegue" id="ejY-MQ-EcK"/>
                         <segue destination="EhJ-Kf-QiO" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegue" id="U8K-Ap-for"/>
+                        <segue destination="6IC-Sr-5C6" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegue" id="oRB-SQ-IUt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LBI-8Q-H0N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-346" y="82"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="bOR-14-H0R">
+            <objects>
+                <viewController id="6IC-Sr-5C6" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EHa-AB-QuW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xw1-Kg-hN0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137" y="-832"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="Tc9-ya-n8A">
@@ -378,7 +393,6 @@
     </scenes>
     <resources>
         <image name="Example.jpg" width="960" height="960"/>
-        <image name="Example.jpg" width="960" height="960"/>
         <image name="LoadPic.png" width="640" height="640"/>
         <image name="MenuButton.png" width="94" height="74"/>
         <image name="PictureBorder.png" width="600" height="600"/>
@@ -399,6 +413,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="lKl-yw-CIH"/>
+        <segue reference="mru-Ae-B6j"/>
     </inferredMetricsTieBreakers>
 </document>

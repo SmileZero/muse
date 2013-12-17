@@ -45,6 +45,7 @@
     musicInfo.musicURL = [dic objectForKey:@"location"];
     musicInfo.cover = [self getCoverWithURL:coverURL];
     musicInfo.artist = [dic objectForKey:@"artist_name"];
+      musicInfo.mark = [dic objectForKey:@"mark"];
     
     
     return musicInfo;
@@ -57,6 +58,7 @@
     UIImage * cover = [UIImage imageWithData:data];
     return cover;
 }
+
 
 
 
