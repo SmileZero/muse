@@ -42,7 +42,7 @@
                                             <rect key="frame" x="80" y="11" width="80" height="80"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Sign In" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uEU-AL-DWd">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Sign In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uEU-AL-DWd">
                                             <rect key="frame" x="205" y="28" width="95" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
@@ -161,21 +161,12 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password Confirm" minimumFontSize="17" clearButtonMode="whileEditing" id="Jp7-1A-7eV">
-                                        <rect key="frame" x="32" y="114" width="176" height="30"/>
+                                        <rect key="frame" x="32" y="113" width="176" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="zLs-xX-NuE" id="bmQ-vF-Zs9"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nickname" minimumFontSize="17" clearButtonMode="whileEditing" id="o3K-jd-xCp">
-                                        <rect key="frame" x="32" y="159" width="176" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="zLs-xX-NuE" id="mUp-9J-i3X"/>
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rfr-P0-zbv">
@@ -202,6 +193,15 @@
                                             <action selector="backToSignIn:" destination="zLs-xX-NuE" eventType="touchUpInside" id="IsX-zA-C4w"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nickname" minimumFontSize="17" clearButtonMode="whileEditing" id="9EE-Ty-fCt">
+                                        <rect key="frame" x="32" y="157" width="176" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="zLs-xX-NuE" id="m9y-FM-rHp"/>
+                                        </connections>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -210,8 +210,12 @@
                     </view>
                     <connections>
                         <outlet property="cancelBtn" destination="TbY-af-JPE" id="2qg-rD-kqP"/>
+                        <outlet property="emailSignUp" destination="JSc-B0-lJ5" id="wwt-EP-28c"/>
                         <outlet property="emailView" destination="BuR-mk-ALQ" id="aui-0j-mM5"/>
+                        <outlet property="nameSignUp" destination="9EE-Ty-fCt" id="fYl-eP-ufZ"/>
                         <outlet property="passwordView" destination="UIS-2R-7hk" id="frz-4R-FSU"/>
+                        <outlet property="pwdConfirmSignUp" destination="Jp7-1A-7eV" id="o9W-eX-s2n"/>
+                        <outlet property="pwdSignUp" destination="aSv-DR-UTd" id="lHI-Qt-EVB"/>
                         <outlet property="signInBtn" destination="m18-PD-REz" id="kFY-qj-bqH"/>
                         <outlet property="signUpView" destination="igV-tM-Xdb" id="zNg-1F-j7p"/>
                     </connections>
@@ -372,6 +376,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Example.jpg" width="960" height="960"/>
         <image name="Example.jpg" width="960" height="960"/>
         <image name="LoadPic.png" width="640" height="640"/>
         <image name="MenuButton.png" width="94" height="74"/>

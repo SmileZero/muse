@@ -199,6 +199,8 @@ static User *current_user;
         return @"ok";
     }
     else{
+        
+        NSLog(userDictionary[@"msg"]);
         return userDictionary[@"msg"];
     }
 }
