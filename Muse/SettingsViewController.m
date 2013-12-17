@@ -72,6 +72,13 @@
         UIView *scrollView = cell.subviews[0];
         UIView *content = scrollView.subviews[0];
         UIImageView *imageView = content.subviews[0];
+        
+        imageView.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+        imageView.layer.cornerRadius = 10;
+        imageView.layer.masksToBounds = YES;
+        //imageView.layer.borderColor = [UIColor colorWithWhite:0.2f alpha:1.0f].CGColor;
+        //imageView.layer.borderWidth = 7.0f;
+        
         UILabel *labelView = content.subviews[1];
         
         if ([User getUser]) {

@@ -12,11 +12,16 @@
 #import "ServerConnection.h"
 
 @interface SignInViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *signInBtn;
 @property (weak, nonatomic) IBOutlet UITextField *emailView;
 @property (weak, nonatomic) IBOutlet UITextField *passwordView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelBtn;
+@property (weak, nonatomic) IBOutlet UIView *signUpView;
+- (IBAction)backToSignIn:(id)sender;
+- (IBAction)showSignUpView:(id)sender;
 
 - (IBAction)signIn:(id)sender;
+- (IBAction)signUp:(id)sender;
 @end
 
 @implementation SignInViewController
@@ -41,6 +46,16 @@
     if ([User getUser]) {
         _emailView.text = [User getUser].email;
     }
+    _signUpView.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+    _signUpView.layer.cornerRadius = 5;
+    _signUpView.layer.masksToBounds = YES;
+    _cancelBtn.layer.cornerRadius = 5;
+    _signInBtn.layer.cornerRadius = 5;
+    //_signUpView.layer.borderColor = [UIColor colorWithWhite:0.5f alpha:1.0f].CGColor;
+    //_signUpView.layer.borderWidth = 8.0f;
+    CGRect rect = _signUpView.frame;
+    _signUpView.frame = CGRectMake(rect.origin.x, 1136+rect.origin.y/2 , rect.size.width, rect.size.height);
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,6 +96,25 @@
     return YES;
 }
 
+- (IBAction)backToSignIn:(id)sender {
+    [UIView beginAnimations:@"MoveView" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView setAnimationDuration:0.5f];
+    CGRect rect = _signUpView.frame;
+    _signUpView.frame = CGRectMake(rect.origin.x, 1136+rect.origin.y/2 , rect.size.width, rect.size.height);
+    [UIView commitAnimations];
+    //_signUpView.hidden = YES;
+}
+
+- (IBAction)showSignUpView:(id)sender {
+    [UIView beginAnimations:@"MoveView" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView setAnimationDuration:0.5f];
+    CGRect rect = _signUpView.frame;
+    _signUpView.frame = CGRectMake(43, 122 , rect.size.width, rect.size.height);
+    [UIView commitAnimations];
+
+}
 
 - (IBAction)signIn:(id)sender {
     
@@ -107,5 +141,9 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Email/Password Incorrect" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
+}
+
+- (IBAction)signUp:(id)sender {
+    
 }
 @end
