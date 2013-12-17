@@ -7,7 +7,8 @@
 //
 #import "PlayerViewController.h"
 #import "SWRevealViewController.h"
-
+#import "User.h"
+#import "Player.h"
 @interface PlayerViewController ()
 @property int playStatus;
 
@@ -25,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *loveButton;
 @property (weak, nonatomic) IBOutlet UIButton *hateButton;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
+@property (weak, nonatomic) IBOutlet UIImageView *pauseImageV3;
+@property (weak, nonatomic) IBOutlet UIImageView *pauseImageV2;
+@property (weak, nonatomic) IBOutlet UILabel *musicTimeLabel;
 
 
 @end
@@ -34,7 +38,7 @@
 
 - (void)initPlayer
 {
-    _moviePlayer = [[MPMoviePlayerController alloc] init];
+    _moviePlayer = [Player getMoviePlayer];
     
     [[NSNotificationCenter defaultCenter]
      addObserver:   self
@@ -42,36 +46,89 @@
      name:          MPMoviePlayerPlaybackDidFinishNotification
      object         :_moviePlayer];
     
+    [[NSNotificationCenter defaultCenter]
+     addObserver:   self
+     selector:      @selector(moviePlaybackStateDidChange:)
+     name:          MPMoviePlayerPlaybackStateDidChangeNotification
+     object:        _moviePlayer];
+    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(updateTimeLine) userInfo:nil repeats:true];
+    [_timer fire];
+    
     self.playStatus = 0;
 }
 
 
+- (void)updateTimeLine
+{
+    if ([_moviePlayer playbackState] == 2) {
+        return ;
+    }
+    
+    int time = [_moviePlayer currentPlaybackTime];
+    
+    if (time < 0) {
+        time = 0;
+    }
+    
+    int minute = floor(time / 60);
+    int second = time - minute * 60;
+
+    _musicTimeLabel.text = [NSString stringWithFormat:@"%d:%02d", minute, second];
+}
+
+- (void)loadCurrentMusicInformation
+{
+    _musicNameLabel.text = _currentMusic.title;
+    _musicPictureImageView.image = _currentMusic.cover;
+    _artistNameLabel.text = _currentMusic.artist;
+}
 
 - (void)loadMusic
 {
     XiamiConnection * conn = [[XiamiConnection alloc] init];
+    srand((int)conn);
     
     _currentMusic = [conn getMusicWithIdentifier:[NSString stringWithFormat:@"%d", rand() % 5000]];
+    [Player setCurrentMusic:_currentMusic];
+    
     _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
     _musicNameLabel.text = _currentMusic.title;
     _musicPictureImageView.image = _currentMusic.cover;
     _artistNameLabel.text = _currentMusic.artist;
-    [_moviePlayer play];
+    
+    [self.moviePlayer play];
+    self.playStatus = 1;
 }
 
 - (void)viewDidLoad
 {
+    
+    if ([User getUser]) {
+        if ([[User getUser] signinWithRememberToken]) {
+        }
+        else{
+            NSLog(@"remember_token is incorrent");
+        }
+    }
+
     [super viewDidLoad];
     [self initPlayer];
-    [self loadMusic];
+    
+    if ([Player getCurrentMusic] == NULL) {
+        [self loadMusic];
+    } else {
+        _currentMusic = [Player getCurrentMusic];
+        [self loadCurrentMusicInformation];
+    }
+    
+    
     
     
     [_settingButton addTarget:self.revealViewController action:@selector(rightRevealToggle:) forControlEvents:UIControlEventTouchUpInside];
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
-
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -88,10 +145,10 @@
     
     if (self.playStatus == 0) {
         self.playStatus = 1;
-        [_moviePlayer pause];
+        [self moviePlay];
     } else {
         self.playStatus = 0;
-        [_moviePlayer play];
+        [self moviePause];
     }
     
 }
@@ -105,6 +162,45 @@
     NSLog(@"moviePlaybackDidFinish = %@",[notification userInfo]);
     if ([[[notification userInfo] objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] intValue] == MPMoviePlaybackStateStopped) {
         [self loadMusic];
+    }
+}
+
+- (void)moviePlaybackStateDidChange:(NSNotification *)notification {
+    
+    //NSLog(@"moviePlaybackStateDidChange = %f", [_moviePlayer currentPlaybackTime]);
+    
+    int isPlay = [_moviePlayer playbackState];
+    
+    if (isPlay == 2) {
+        _pauseImageV2.hidden = YES;
+        _pauseImageV3.hidden = NO;
+        
+    } else {
+        _pauseImageV2.hidden = NO;
+        _pauseImageV3.hidden = YES;
+    }
+    
+    
+    NSLog(@"%d%d", self.playStatus, isPlay);
+    
+    if (self.playStatus == 1 && isPlay == 2) {
+        NSLog(@"try once!");
+        
+        [self performSelector: @selector(moviePlay) withObject:nil afterDelay:3];
+    }
+}
+
+- (void)moviePlay
+{
+    if ([_moviePlayer playbackState] == 2) {
+        [_moviePlayer play];
+    }
+}
+
+- (void)moviePause
+{
+    if ([_moviePlayer playbackState] == 1) {
+        [_moviePlayer pause];
     }
 }
 
