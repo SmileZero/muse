@@ -7,13 +7,17 @@
 //
 #import "PlayerViewController.h"
 #import "SWRevealViewController.h"
+#import "User.h"
 #import "Player.h"
+<<<<<<< HEAD
 
 
 #define degreesToRadians(x) -(M_PI * x / 180.0)
 
 
 
+=======
+>>>>>>> feature/user_signup_login
 @interface PlayerViewController ()
 @property int playStatus;
 
@@ -124,6 +128,15 @@
 
 - (void)viewDidLoad
 {
+    
+    if ([User getUser]) {
+        if ([[User getUser] signinWithRememberToken]) {
+        }
+        else{
+            NSLog(@"remember_token is incorrent");
+        }
+    }
+
     [super viewDidLoad];
     [self initPlayer];
     
@@ -141,8 +154,6 @@
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
-
 }
 
 - (void) viewWillAppear:(BOOL)animated

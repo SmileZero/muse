@@ -16,13 +16,15 @@
 @property(strong, nonatomic) NSString *avatar;
 @property(strong, nonatomic) NSString *remembrer_token;
 
++ (User *) getUser;
 
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password name:(NSString *)name avatar:(NSString *)avatar remembrer_token:(NSString *)remembrer_token user_id:(NSNumber *)user_id;
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password name:(NSString *)name;
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password;
 
-- (void)signup;
+- (NSString *)signup;
 - (BOOL)signin;
-- (void)signout;
+- (BOOL)signout;
+- (BOOL)signinWithRememberToken;
 
 @end
