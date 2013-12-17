@@ -9,15 +9,9 @@
 #import "SWRevealViewController.h"
 #import "User.h"
 #import "Player.h"
-<<<<<<< HEAD
-
 
 #define degreesToRadians(x) -(M_PI * x / 180.0)
 
-
-
-=======
->>>>>>> feature/user_signup_login
 @interface PlayerViewController ()
 @property int playStatus;
 
@@ -123,7 +117,9 @@
     _artistNameLabel.text = _currentMusic.artist;
     
     [self.moviePlayer play];
-    self.playStatus = 1;
+    
+    _playStatus = 1;
+    [Player setCurrentPlayStatus:_playStatus];
 }
 
 - (void)viewDidLoad
@@ -144,6 +140,7 @@
         [self loadMusic];
     } else {
         _currentMusic = [Player getCurrentMusic];
+        _playStatus = [Player getCurrentPlayStatus];
         [self loadCurrentMusicInformation];
     }
     
@@ -206,7 +203,7 @@
     }
     
     
-    NSLog(@"%d%d", self.playStatus, isPlay);
+    NSLog(@"C: %d M:%d", self.playStatus, isPlay);
     
     if (self.playStatus == 1 && isPlay == 2) {
         NSLog(@"try once!");

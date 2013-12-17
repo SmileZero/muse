@@ -14,7 +14,12 @@
 @interface Player : NSObject
 
 + (MPMoviePlayerController *) getMoviePlayer;
+
 + (XiamiObject *) getCurrentMusic;
 + (void) setCurrentMusic: (XiamiObject *) music;
+
+
++ (int) getCurrentPlayStatus;
++ (void) setCurrentPlayStatus: (int) playStatus;
 
 @end
