@@ -96,7 +96,7 @@ static User *current_user;
 
 -(BOOL)signin
 {
-    NSLog(@"--- save %@ %@", current_user.email, current_user.password);
+    NSLog(@"--- signIn %@ %@", current_user.email, current_user.password);
     [self getCSRFToken];
     NSError *error = nil;
     NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signin", SERVER_URL] method:@"POST" JSONObject:@{@"session": @{@"email" : current_user.email, @"password" : current_user.password}, @"authenticity_token": CSRFToken}];
@@ -133,7 +133,7 @@ static User *current_user;
 -(BOOL)signinWithRememberToken
 {
     if (current_user.remembrer_token) {
-        NSLog(@"--- save %@ %@", current_user.email, current_user.remembrer_token);
+        NSLog(@"--- signinWithToken %@ %@", current_user.email, current_user.remembrer_token);
         [self getCSRFToken];
         NSError *error = nil;
         NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signin", SERVER_URL] method:@"POST" JSONObject:@{@"session": @{@"remember_token" : current_user.remembrer_token}, @"authenticity_token": CSRFToken}];
@@ -167,6 +167,48 @@ static User *current_user;
         }
     }
     else return NO;
+}
+
+- (NSString *)signup
+{
+    NSLog(@"--- signUp %@ %@", current_user.email, current_user.name);
+    [self getCSRFToken];
+    NSError *error = nil;
+    NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/users.json", SERVER_URL] method:@"POST" JSONObject:@{@"user": @{@"email" : current_user.email, @"password_hash" : current_user.password, @"name": current_user.name}, @"authenticity_token": CSRFToken}];
+    NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    if ([userDictionary[@"status"]  isEqual: @"ok"]) {
+        current_user.user_id = userDictionary[@"user"][@"id"];
+        current_user.avatar = userDictionary[@"user"][@"avatar"][@"url"];
+        current_user.remembrer_token = userDictionary[@"user"][@"remember_token"];
+        current_user.password = nil;
+        NSString *error;
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];
+        NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:
+                                   [NSArray arrayWithObjects: current_user.user_id, current_user.name, current_user.email,current_user.avatar, current_user.remembrer_token, nil]
+                                                              forKeys:[NSArray arrayWithObjects: @"User_id", @"Name", @"Email",@"Avatar", @"Remember_token", nil]];
+        NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistDict
+                                                                       format:NSPropertyListXMLFormat_v1_0
+                                                             errorDescription:&error];
+        if(plistData) {
+            [plistData writeToFile:plistPath atomically:YES];
+        }
+        else {
+            NSLog(@"%@",error);
+        }
+        return @"ok";
+    }
+    else{
+        return userDictionary[@"msg"];
+    }
+}
+
+- (BOOL)signout
+{
+    NSLog(@"--- signOut %@ %@", current_user.email, current_user.name);
+    [self getCSRFToken];
+    [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signout.json", SERVER_URL] method:@"DELETE" JSONObject:@{@"authenticity_token": CSRFToken}];
+    return YES;
 }
 
 @end

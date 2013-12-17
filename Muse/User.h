@@ -22,9 +22,9 @@
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password name:(NSString *)name;
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password;
 
-- (void)signup;
+- (NSString *)signup;
 - (BOOL)signin;
-- (void)signout;
+- (BOOL)signout;
 - (BOOL)signinWithRememberToken;
 
 @end
