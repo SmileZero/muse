@@ -22,4 +22,9 @@
 + (int) getCurrentPlayStatus;
 + (void) setCurrentPlayStatus: (int) playStatus;
 
++ (void) stopMoviePlayer;
++ (void) playMoviePlayer;
+
+
+
 @end

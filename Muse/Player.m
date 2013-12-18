@@ -49,6 +49,16 @@ static int currentPlayStatus = 0;
 }
 
 
++ (void) stopMoviePlayer
+{
+    [moviePlayer pause];
+}
+
+
++ (void) playMoviePlayer
+{
+    [moviePlayer play];
+}
 
 
 
