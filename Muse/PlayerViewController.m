@@ -121,10 +121,11 @@
 
 - (void)loadMusic
 {
+    
     XiamiConnection * conn = [[XiamiConnection alloc] init];
     srand((int)conn);
     
-    _currentMusic = [conn getMusicWithIdentifier:[NSString stringWithFormat:@"%d", rand() % 5000]];
+    _currentMusic = [conn getRecemmondMusic];
     [Player setCurrentMusic:_currentMusic];
     
     _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
@@ -148,16 +149,30 @@
     }
     
 }
+- (IBAction)hateMusicButtonClicked:(id)sender {
+    
+    XiamiConnection * conn = [[XiamiConnection alloc] init];
+    BOOL result = [conn hateSongWithIdentifier:_currentMusic.identifier];
+    
+    if (result) {
+        [self loadMusic];
+    }
+    
+}
+
+
 - (IBAction)loveMusicButtonClicked:(id)sender {
     
     XiamiConnection * conn = [[XiamiConnection alloc] init];
-    BOOL result = [conn disLoveSongWithIdentifier:_currentMusic.identifier];
+    BOOL result = [conn loveSongWithIdentifier:_currentMusic.identifier];
     
     
     if (result) {
         [self setMarkButtonWithStatus:NO];
     }
 }
+
+
 
 - (void)viewDidLoad
 {
