@@ -101,6 +101,7 @@ static User *current_user;
     NSError *error = nil;
     NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signin", SERVER_URL] method:@"POST" JSONObject:@{@"session": @{@"email" : current_user.email, @"password" : current_user.password}, @"authenticity_token": CSRFToken}];
     // set todo_id
+    
     NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     if ([userDictionary[@"status"]  isEqual: @"ok"]) {
         current_user.user_id = userDictionary[@"user"][@"id"];

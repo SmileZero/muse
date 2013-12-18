@@ -47,6 +47,19 @@
 		21D8B0D9185718950013559A /* MenuButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 21D8B0D8185718950013559A /* MenuButton.png */; };
 		7A3E0005185B3EAA000F5B6C /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E0004185B3EAA000F5B6C /* SignInViewController.m */; };
 		7A3E000B185B5F49000F5B6C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E000A185B5F49000F5B6C /* User.m */; };
+		7A3E000D18613AF2000F5B6C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3E000C18613AF2000F5B6C /* AdSupport.framework */; };
+		7A3E000F18613B04000F5B6C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3E000E18613B04000F5B6C /* AudioToolbox.framework */; };
+		7A3E001118613B19000F5B6C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3E001018613B19000F5B6C /* QuartzCore.framework */; };
+		7A3E001318613B23000F5B6C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3E001218613B23000F5B6C /* CoreMedia.framework */; };
+		7A3E001518613B2C000F5B6C /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3E001418613B2C000F5B6C /* libxml2.dylib */; };
+		7A3E001718613B37000F5B6C /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3E001618613B37000F5B6C /* libstdc++.dylib */; };
+		7A3E001918613B40000F5B6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3E001818613B40000F5B6C /* libsqlite3.dylib */; };
+		7A3E001B18613B95000F5B6C /* GracenoteMusicID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3E001A18613B95000F5B6C /* GracenoteMusicID.framework */; };
+		7A3E001F18613C58000F5B6C /* FPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E001E18613C58000F5B6C /* FPResponse.m */; };
+		7A3E002118613DFB000F5B6C /* border.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A3E002018613DFB000F5B6C /* border.png */; };
+		7A3E00231861444D000F5B6C /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A3E00221861444D000F5B6C /* circle.png */; };
+		7A3E002518615DE5000F5B6C /* playButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A3E002418615DE5000F5B6C /* playButton.png */; };
+		7A3E002818618A51000F5B6C /* Music.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E002718618A51000F5B6C /* Music.m */; };
 		7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */; };
 		7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */; };
 /* End PBXBuildFile section */
@@ -113,6 +126,21 @@
 		7A3E0004185B3EAA000F5B6C /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		7A3E0009185B5F49000F5B6C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		7A3E000A185B5F49000F5B6C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		7A3E000C18613AF2000F5B6C /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		7A3E000E18613B04000F5B6C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		7A3E001018613B19000F5B6C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7A3E001218613B23000F5B6C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		7A3E001418613B2C000F5B6C /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		7A3E001618613B37000F5B6C /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		7A3E001818613B40000F5B6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		7A3E001A18613B95000F5B6C /* GracenoteMusicID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GracenoteMusicID.framework; path = ../../../Downloads/GN_Music_SDK_iOS_3_3_0_14/GracenoteMusicID.framework; sourceTree = "<group>"; };
+		7A3E001D18613C58000F5B6C /* FPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPResponse.h; sourceTree = "<group>"; };
+		7A3E001E18613C58000F5B6C /* FPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPResponse.m; sourceTree = "<group>"; };
+		7A3E002018613DFB000F5B6C /* border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border.png; sourceTree = "<group>"; };
+		7A3E00221861444D000F5B6C /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
+		7A3E002418615DE5000F5B6C /* playButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playButton.png; sourceTree = "<group>"; };
+		7A3E002618618A51000F5B6C /* Music.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Music.h; sourceTree = "<group>"; };
+		7A3E002718618A51000F5B6C /* Music.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Music.m; sourceTree = "<group>"; };
 		7A3EFFFA185B0C57000F5B6C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		7A3EFFFD185B2C67000F5B6C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -124,8 +152,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21ABB1FC1857736100BBCA8B /* CoreVideo.framework in Frameworks */,
+				7A3E001B18613B95000F5B6C /* GracenoteMusicID.framework in Frameworks */,
+				7A3E001918613B40000F5B6C /* libsqlite3.dylib in Frameworks */,
+				7A3E001718613B37000F5B6C /* libstdc++.dylib in Frameworks */,
+				7A3E001518613B2C000F5B6C /* libxml2.dylib in Frameworks */,
+				7A3E001318613B23000F5B6C /* CoreMedia.framework in Frameworks */,
+				7A3E001118613B19000F5B6C /* QuartzCore.framework in Frameworks */,
 				21ABB1FA18576CB600BBCA8B /* MediaPlayer.framework in Frameworks */,
+				7A3E000F18613B04000F5B6C /* AudioToolbox.framework in Frameworks */,
+				7A3E000D18613AF2000F5B6C /* AdSupport.framework in Frameworks */,
+				21ABB1FC1857736100BBCA8B /* CoreVideo.framework in Frameworks */,
 				21ABB1F818576C9300BBCA8B /* AVFoundation.framework in Frameworks */,
 				21371F8B1850956700BB2A4F /* CoreGraphics.framework in Frameworks */,
 				21371F8D1850956700BB2A4F /* UIKit.framework in Frameworks */,
@@ -149,6 +185,9 @@
 		2104C6E01859C9D2008ED8BE /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				7A3E002418615DE5000F5B6C /* playButton.png */,
+				7A3E00221861444D000F5B6C /* circle.png */,
+				7A3E002018613DFB000F5B6C /* border.png */,
 				215C3868185DEFEF007D3452 /* LoadPic.png */,
 				21ABB20118586DCA00BBCA8B /* Example.jpg */,
 				21ABB1FF18586D3300BBCA8B /* PictureMask.png */,
@@ -181,6 +220,14 @@
 		21371F871850956700BB2A4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7A3E001A18613B95000F5B6C /* GracenoteMusicID.framework */,
+				7A3E001818613B40000F5B6C /* libsqlite3.dylib */,
+				7A3E001618613B37000F5B6C /* libstdc++.dylib */,
+				7A3E001418613B2C000F5B6C /* libxml2.dylib */,
+				7A3E001218613B23000F5B6C /* CoreMedia.framework */,
+				7A3E001018613B19000F5B6C /* QuartzCore.framework */,
+				7A3E000E18613B04000F5B6C /* AudioToolbox.framework */,
+				7A3E000C18613AF2000F5B6C /* AdSupport.framework */,
 				21ABB1FB1857736100BBCA8B /* CoreVideo.framework */,
 				21ABB1F918576CB600BBCA8B /* MediaPlayer.framework */,
 				21ABB1F718576C9300BBCA8B /* AVFoundation.framework */,
@@ -195,6 +242,7 @@
 		21371F8E1850956700BB2A4F /* Muse */ = {
 			isa = PBXGroup;
 			children = (
+				7A3E001C18613C43000F5B6C /* SoundRecognize */,
 				215C3864185DA916007D3452 /* XiamiConnection */,
 				215C3860185DA8F0007D3452 /* Model */,
 				7A3EFFF9185B0C3C000F5B6C /* Library */,
@@ -250,6 +298,8 @@
 				215C3852185ABC09007D3452 /* ServerConnection.m */,
 				7A3E0009185B5F49000F5B6C /* User.h */,
 				7A3E000A185B5F49000F5B6C /* User.m */,
+				7A3E002618618A51000F5B6C /* Music.h */,
+				7A3E002718618A51000F5B6C /* Music.m */,
 			);
 			name = ServerConnection;
 			sourceTree = "<group>";
@@ -300,6 +350,15 @@
 				21ABB203185873BF00BBCA8B /* icon */,
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		7A3E001C18613C43000F5B6C /* SoundRecognize */ = {
+			isa = PBXGroup;
+			children = (
+				7A3E001D18613C58000F5B6C /* FPResponse.h */,
+				7A3E001E18613C58000F5B6C /* FPResponse.m */,
+			);
+			name = SoundRecognize;
 			sourceTree = "<group>";
 		};
 		7A3EFFF9185B0C3C000F5B6C /* Library */ = {
@@ -389,11 +448,13 @@
 			files = (
 				2104C6DE18597D4D008ED8BE /* 80.png in Resources */,
 				21371FA11850956700BB2A4F /* Images.xcassets in Resources */,
+				7A3E002518615DE5000F5B6C /* playButton.png in Resources */,
 				21ABB209185873CD00BBCA8B /* settings_icon.png in Resources */,
 				215C386B185DFC0E007D3452 /* pause_icon_v2.png in Resources */,
 				21371F931850956700BB2A4F /* InfoPlist.strings in Resources */,
 				21ABB207185873CD00BBCA8B /* hate_icon.png in Resources */,
 				21ABB20018586D3300BBCA8B /* PictureMask.png in Resources */,
+				7A3E002118613DFB000F5B6C /* border.png in Resources */,
 				21D8B0D9185718950013559A /* MenuButton.png in Resources */,
 				21ABB208185873CD00BBCA8B /* love_icon.png in Resources */,
 				215C3869185DEFEF007D3452 /* LoadPic.png in Resources */,
@@ -401,6 +462,7 @@
 				2104C6DD18597D4D008ED8BE /* 58.png in Resources */,
 				21ABB20B185875D500BBCA8B /* next_icon.png in Resources */,
 				215C386D185DFE0D007D3452 /* pause_icon_v3.png in Resources */,
+				7A3E00231861444D000F5B6C /* circle.png in Resources */,
 				21ABB20D18587E5C00BBCA8B /* last_icon.png in Resources */,
 				214D6D071860A7DA00BDCF0B /* love_v2.png in Resources */,
 				21ABB20218586DCA00BBCA8B /* Example.jpg in Resources */,
@@ -426,9 +488,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				215C3867185DA927007D3452 /* XiamiConnection.m in Sources */,
+				7A3E002818618A51000F5B6C /* Music.m in Sources */,
 				7A3E000B185B5F49000F5B6C /* User.m in Sources */,
 				7A3E0005185B3EAA000F5B6C /* SignInViewController.m in Sources */,
 				215C3853185ABC09007D3452 /* ServerConnection.m in Sources */,
+				7A3E001F18613C58000F5B6C /* FPResponse.m in Sources */,
 				21371F9F1850956700BB2A4F /* PlayerViewController.m in Sources */,
 				7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */,
 				21660584185F3A3500560812 /* Player.m in Sources */,
@@ -561,6 +625,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/yan_runchen/Downloads/GN_Music_SDK_iOS_3_3_0_14,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Muse/Muse-Prefix.pch";
 				INFOPLIST_FILE = "Muse/Muse-Info.plist";
@@ -573,6 +641,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/yan_runchen/Downloads/GN_Music_SDK_iOS_3_3_0_14,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Muse/Muse-Prefix.pch";
 				INFOPLIST_FILE = "Muse/Muse-Info.plist";
