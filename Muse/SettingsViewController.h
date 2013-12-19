@@ -6,7 +6,6 @@
 //  Copyright (c) 2013年 zhu peijun. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 
 @interface SettingsViewController : UITableViewController
 

@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 zhu peijun. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "SettingsViewController.h"
 #import "SWRevealViewController.h"
 #import "User.h"
@@ -14,6 +15,8 @@
 #import "FPResponse.h"
 #import <GracenoteMusicID/GNConfig.h>
 #import <GracenoteMusicID/GNOperations.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface SettingsViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
@@ -174,23 +177,6 @@
     
     _menuItems = @[@"user",@"recognize"];
     _animating = NO;
-    
-    NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
-    NSArray *fontNames;
-    NSInteger indFamily, indFont;
-    for (indFamily=0; indFamily<[familyNames count]; ++indFamily)
-    {
-        NSLog(@"Family name: %@", [familyNames objectAtIndex:indFamily]);
-        fontNames = [[NSArray alloc] initWithArray:
-                     [UIFont fontNamesForFamilyName:
-                      [familyNames objectAtIndex:indFamily]]];
-        for (indFont=0; indFont<[fontNames count]; ++indFont)
-        {
-            NSLog(@"    Font name: %@", [fontNames objectAtIndex:indFont]);
-        }
-        //[fontNames release];
-    }
-    //[familyNames release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -283,8 +269,36 @@
     //where indexPath.row is the selected cell
     if (indexPath.row == 1) {
         [self.view.window addSubview:_containerView];
+        
+        NSError *error = nil;
+        AVAudioSession * audioSession = [AVAudioSession sharedInstance];
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
+        [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+        
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
+        [audioSession setActive:YES error: &error];
+
         //[Player stopMoviePlayer];
     }
+}
+
+- (void)sessionDidInterrupt:(NSNotification *)notification
+{
+    switch ([notification.userInfo[AVAudioSessionInterruptionTypeKey] intValue]) {
+        case AVAudioSessionInterruptionTypeBegan:
+            NSLog(@"Interruption began");
+            break;
+        case AVAudioSessionInterruptionTypeEnded:
+        default:
+            NSLog(@"Interruption ended");
+            break;
+    }
+}
+
+- (void)sessionRouteDidChange:(NSNotification *)notification
+{
+    NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 -(IBAction)recogBtnClicked:(id)sender
@@ -304,6 +318,7 @@
     NSLog(@"play");
     [self musicInfoHide];
     [_containerView removeFromSuperview];
+    [[AVAudioSession sharedInstance] setActive:NO error: nil];
     //[Player playMoviePlayer];
 
 }
@@ -312,7 +327,8 @@
     UIView *containerView = (UIImageView *)gr.view;
     [self musicInfoHide];
     [containerView removeFromSuperview];
-    [Player playMoviePlayer];
+    //[Player playMoviePlayer];
+    [[AVAudioSession sharedInstance] setActive:NO error: nil];
 }
 
 /*
