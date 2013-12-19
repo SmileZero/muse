@@ -10,9 +10,25 @@
 #import "SWRevealViewController.h"
 #import "User.h"
 #import "ServerConnection.h"
+#import "Player.h"
+#import "FPResponse.h"
+#import <GracenoteMusicID/GNConfig.h>
+#import <GracenoteMusicID/GNOperations.h>
 
 @interface SettingsViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
+@property (retain, nonatomic) GNConfig *config;
+@property (nonatomic, strong) UIView *containerView;
+@property (nonatomic, strong) UIView *recogContainer;
+@property (nonatomic, strong) UIView *recogView;
+@property (nonatomic, strong) UIImageView *border;
+@property (nonatomic, strong) UIButton *recogBtn;
+@property (nonatomic, strong) UILabel *musicName;
+@property (nonatomic, strong) UILabel *artistName;
+@property (nonatomic, strong) UIImageView *cover;
+@property (nonatomic, strong) UIButton *playBtn;
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
+@property BOOL animating;
 @end
 
 @implementation SettingsViewController
@@ -24,6 +40,50 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void) spinWithOptions: (UIViewAnimationOptions) options {
+    // this spin completes 360 degrees every 2 seconds
+    [UIView animateWithDuration: 0.3f
+          delay: 0.0f
+        options: options
+     animations: ^{
+         _border.transform = CGAffineTransformRotate(_border.transform, -M_PI / 2);
+     }
+     completion: ^(BOOL finished) {
+         if (finished) {
+             if (_animating) {
+                 // if flag still set, keep spinning with constant speed
+                 [self spinWithOptions: UIViewAnimationOptionCurveLinear];
+             } else if (options != UIViewAnimationOptionCurveEaseOut) {
+                 // one last spin, with deceleration
+                 [self spinWithOptions: UIViewAnimationOptionCurveEaseOut];
+             }
+         }
+     }];
+}
+
+- (void) startSpin {
+    if (!_animating) {
+        _animating = YES;
+        [self spinWithOptions: UIViewAnimationOptionCurveEaseIn];
+    }
+}
+
+- (void) stopSpin {
+    // set the flag to stop spinning after one last 90 degree increment
+    _animating = NO;
+}
+
+- (void)musicInfoHide
+{
+    _recogBtn.hidden = false;
+    _border.hidden = false;
+    _musicName.hidden = true;
+    _artistName.hidden = true;
+    _cover.hidden = true;
+    _playBtn.hidden = true;
+    [_recogBtn setTitle:@"TOUCH TO BEGIN" forState:UIControlStateNormal];
 }
 
 - (void)viewDidLoad
@@ -38,9 +98,99 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
     self.tableView.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
     self.tableView.separatorColor = [UIColor colorWithWhite:0.15f alpha:0.2f];
+    self.config = [GNConfig init:@"4388096-F18341100713290DF7B092A14D9627E6"];
     
-    _menuItems = @[@"user"];
     
+    _containerView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+    CGRect recogContainerRect = CGRectMake(10.0, 150.0, 300.0, 300.0);
+    _recogContainer = [[UIView alloc] initWithFrame:recogContainerRect];
+    _containerView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6f];
+    
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"border.png"] drawInRect:_recogContainer.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    _recogContainer.backgroundColor = [UIColor colorWithPatternImage:image];
+    [_containerView addSubview:_recogContainer];
+    
+    CGRect recogRect = CGRectMake(22.0, 28.0, 252.0, 250.0);
+    _recogView = [[UIView alloc] initWithFrame:recogRect];
+    _recogView.backgroundColor = [UIColor colorWithWhite:0.18f alpha:1.0f];
+    _recogView.layer.cornerRadius = 5;
+    [_recogContainer addSubview:_recogView];
+    
+    _border = [[UIImageView alloc] initWithFrame:CGRectMake(-10,-10,270,270)];
+    _border.image = [UIImage imageNamed:@"circle.png"];
+    [_border setContentMode:UIViewContentModeScaleAspectFit];
+    [_recogView addSubview: _border];
+    
+    _recogBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _recogBtn.frame = CGRectMake(20, 20, 213, 213
+                                ); // position in the parent view and set the size of the button
+    //_recogBtn.backgroundColor= [UIColor colorWithWhite:1.0f alpha:0.5f];
+    _recogBtn.layer.cornerRadius = 107;//half of the width
+    [_recogBtn setTitleColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
+    [_recogBtn setTitle:@"TOUCH TO BEGIN" forState:UIControlStateNormal];
+    [_recogBtn.titleLabel setFont:[UIFont fontWithName:@"Copperplate" size:20]];
+    // add targets and actions
+    [_recogBtn addTarget:self action:@selector(recogBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    // add to a view
+    [_recogView addSubview:_recogBtn];
+    
+    _musicName = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 30)];
+    _musicName.text = @"Music Title";
+    [_musicName setTextColor:[UIColor colorWithWhite:0.5f alpha:1]];
+    _musicName.font = [UIFont fontWithName:@"Copperplate" size:20];
+    [_recogView addSubview:_musicName];
+    
+    _artistName = [[UILabel alloc] initWithFrame:CGRectMake(23, 25, 200, 30)];
+    _artistName.text = @"Artist Name";
+    [_artistName setTextColor:[UIColor colorWithWhite:0.5f alpha:1]];
+    _artistName.font = [UIFont fontWithName:@"Copperplate" size:16];
+    [_recogView addSubview:_artistName];
+    
+    _cover = [[UIImageView alloc] initWithFrame:CGRectMake(88,85,150,150)];
+    _cover.image = [UIImage imageNamed:@"Example.jpg"];
+    [_cover setContentMode:UIViewContentModeScaleAspectFit];
+    [_recogView addSubview: _cover];
+    
+    _playBtn = [[UIButton alloc] initWithFrame:CGRectMake(88,85,150,150)];
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"playButton.png"] drawInRect:_playBtn.bounds];
+    UIImage *imagePlayBtn = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    _playBtn.backgroundColor = [UIColor colorWithPatternImage:imagePlayBtn];
+    [_recogView addSubview: _playBtn];
+    
+    [_playBtn addTarget:self action:@selector(playBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+
+    
+    
+    _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(containerViewTapped:)];
+    [_containerView addGestureRecognizer:_tap];
+    
+    [self musicInfoHide];
+    
+    _menuItems = @[@"user",@"recognize"];
+    _animating = NO;
+    
+    NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
+    NSArray *fontNames;
+    NSInteger indFamily, indFont;
+    for (indFamily=0; indFamily<[familyNames count]; ++indFamily)
+    {
+        NSLog(@"Family name: %@", [familyNames objectAtIndex:indFamily]);
+        fontNames = [[NSArray alloc] initWithArray:
+                     [UIFont fontNamesForFamilyName:
+                      [familyNames objectAtIndex:indFamily]]];
+        for (indFont=0; indFont<[fontNames count]; ++indFont)
+        {
+            NSLog(@"    Font name: %@", [fontNames objectAtIndex:indFont]);
+        }
+        //[fontNames release];
+    }
+    //[familyNames release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,6 +205,14 @@
 {
     // Return the number of sections.
     return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        return 103;
+    }
+    return 52;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -90,6 +248,8 @@
             //cell.userInteractionEnabled = NO;
         }
     }
+    else if (indexPath.row == 1){
+    }
     
     return cell;
 }
@@ -119,6 +279,42 @@
     }
     
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //where indexPath.row is the selected cell
+    if (indexPath.row == 1) {
+        [self.view.window addSubview:_containerView];
+        //[Player stopMoviePlayer];
+    }
+}
+
+-(IBAction)recogBtnClicked:(id)sender
+{
+    NSLog(@"recog");
+    _tap.enabled = NO;
+    UIButton *button = (UIButton *)sender;
+    [button setTitle:@"RECOGNIZING..." forState:UIControlStateNormal];
+    [self startSpin];
+    button.userInteractionEnabled = NO;
+    id resp = [[FPResponse alloc] initWithNameLabel:_musicName artistLabel:_artistName cover:_cover playBtn:_playBtn recogBtn:_recogBtn border:_border tap:_tap animating:&_animating];
+    [GNOperations recognizeMIDStreamFromMic:resp config:self.config];
+}
+
+-(IBAction)playBtnClicked:(id)sender
+{
+    NSLog(@"play");
+    [self musicInfoHide];
+    [_containerView removeFromSuperview];
+    //[Player playMoviePlayer];
+
+}
+
+- (void)containerViewTapped:(UITapGestureRecognizer *)gr {
+    UIView *containerView = (UIImageView *)gr.view;
+    [self musicInfoHide];
+    [containerView removeFromSuperview];
+    [Player playMoviePlayer];
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

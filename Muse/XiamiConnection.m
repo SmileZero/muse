@@ -18,6 +18,7 @@
 - (XiamiObject *)getMusicWithIdentifier:(NSString *)identifier
 {
     
+    
     NSString * url = [NSString stringWithFormat: @"%@%@.json", SERVER_URL, identifier];
     
     NSData * data = [ServerConnection getRequestToURL:url];
@@ -52,6 +53,22 @@
 }
 
 
+- (XiamiObject *)getRecemmondMusic
+{
+    NSString * url = [NSString stringWithFormat: @"%@/song_graphs.json", SERVER_URL];
+    NSData * rcdData = [ServerConnection getRequestToURL:url];
+    NSError * error = nil;
+    NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:rcdData options:0 error: &error];
+    
+    if ([dic[@"status"] isEqualToString:@"ok"]) {
+        return [self getMusicWithIdentifier:dic[@"music_id"]];
+    } else {
+        srand((int)rcdData);
+        NSString * randomId = [NSString stringWithFormat:@"%d", rand() % 5000];
+        return [self getMusicWithIdentifier:randomId];
+    }
+}
+
 - (UIImage *) getCoverWithURL:(NSString *) url
 {
     NSData * data = [ServerConnection getRequestToURL:url];
@@ -78,6 +95,21 @@
 - (BOOL) disLoveSongWithIdentifier: (NSString *)identifier
 {
     NSString * url = [NSString stringWithFormat: @"%@/%@/unmark", SERVER_URL, identifier];
+    NSData * data = [ServerConnection getRequestToURL:url];
+    
+    NSError * error = NULL;
+    NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    
+    if ([dic[@"status"] isEqualToString:@"ok"] == YES) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL) hateSongWithIdentifier: (NSString *)identifier
+{
+    NSString * url = [NSString stringWithFormat: @"%@/%@/dislike", SERVER_URL, identifier];
     NSData * data = [ServerConnection getRequestToURL:url];
     
     NSError * error = NULL;

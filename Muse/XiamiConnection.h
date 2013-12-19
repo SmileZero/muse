@@ -13,6 +13,8 @@
 
 @interface XiamiConnection : NSObject
 - (XiamiObject *) getMusicWithIdentifier: (NSString *) identifier;
+- (XiamiObject *)getRecemmondMusic;
 - (BOOL) loveSongWithIdentifier: (NSString *)identifier;
 - (BOOL) disLoveSongWithIdentifier: (NSString *)identifier;
+- (BOOL) hateSongWithIdentifier: (NSString *)identifier;
 @end
