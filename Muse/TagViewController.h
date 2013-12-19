@@ -11,6 +11,6 @@
 @interface TagViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 
-@property (retain, nonatomic) NSArray * tagArray;
+@property (weak, nonatomic) NSArray * tagArray;
 
 @end

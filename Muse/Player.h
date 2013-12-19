@@ -25,6 +25,10 @@
 + (void) stopMoviePlayer;
 + (void) playMoviePlayer;
 
++ (void) setPlayType: (int) type;
++ (int) getPlayType;
++ (void) setPlayList: (NSArray *) list;
++ (NSArray *) getPlayList;
 
 
 @end

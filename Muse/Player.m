@@ -15,6 +15,15 @@ static MPMoviePlayerController * moviePlayer = NULL;
 static XiamiObject * currentMusic = NULL;
 static int currentPlayStatus = 0;
 
+static NSArray * playList = NULL;
+
+// play type
+// 0 is recommended music
+// 1 is play list's music
+
+static int playType = 0;
+
+
 + (MPMoviePlayerController *) getMoviePlayer
 {
     if (moviePlayer == NULL) {
@@ -47,6 +56,25 @@ static int currentPlayStatus = 0;
     currentPlayStatus = playStatus;
 }
 
++ (void) setPlayType: (int) type
+{
+    playType = type;
+}
+
++ (void) setPlayList: (NSArray *) list
+{
+    playList = list;
+}
+
++ (int) getPlayType
+{
+    return playType;
+}
+
++ (NSArray *) getPlayList
+{
+    return playList;
+}
 
 + (void) stopMoviePlayer
 {

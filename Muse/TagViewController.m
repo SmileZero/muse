@@ -7,6 +7,9 @@
 //
 
 #import "TagViewController.h"
+#import "Player.h"
+#import "SWRevealViewController.h"
+#import "PlayerViewController.h"
 
 @interface TagViewController ()
 
@@ -46,7 +49,7 @@
     NSString * filePath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
     _tagArray = [NSArray arrayWithContentsOfFile:filePath];
     
-    return [_tagArray count];
+    return [_tagArray count] + 1;
 }
 
 
@@ -62,19 +65,46 @@
     UILabel * tagNameLabel = (UILabel *)[cell viewWithTag:101];
     UILabel * countMusicOfThisTagLabel = (UILabel *)[cell viewWithTag:102];
     
-    NSDictionary * dic = _tagArray[indexPath.row];
-    NSArray * musicIds = dic[@"MusicIds"];
     
-    tagNameLabel.text = dic[@"Name"];
-    countMusicOfThisTagLabel.text = [NSString stringWithFormat:@"%d", [musicIds count]];
+    
+    
+    if (indexPath.row == 0) {
+        tagNameLabel.text = @"Guess";
+        countMusicOfThisTagLabel.text = @"";
+    } else {
+        
+        NSDictionary * dic = _tagArray[indexPath.row - 1];
+        NSArray * musicIds = dic[@"MusicIds"];
+        
+        tagNameLabel.text = dic[@"Name"];
+        countMusicOfThisTagLabel.text = [NSString stringWithFormat:@"%d", [musicIds count]];
+    }
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == 0) {
+        [Player setPlayType:0];
+    } else {
+        [Player setPlayType:1];
+        
+        NSString * filePath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
+        _tagArray = [NSArray arrayWithContentsOfFile:filePath];
+        [Player setPlayList:_tagArray[indexPath.row - 1][@"MusicIds"]];
+    }
     
+    //[self performSegueWithIdentifier:@"gotoPlayViewFromTagView" sender:self];
+    [self.revealViewController setFrontViewPosition:FrontViewPositionLeft animated:YES];
+    
+    
+    PlayerViewController * palyViewController =  (PlayerViewController *)self.revealViewController.frontViewController;
+    
+    [palyViewController loadMusic];
 }
+
+
 
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="0cu-gn-nXq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="zLs-xX-NuE">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
@@ -15,13 +15,14 @@
                     </view>
                     <connections>
                         <segue destination="Itg-6f-xE6" kind="custom" identifier="sw_right" customClass="SWRevealViewControllerSegue" id="ejY-MQ-EcK"/>
-                        <segue destination="EhJ-Kf-QiO" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegue" id="U8K-Ap-for"/>
+                        <segue destination="EhJ-Kf-QiO" kind="custom" identifier="sw_front_1" customClass="SWRevealViewControllerSegue" id="U8K-Ap-for"/>
                         <segue destination="6IC-Sr-5C6" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegue" id="oRB-SQ-IUt"/>
+                        <segue destination="vXZ-lx-hvc" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegue" id="YHG-X7-9PR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LBI-8Q-H0N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-346" y="82"/>
+            <point key="canvasLocation" x="-346" y="-106"/>
         </scene>
         <!--Tag View Controller-->
         <scene sceneID="bOR-14-H0R">
@@ -95,7 +96,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xw1-Kg-hN0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137" y="-832"/>
+            <point key="canvasLocation" x="125" y="-940"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="Tc9-ya-n8A">
@@ -106,7 +107,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="user" rowHeight="103" id="ppX-LW-NXK">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="user" rowHeight="103" id="ppX-LW-NXK">
                                 <rect key="frame" x="0.0" y="22" width="320" height="103"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ppX-LW-NXK" id="Xcb-Pg-fTi">
@@ -127,9 +128,6 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <segue destination="zLs-xX-NuE" kind="custom" identifier="showSignIn" customClass="SWRevealViewControllerSegue" id="NqX-vs-MnB"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="recognize" rowHeight="53" id="lKY-aS-Y9m">
                                 <rect key="frame" x="0.0" y="125" width="320" height="53"/>
@@ -188,7 +186,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="m18-PD-REz">
-                                <rect key="frame" x="66" y="353" width="88" height="34"/>
+                                <rect key="frame" x="66" y="353" width="196" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.35337611610000003" green="0.35337611610000003" blue="0.35337611610000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -198,19 +196,6 @@
                                 </state>
                                 <connections>
                                     <action selector="signIn:" destination="zLs-xX-NuE" eventType="touchUpInside" id="Wyz-VP-0bx"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TbY-af-JPE">
-                                <rect key="frame" x="171" y="353" width="91" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.35337611610000003" green="0.35337611610000003" blue="0.35337611610000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="custom" identifier="backToPlayer" customClass="SWRevealViewControllerSegue" id="lKl-yw-CIH"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not a member?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bM6-lb-gLw">
@@ -302,7 +287,6 @@
                         <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
-                        <outlet property="cancelBtn" destination="TbY-af-JPE" id="2qg-rD-kqP"/>
                         <outlet property="emailSignUp" destination="JSc-B0-lJ5" id="wwt-EP-28c"/>
                         <outlet property="emailView" destination="BuR-mk-ALQ" id="aui-0j-mM5"/>
                         <outlet property="nameSignUp" destination="9EE-Ty-fCt" id="fYl-eP-ufZ"/>
@@ -311,11 +295,12 @@
                         <outlet property="pwdSignUp" destination="aSv-DR-UTd" id="lHI-Qt-EVB"/>
                         <outlet property="signInBtn" destination="m18-PD-REz" id="kFY-qj-bqH"/>
                         <outlet property="signUpView" destination="igV-tM-Xdb" id="zNg-1F-j7p"/>
+                        <segue destination="0cu-gn-nXq" kind="modal" identifier="backToPlayer" id="M2d-d5-mYs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="seL-Lj-ale" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="551" y="-150"/>
+            <point key="canvasLocation" x="-783" y="-106"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ylq-ul-2x8">
@@ -510,6 +495,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="mru-Ae-B6j"/>
+        <segue reference="YHG-X7-9PR"/>
     </inferredMetricsTieBreakers>
 </document>

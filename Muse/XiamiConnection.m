@@ -10,7 +10,8 @@
 #import "XiamiConnection.h"
 
 
-#define SERVER_URL @"http://172.30.4.19/musics/"
+//#define SERVER_URL @"http://172.30.4.19/musics/"
+#define SERVER_URL_MUSIC @"http://localhost:3000/musics/"
 
 @implementation XiamiConnection
 
@@ -19,7 +20,7 @@
 {
     
     
-    NSString * url = [NSString stringWithFormat: @"%@%@.json", SERVER_URL, identifier];
+    NSString * url = [NSString stringWithFormat: @"%@%@.json", SERVER_URL_MUSIC, identifier];
     
     NSData * data = [ServerConnection getRequestToURL:url];
     
@@ -56,7 +57,7 @@
 
 - (XiamiObject *)getRecemmondMusic
 {
-    NSString * url = [NSString stringWithFormat: @"%@/song_graphs.json", SERVER_URL];
+    NSString * url = [NSString stringWithFormat: @"%@/song_graphs.json", SERVER_URL_MUSIC];
     NSData * rcdData = [ServerConnection getRequestToURL:url];
     NSError * error = nil;
     NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:rcdData options:0 error: &error];
@@ -80,7 +81,7 @@
 
 - (BOOL) loveSongWithIdentifier: (NSString *)identifier
 {
-    NSString * url = [NSString stringWithFormat: @"%@/%@/like", SERVER_URL, identifier];
+    NSString * url = [NSString stringWithFormat: @"%@/%@/like", SERVER_URL_MUSIC, identifier];
     NSData * data = [ServerConnection getRequestToURL:url];
     
     NSError * error = NULL;
@@ -95,7 +96,7 @@
 
 - (BOOL) disLoveSongWithIdentifier: (NSString *)identifier
 {
-    NSString * url = [NSString stringWithFormat: @"%@/%@/unmark", SERVER_URL, identifier];
+    NSString * url = [NSString stringWithFormat: @"%@/%@/unmark", SERVER_URL_MUSIC, identifier];
     NSData * data = [ServerConnection getRequestToURL:url];
     
     NSError * error = NULL;
@@ -110,7 +111,7 @@
 
 - (BOOL) hateSongWithIdentifier: (NSString *)identifier
 {
-    NSString * url = [NSString stringWithFormat: @"%@/%@/dislike", SERVER_URL, identifier];
+    NSString * url = [NSString stringWithFormat: @"%@/%@/dislike", SERVER_URL_MUSIC, identifier];
     NSData * data = [ServerConnection getRequestToURL:url];
     
     NSError * error = NULL;

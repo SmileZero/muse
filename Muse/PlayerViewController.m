@@ -125,7 +125,23 @@
     XiamiConnection * conn = [[XiamiConnection alloc] init];
     srand((int)conn);
     
-    XiamiObject * music = [conn getRecemmondMusic];
+    
+    
+    XiamiObject * music = NULL;
+    
+    int playType = [Player getPlayType];
+    
+    if (playType == 0) {
+        music = [conn getRecemmondMusic];
+    } else {
+        NSArray * ar = [Player getPlayList];
+        
+        _playList = ar;
+        
+        int n = [_playList count];
+        srand((int) music);
+        music = [conn getMusicWithIdentifier:_playList[rand() % n]];
+    }
     
     _currentMusic = music;
     [Player setCurrentMusic:_currentMusic];
