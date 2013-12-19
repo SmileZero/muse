@@ -12,6 +12,7 @@
 #import "ServerConnection.h"
 #import "Player.h"
 #import "FPResponse.h"
+#import "PlayerViewController.h"
 #import <GracenoteMusicID/GNConfig.h>
 #import <GracenoteMusicID/GNOperations.h>
 #import <AVFoundation/AVFoundation.h>
@@ -257,6 +258,9 @@
         [audioSession setActive:YES error: &error];
         
         //[Player stopMoviePlayer];
+        PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
+        
+        [playViewController musicPause];
     }
 }
 
@@ -298,7 +302,6 @@
     [_containerView removeFromSuperview];
     [[AVAudioSession sharedInstance] setActive:NO error: nil];
     //[Player playMoviePlayer];
-    
 }
 
 - (void)containerViewTapped:(UITapGestureRecognizer *)gr {
@@ -307,6 +310,15 @@
     [containerView removeFromSuperview];
     //[Player playMoviePlayer];
     [[AVAudioSession sharedInstance] setActive:NO error: nil];
+    
+    
+    
+    //play
+    PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
+    
+    if (playViewController.currentPlayStatus == 1) {
+        [playViewController musicPlay];
+    }
 }
 
 /*

@@ -264,13 +264,13 @@
     
     if (self.currentPlayStatus == 0) {
         self.currentPlayStatus = 1;
-        [Player setCurrentPlayStatus:_currentPlayStatus];
         [self moviePlay];
     } else {
         self.currentPlayStatus = 0;
-        [Player setCurrentPlayStatus:_currentPlayStatus];
         [self moviePause];
     }
+    
+    [Player setCurrentPlayStatus:_currentPlayStatus];
     
     NSLog(@"statuse change to %d", _currentPlayStatus);
     
@@ -316,6 +316,9 @@
     }
 }
 
+
+
+
 - (void)moviePlay
 {
     if ([_moviePlayer playbackState] == 2) {
@@ -329,5 +332,24 @@
         [_moviePlayer pause];
     }
 }
+
+- (void)musicPlay
+{
+    if ([_moviePlayer playbackState] == 2) {
+        self.currentPlayStatus = 1;
+        [Player setCurrentPlayStatus:_currentPlayStatus];
+        [_moviePlayer play];
+    }
+}
+
+- (void)musicPause
+{
+    if ([_moviePlayer playbackState] == 1) {
+        self.currentPlayStatus = 0;
+        [Player setCurrentPlayStatus:_currentPlayStatus];
+        [_moviePlayer pause];
+    }
+}
+
 
 @end
