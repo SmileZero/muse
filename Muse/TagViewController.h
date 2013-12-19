@@ -10,4 +10,7 @@
 
 @interface TagViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
+
+@property (retain, nonatomic) NSArray * tagArray;
+
 @end

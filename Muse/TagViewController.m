@@ -23,10 +23,15 @@
     return self;
 }
 
+- (void) loadAllTagInfo
+{
+    NSLog(@"%d", [_tagArray count]);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [self loadAllTagInfo];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,13 +43,37 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return NULL;
+    NSString * filePath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
+    _tagArray = [NSArray arrayWithContentsOfFile:filePath];
+    
+    return [_tagArray count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NULL;
+    NSString * filePath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
+    _tagArray = [NSArray arrayWithContentsOfFile:filePath];
+    
+    
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier: @"TagTableCell" forIndexPath:indexPath];
+    
+    
+    UILabel * tagNameLabel = (UILabel *)[cell viewWithTag:101];
+    UILabel * countMusicOfThisTagLabel = (UILabel *)[cell viewWithTag:102];
+    
+    NSDictionary * dic = _tagArray[indexPath.row];
+    NSArray * musicIds = dic[@"MusicIds"];
+    
+    tagNameLabel.text = dic[@"Name"];
+    countMusicOfThisTagLabel.text = [NSString stringWithFormat:@"%d", [musicIds count]];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
 }
 
 

@@ -27,6 +27,7 @@
 		214D6D071860A7DA00BDCF0B /* love_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 214D6D061860A7DA00BDCF0B /* love_v2.png */; };
 		214D6D09186207FF00BDCF0B /* GracenoteMusicID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 214D6D08186207FF00BDCF0B /* GracenoteMusicID.framework */; };
 		214D6D0C1862BA7300BDCF0B /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 214D6D0B1862BA7300BDCF0B /* TagViewController.m */; };
+		214D6D0E1862FC0B00BDCF0B /* TagSource.plist in Resources */ = {isa = PBXBuildFile; fileRef = 214D6D0D1862FC0B00BDCF0B /* TagSource.plist */; };
 		215C3853185ABC09007D3452 /* ServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3852185ABC09007D3452 /* ServerConnection.m */; };
 		215C3863185DA908007D3452 /* XiamiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3862185DA908007D3452 /* XiamiObject.m */; };
 		215C3867185DA927007D3452 /* XiamiConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3866185DA927007D3452 /* XiamiConnection.m */; };
@@ -102,6 +103,7 @@
 		214D6D08186207FF00BDCF0B /* GracenoteMusicID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GracenoteMusicID.framework; path = Muse/GracenoteMusicID.framework; sourceTree = "<group>"; };
 		214D6D0A1862BA7300BDCF0B /* TagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewController.h; sourceTree = "<group>"; };
 		214D6D0B1862BA7300BDCF0B /* TagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagViewController.m; sourceTree = "<group>"; };
+		214D6D0D1862FC0B00BDCF0B /* TagSource.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TagSource.plist; sourceTree = "<group>"; };
 		215C3851185ABC09007D3452 /* ServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnection.h; sourceTree = "<group>"; };
 		215C3852185ABC09007D3452 /* ServerConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerConnection.m; sourceTree = "<group>"; };
 		215C3861185DA908007D3452 /* XiamiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiamiObject.h; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				21371F911850956700BB2A4F /* InfoPlist.strings */,
 				21371F941850956700BB2A4F /* main.m */,
 				21371F961850956700BB2A4F /* Muse-Prefix.pch */,
+				214D6D0D1862FC0B00BDCF0B /* TagSource.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				21ABB209185873CD00BBCA8B /* settings_icon.png in Resources */,
 				215C386B185DFC0E007D3452 /* pause_icon_v2.png in Resources */,
 				21371F931850956700BB2A4F /* InfoPlist.strings in Resources */,
+				214D6D0E1862FC0B00BDCF0B /* TagSource.plist in Resources */,
 				21ABB207185873CD00BBCA8B /* hate_icon.png in Resources */,
 				21ABB20018586D3300BBCA8B /* PictureMask.png in Resources */,
 				7A3E002118613DFB000F5B6C /* border.png in Resources */,
