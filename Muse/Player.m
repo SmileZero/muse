@@ -33,8 +33,7 @@ static int currentPlayStatus = 0;
 + (void) setCurrentMusic: (XiamiObject *) music
 {
     currentMusic = music;
-    NSLog(@"set: %@", currentMusic.title);
-    
+    //NSLog(@"set: %@", currentMusic.title);
 }
 
 

@@ -21,6 +21,7 @@
 @property (weak, nonatomic) NSTimer * timer;
 
 @property (weak, nonatomic) NSTimer * rotateTimer;
+
 @property int rotated;
 @property int currentPlayStatus;
 

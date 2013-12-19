@@ -125,7 +125,9 @@
     XiamiConnection * conn = [[XiamiConnection alloc] init];
     srand((int)conn);
     
-    _currentMusic = [conn getRecemmondMusic];
+    XiamiObject * music = [conn getRecemmondMusic];
+    
+    _currentMusic = music;
     [Player setCurrentMusic:_currentMusic];
     
     _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
@@ -133,6 +135,9 @@
     [self loadCurrentMusicInformation];
     
     [self.moviePlayer play];
+    
+    
+    NSLog(@"%@", music);
     
     _currentPlayStatus = 1;
     

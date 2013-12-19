@@ -26,6 +26,7 @@
 		21371FB41850956700BB2A4F /* MuseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21371FB31850956700BB2A4F /* MuseTests.m */; };
 		214D6D071860A7DA00BDCF0B /* love_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 214D6D061860A7DA00BDCF0B /* love_v2.png */; };
 		214D6D09186207FF00BDCF0B /* GracenoteMusicID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 214D6D08186207FF00BDCF0B /* GracenoteMusicID.framework */; };
+		214D6D0C1862BA7300BDCF0B /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 214D6D0B1862BA7300BDCF0B /* TagViewController.m */; };
 		215C3853185ABC09007D3452 /* ServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3852185ABC09007D3452 /* ServerConnection.m */; };
 		215C3863185DA908007D3452 /* XiamiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3862185DA908007D3452 /* XiamiObject.m */; };
 		215C3867185DA927007D3452 /* XiamiConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C3866185DA927007D3452 /* XiamiConnection.m */; };
@@ -99,6 +100,8 @@
 		21371FB31850956700BB2A4F /* MuseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MuseTests.m; sourceTree = "<group>"; };
 		214D6D061860A7DA00BDCF0B /* love_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = love_v2.png; path = Muse/love_v2.png; sourceTree = "<group>"; };
 		214D6D08186207FF00BDCF0B /* GracenoteMusicID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GracenoteMusicID.framework; path = Muse/GracenoteMusicID.framework; sourceTree = "<group>"; };
+		214D6D0A1862BA7300BDCF0B /* TagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewController.h; sourceTree = "<group>"; };
+		214D6D0B1862BA7300BDCF0B /* TagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagViewController.m; sourceTree = "<group>"; };
 		215C3851185ABC09007D3452 /* ServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnection.h; sourceTree = "<group>"; };
 		215C3852185ABC09007D3452 /* ServerConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerConnection.m; sourceTree = "<group>"; };
 		215C3861185DA908007D3452 /* XiamiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiamiObject.h; sourceTree = "<group>"; };
@@ -134,7 +137,6 @@
 		7A3E001418613B2C000F5B6C /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		7A3E001618613B37000F5B6C /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		7A3E001818613B40000F5B6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		7A3E001A18613B95000F5B6C /* GracenoteMusicID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GracenoteMusicID.framework; path = ../../../Downloads/GN_Music_SDK_iOS_3_3_0_14/GracenoteMusicID.framework; sourceTree = "<group>"; };
 		7A3E001D18613C58000F5B6C /* FPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPResponse.h; sourceTree = "<group>"; };
 		7A3E001E18613C58000F5B6C /* FPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPResponse.m; sourceTree = "<group>"; };
 		7A3E002018613DFB000F5B6C /* border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border.png; sourceTree = "<group>"; };
@@ -222,7 +224,6 @@
 			isa = PBXGroup;
 			children = (
 				214D6D08186207FF00BDCF0B /* GracenoteMusicID.framework */,
-				7A3E001A18613B95000F5B6C /* GracenoteMusicID.framework */,
 				7A3E001818613B40000F5B6C /* libsqlite3.dylib */,
 				7A3E001618613B37000F5B6C /* libstdc++.dylib */,
 				7A3E001418613B2C000F5B6C /* libxml2.dylib */,
@@ -244,6 +245,8 @@
 		21371F8E1850956700BB2A4F /* Muse */ = {
 			isa = PBXGroup;
 			children = (
+				214D6D0A1862BA7300BDCF0B /* TagViewController.h */,
+				214D6D0B1862BA7300BDCF0B /* TagViewController.m */,
 				7A3E001C18613C43000F5B6C /* SoundRecognize */,
 				215C3864185DA916007D3452 /* XiamiConnection */,
 				215C3860185DA8F0007D3452 /* Model */,
@@ -502,6 +505,7 @@
 				21371F991850956700BB2A4F /* AppDelegate.m in Sources */,
 				21371F951850956700BB2A4F /* main.m in Sources */,
 				215C3863185DA908007D3452 /* XiamiObject.m in Sources */,
+				214D6D0C1862BA7300BDCF0B /* TagViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

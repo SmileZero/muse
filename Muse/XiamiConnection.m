@@ -10,7 +10,7 @@
 #import "XiamiConnection.h"
 
 
-#define SERVER_URL @"http://localhost:3000/musics/"
+#define SERVER_URL @"http://172.30.4.19/musics/"
 
 @implementation XiamiConnection
 
@@ -39,7 +39,7 @@
     
     NSString * coverURL = [NSString stringWithFormat:@"%@%@%@", coverHeader, @"_2", coverType];
     
-    NSLog(@"%@", coverURL);
+    //NSLog(@"%@", coverURL);
     
     musicInfo.identifier = [dic objectForKey:@"id"];
     musicInfo.title = [dic objectForKey:@"name"];
@@ -48,6 +48,7 @@
     musicInfo.artist = [dic objectForKey:@"artist_name"];
     musicInfo.mark = [NSString stringWithFormat: @"%@", [dic objectForKey:@"mark"]];
     
+    //NSLog(@"%@", musicInfo.musicURL);
     
     return musicInfo;
 }
