@@ -14,6 +14,7 @@
 #import "FPResponse.h"
 #import <GracenoteMusicID/GNConfig.h>
 #import <GracenoteMusicID/GNOperations.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface SettingsViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
@@ -262,12 +263,41 @@
     }
     
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //where indexPath.row is the selected cell
     if (indexPath.row == 1) {
         [self.view.window addSubview:_containerView];
+        
+        NSError *error = nil;
+        AVAudioSession * audioSession = [AVAudioSession sharedInstance];
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
+        [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+        
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
+        [audioSession setActive:YES error: &error];
+        
         //[Player stopMoviePlayer];
     }
+}
+
+- (void)sessionDidInterrupt:(NSNotification *)notification
+{
+    switch ([notification.userInfo[AVAudioSessionInterruptionTypeKey] intValue]) {
+        case AVAudioSessionInterruptionTypeBegan:
+            NSLog(@"Interruption began");
+            break;
+        case AVAudioSessionInterruptionTypeEnded:
+        default:
+            NSLog(@"Interruption ended");
+            break;
+    }
+}
+
+- (void)sessionRouteDidChange:(NSNotification *)notification
+{
+    NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 -(IBAction)recogBtnClicked:(id)sender
@@ -282,20 +312,23 @@
     [GNOperations recognizeMIDStreamFromMic:resp config:self.config];
 }
 
+
 -(IBAction)playBtnClicked:(id)sender
 {
     NSLog(@"play");
     [self musicInfoHide];
     [_containerView removeFromSuperview];
+    [[AVAudioSession sharedInstance] setActive:NO error: nil];
     //[Player playMoviePlayer];
-
+    
 }
 
 - (void)containerViewTapped:(UITapGestureRecognizer *)gr {
     UIView *containerView = (UIImageView *)gr.view;
     [self musicInfoHide];
     [containerView removeFromSuperview];
-    [Player playMoviePlayer];
+    //[Player playMoviePlayer];
+    [[AVAudioSession sharedInstance] setActive:NO error: nil];
 }
 
 /*
