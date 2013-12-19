@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define SERVER_URL @"http://localhost:3000"
+#define SERVER_URL @"http://172.30.4.19"
 #define CSRF_TOKEN @"ErP/0VA0bLqQBvKhuTaw4CxYrlxaNya65enbK2hbCqg="
 
 @interface ServerConnection : NSObject

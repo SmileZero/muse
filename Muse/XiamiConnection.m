@@ -10,7 +10,7 @@
 #import "XiamiConnection.h"
 
 
-#define SERVER_URL @"http://localhost:3000/musics/"
+#define SERVER_URL @"http://172.30.4.19/musics/"
 
 @implementation XiamiConnection
 
