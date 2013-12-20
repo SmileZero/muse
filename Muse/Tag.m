@@ -86,7 +86,12 @@
         
         NSString* errorStr = nil;
         
-        NSString * filePath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
+        NSString *error;
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *filePath = [rootPath stringByAppendingPathComponent:@"TagSource.plist"];
+
+        
+        //NSString * filePath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
         
         NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistArray
                                                                        format:NSPropertyListXMLFormat_v1_0
