@@ -10,6 +10,7 @@
 #import "Player.h"
 #import "SWRevealViewController.h"
 #import "PlayerViewController.h"
+#import "Tag.h"
 
 @interface TagViewController ()
 

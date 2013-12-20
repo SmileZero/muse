@@ -79,7 +79,7 @@
                 [tagPlist removeObjectForKey:@"music_list"];
                 [plistArray addObject:tagPlist];
                 
-                NSLog(@"%@",tag);
+                //NSLog(@"%@",tag);
             }
             else return NO;
         }

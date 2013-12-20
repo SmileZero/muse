@@ -30,6 +30,8 @@
 @property (nonatomic, strong) UIImageView *cover;
 @property (nonatomic, strong) UIButton *playBtn;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
+- (IBAction)showRecogView:(id)sender;
+- (IBAction)signOut:(id)sender;
 @property BOOL animating;
 @end
 
@@ -174,7 +176,7 @@
     
     [self musicInfoHide];
     
-    _menuItems = @[@"user",@"recognize"];
+    _menuItems = @[@"user",@"recognize",@"signout"];
     _animating = NO;
 }
 
@@ -234,6 +236,7 @@
         }
     }
     else if (indexPath.row == 1){
+        
     }
     
     return cell;
@@ -245,23 +248,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //where indexPath.row is the selected cell
-    if (indexPath.row == 1) {
-        [self.view.window addSubview:_containerView];
-        
-        NSError *error = nil;
-        AVAudioSession * audioSession = [AVAudioSession sharedInstance];
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
-        [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-        
-        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
-        [audioSession setActive:YES error: &error];
-        
-        //[Player stopMoviePlayer];
-        PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
-        
-        [playViewController musicPause];
-    }
 }
 
 - (void)sessionDidInterrupt:(NSNotification *)notification
@@ -372,4 +358,32 @@
 
  */
 
+- (IBAction)showRecogView:(id)sender {
+    [self.view.window addSubview:_containerView];
+    
+    NSError *error = nil;
+    AVAudioSession * audioSession = [AVAudioSession sharedInstance];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
+    [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+    
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
+    [audioSession setActive:YES error: &error];
+    
+    //[Player stopMoviePlayer];
+    PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
+    
+    [playViewController musicPause];
+}
+
+- (IBAction)signOut:(id)sender {
+    if ([[User getUser] signout]) {
+        PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
+        [playViewController musicPause];
+        [self performSegueWithIdentifier:@"signOut" sender:self];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Sign out failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+}
 @end

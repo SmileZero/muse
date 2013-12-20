@@ -63,6 +63,8 @@
 		7A3E002518615DE5000F5B6C /* playButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A3E002418615DE5000F5B6C /* playButton.png */; };
 		7A3E002818618A51000F5B6C /* Music.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E002718618A51000F5B6C /* Music.m */; };
 		7A3E003718638966000F5B6C /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E003618638966000F5B6C /* Tag.m */; };
+		7A3E003A1863D22E000F5B6C /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E00391863D22E000F5B6C /* StartViewController.m */; };
+		7A3E003C1863D76A000F5B6C /* museStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A3E003B1863D76A000F5B6C /* museStart.png */; };
 		7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */; };
 		7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */; };
 /* End PBXBuildFile section */
@@ -149,6 +151,9 @@
 		7A3E002718618A51000F5B6C /* Music.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Music.m; sourceTree = "<group>"; };
 		7A3E003518638966000F5B6C /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
 		7A3E003618638966000F5B6C /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
+		7A3E00381863D22E000F5B6C /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
+		7A3E00391863D22E000F5B6C /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
+		7A3E003B1863D76A000F5B6C /* museStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = museStart.png; sourceTree = "<group>"; };
 		7A3EFFFA185B0C57000F5B6C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		7A3EFFFD185B2C67000F5B6C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -193,6 +198,7 @@
 		2104C6E01859C9D2008ED8BE /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				7A3E003B1863D76A000F5B6C /* museStart.png */,
 				7A3E002418615DE5000F5B6C /* playButton.png */,
 				7A3E00221861444D000F5B6C /* circle.png */,
 				7A3E002018613DFB000F5B6C /* border.png */,
@@ -268,6 +274,8 @@
 				7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */,
 				7A3E0003185B3EAA000F5B6C /* SignInViewController.h */,
 				7A3E0004185B3EAA000F5B6C /* SignInViewController.m */,
+				7A3E00381863D22E000F5B6C /* StartViewController.h */,
+				7A3E00391863D22E000F5B6C /* StartViewController.m */,
 			);
 			path = Muse;
 			sourceTree = "<group>";
@@ -459,6 +467,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A3E003C1863D76A000F5B6C /* museStart.png in Resources */,
 				2104C6DE18597D4D008ED8BE /* 80.png in Resources */,
 				21371FA11850956700BB2A4F /* Images.xcassets in Resources */,
 				7A3E002518615DE5000F5B6C /* playButton.png in Resources */,
@@ -514,6 +523,7 @@
 				7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */,
 				21371F991850956700BB2A4F /* AppDelegate.m in Sources */,
 				21371F951850956700BB2A4F /* main.m in Sources */,
+				7A3E003A1863D22E000F5B6C /* StartViewController.m in Sources */,
 				215C3863185DA908007D3452 /* XiamiObject.m in Sources */,
 				214D6D0C1862BA7300BDCF0B /* TagViewController.m in Sources */,
 			);

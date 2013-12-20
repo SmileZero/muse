@@ -201,7 +201,7 @@ static User *current_user;
     }
     else{
         
-        NSLog(userDictionary[@"msg"]);
+        NSLog(@"%@",userDictionary[@"msg"]);
         return userDictionary[@"msg"];
     }
 }
@@ -211,6 +211,16 @@ static User *current_user;
     NSLog(@"--- signOut %@ %@", current_user.email, current_user.name);
     [self getCSRFToken];
     [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signout.json", SERVER_URL] method:@"DELETE" JSONObject:@{@"authenticity_token": CSRFToken}];
+    
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];
+    
+    NSError *error;
+    if(![[NSFileManager defaultManager] removeItemAtPath:plistPath error:&error])
+    {
+        //TODO: Handle/Log error
+        NSLog(@"UserProfile.plist can't be deleted");
+    }
     return YES;
 }
 

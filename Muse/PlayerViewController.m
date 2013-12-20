@@ -198,15 +198,7 @@
 
 - (void)viewDidLoad
 {
-    
-//    if ([User getUser]) {
-//        if ([[User getUser] signinWithRememberToken]) {
-//        }
-//        else{
-//            NSLog(@"remember_token is incorrent");
-//        }
-//    }
-    [Tag getAll];
+    //[Tag getAll];
 
     [super viewDidLoad];
     [self initPlayer];

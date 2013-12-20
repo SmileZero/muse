@@ -10,6 +10,7 @@
 #import "SWRevealViewController.h"
 #import "User.h"
 #import "ServerConnection.h"
+#import "Tag.h"
 
 @interface SignInViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *signInBtn;
@@ -129,6 +130,7 @@
     
     User * user = [User userWithEmail:_emailView.text password:_passwordView.text];
     if ([user signin]) {
+        [Tag getAll];
         UIView *tableView = self.revealViewController.rightViewController.view.subviews[0];
         UIImageView *imageView = (UIImageView *) [tableView viewWithTag:1];//content.subviews[0];
         UILabel *labelView = (UILabel *) [tableView viewWithTag:2];//content.subviews[1];
@@ -172,6 +174,10 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Password can't be blank" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
+    else if([_pwdSignUp.text length] < 6 ){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Password is less than 6 characters" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
     else if(![_pwdConfirmSignUp.text isEqual:_pwdSignUp.text]){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Passwords don't match" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -198,6 +204,7 @@
                 labelView.text = [User getUser].name;
             }
             
+            [Tag getAll];
             [self performSegueWithIdentifier:@"backToPlayer" sender:self];
         }
         else{
