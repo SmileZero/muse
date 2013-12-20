@@ -190,12 +190,10 @@
         User* new_user = [User userWithEmail:_emailSignUp.text password:_pwdSignUp.text name:_nameSignUp.text];
         NSString* result = [new_user signup];
         if ([result isEqual: @"ok"]) {
+            [Tag getAll];
             UIView *tableView = self.revealViewController.rightViewController.view.subviews[0];
-            UITableViewCell *tableCell = tableView.subviews[0];
-            UIView *scrollView = tableCell.subviews[0];
-            UIView *content = scrollView.subviews[1];
-            UIImageView *imageView = content.subviews[0];
-            UILabel *labelView = content.subviews[1];
+            UIImageView *imageView = (UIImageView *) [tableView viewWithTag:1];//content.subviews[0];
+            UILabel *labelView = (UILabel *) [tableView viewWithTag:2];//content.subviews[1];
             
             if ([User getUser]) {
                 NSData *data = [ServerConnection getRequestToURL:[NSString stringWithFormat:@"%@/%@", SERVER_URL, [User getUser].avatar]];

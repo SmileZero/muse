@@ -140,7 +140,7 @@
         _playList = ar;
         
         int n = [_playList count];
-        srand((int) music);
+        srand((int) conn);
         music = [conn getMusicWithIdentifier:_playList[rand() % n]];
     }
     
