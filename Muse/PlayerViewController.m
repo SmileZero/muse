@@ -9,6 +9,7 @@
 #import "SWRevealViewController.h"
 #import "User.h"
 #import "Player.h"
+#import "Tag.h"
 
 #define degreesToRadians(x) -(M_PI * x / 180.0)
 
@@ -198,13 +199,14 @@
 - (void)viewDidLoad
 {
     
-    if ([User getUser]) {
-        if ([[User getUser] signinWithRememberToken]) {
-        }
-        else{
-            NSLog(@"remember_token is incorrent");
-        }
-    }
+//    if ([User getUser]) {
+//        if ([[User getUser] signinWithRememberToken]) {
+//        }
+//        else{
+//            NSLog(@"remember_token is incorrent");
+//        }
+//    }
+    [Tag getAll];
 
     [super viewDidLoad];
     [self initPlayer];

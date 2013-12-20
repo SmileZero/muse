@@ -62,6 +62,7 @@
 		7A3E00231861444D000F5B6C /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A3E00221861444D000F5B6C /* circle.png */; };
 		7A3E002518615DE5000F5B6C /* playButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A3E002418615DE5000F5B6C /* playButton.png */; };
 		7A3E002818618A51000F5B6C /* Music.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E002718618A51000F5B6C /* Music.m */; };
+		7A3E003718638966000F5B6C /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E003618638966000F5B6C /* Tag.m */; };
 		7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */; };
 		7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */; };
 /* End PBXBuildFile section */
@@ -146,6 +147,8 @@
 		7A3E002418615DE5000F5B6C /* playButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playButton.png; sourceTree = "<group>"; };
 		7A3E002618618A51000F5B6C /* Music.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Music.h; sourceTree = "<group>"; };
 		7A3E002718618A51000F5B6C /* Music.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Music.m; sourceTree = "<group>"; };
+		7A3E003518638966000F5B6C /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		7A3E003618638966000F5B6C /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 		7A3EFFFA185B0C57000F5B6C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		7A3EFFFD185B2C67000F5B6C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -308,6 +311,8 @@
 				7A3E000A185B5F49000F5B6C /* User.m */,
 				7A3E002618618A51000F5B6C /* Music.h */,
 				7A3E002718618A51000F5B6C /* Music.m */,
+				7A3E003518638966000F5B6C /* Tag.h */,
+				7A3E003618638966000F5B6C /* Tag.m */,
 			);
 			name = ServerConnection;
 			sourceTree = "<group>";
@@ -505,6 +510,7 @@
 				21371F9F1850956700BB2A4F /* PlayerViewController.m in Sources */,
 				7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */,
 				21660584185F3A3500560812 /* Player.m in Sources */,
+				7A3E003718638966000F5B6C /* Tag.m in Sources */,
 				7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */,
 				21371F991850956700BB2A4F /* AppDelegate.m in Sources */,
 				21371F951850956700BB2A4F /* main.m in Sources */,
