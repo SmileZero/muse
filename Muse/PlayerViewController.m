@@ -10,6 +10,7 @@
 #import "User.h"
 #import "Player.h"
 #import "Tag.h"
+#import "TagViewController.h"
 
 #define degreesToRadians(x) -(M_PI * x / 180.0)
 
@@ -120,6 +121,32 @@
     }
 }
 
+
+- (void)loadMusicWithIdentifier:(NSString *) identifier
+{
+    XiamiConnection * conn = [[XiamiConnection alloc] init];
+    srand((int)conn);
+    
+    XiamiObject * music = NULL;
+
+    music = [conn getMusicWithIdentifier:identifier];
+    
+    _currentMusic = music;
+    [Player setCurrentMusic:_currentMusic];
+    
+    _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
+    
+    [self loadCurrentMusicInformation];
+    
+    [self.moviePlayer play];
+    
+    _currentPlayStatus = 1;
+    
+    [Player setCurrentPlayStatus:_currentPlayStatus];
+
+}
+
+
 - (void)loadMusic
 {
     
@@ -168,6 +195,7 @@
     
     if (result) {
         [self setMarkButtonWithStatus:YES];
+        [self updateTagView];
     }
     
 }
@@ -191,6 +219,7 @@
     
     if (result) {
         [self setMarkButtonWithStatus:NO];
+        [self updateTagView];
     }
 }
 
@@ -308,6 +337,17 @@
         
         [self performSelector: @selector(moviePlay) withObject:nil afterDelay:5];
     }
+}
+
+
+- (void) updateTagView
+{
+    [Tag getAll];
+    
+    TagViewController * tagViewController = (TagViewController * ) self.revealViewController.rearViewController;
+    
+    [tagViewController realoadTableData];
+
 }
 
 

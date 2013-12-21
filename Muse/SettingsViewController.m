@@ -288,6 +288,15 @@
     [_containerView removeFromSuperview];
     [[AVAudioSession sharedInstance] setActive:NO error: nil];
     //[Player playMoviePlayer];
+    
+    PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
+    
+    NSString * resultId = [FPResponse getResultId];
+    
+    if (resultId != NULL) {
+        [playViewController loadMusicWithIdentifier:resultId];
+
+    }
 }
 
 - (void)containerViewTapped:(UITapGestureRecognizer *)gr {

@@ -13,4 +13,7 @@
 
 @property (strong, nonatomic) NSArray * tagArray;
 
+
+
+- (void)realoadTableData;
 @end

@@ -25,5 +25,6 @@
 
 - (id) initWithNameLabel:(UILabel *) nLabel artistLabel:(UILabel *) aLabel cover:(UIImageView *)cv playBtn:(UIButton *)playBtn recogBtn: (UIButton *) recogBtn border:(UIImageView *)border tap:(UITapGestureRecognizer *) tap animating:(BOOL *) isAnimate;
 - (void) GNResultReady:(GNSearchResult*) result;
++ (NSString *) getResultId;
 
 @end

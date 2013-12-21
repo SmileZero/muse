@@ -27,6 +27,8 @@
 
 @property (weak, nonatomic) NSArray * playList;
 
+
+- (void)loadMusicWithIdentifier:(NSString *) identifier;
 - (void)loadMusic;
 - (void)musicPlay;
 - (void)musicPause;

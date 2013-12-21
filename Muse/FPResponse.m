@@ -20,6 +20,9 @@
 @synthesize cover;
 
 
+static NSString * resultId = NULL;
+
+
 - (id) initWithNameLabel:(UILabel *) nLabel artistLabel:(UILabel *) aLabel cover:(UIImageView *)cv playBtn:(UIButton *)playBtn recogBtn: (UIButton *) recogBtn border:(UIImageView *)border tap:(UITapGestureRecognizer *)tap animating:(BOOL*) isAnimate;
 {
     self = [super init];
@@ -59,15 +62,25 @@
             self.artistLabel.hidden = false;
             self.cover.hidden = false;
             self.playBtn.hidden = false;
+            
+            resultId = [NSString stringWithFormat:@"%@", music.local_id];
         }
     }
     else{
         [self.recogBtn setTitle:@"NO MATCH" forState:UIControlStateNormal];
         //border
+        
+        resultId = NULL;
     }
     self.tap.enabled = YES;
     _recogBtn.userInteractionEnabled = YES;
     *self.animating = NO;
-
 }
+
+
++ (NSString *) getResultId
+{
+    return resultId;
+}
+
 @end

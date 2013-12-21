@@ -38,6 +38,13 @@
     [self loadAllTagInfo];
 }
 
+
+- (void)realoadTableData
+{
+    UITableView * tableView = (UITableView *)[self.view viewWithTag:3001];
+    [tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
