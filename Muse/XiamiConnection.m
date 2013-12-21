@@ -12,7 +12,7 @@
 
 //#define SERVER_URL @"http://172.30.4.19/musics/"
 //#define SERVER_URL_MUSIC @"http://localhost:3000/musics/"
-#define SERVER_URL_MUSIC @"http://192.168.200.233:3000/musics/"
+#define SERVER_URL_MUSIC @"http://192.168.1.10:3000/musics/"
 
 @implementation XiamiConnection
 

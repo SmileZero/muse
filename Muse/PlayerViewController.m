@@ -250,6 +250,15 @@
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -258,6 +267,40 @@
     
     _pauseImageV2.hidden = NO;
     _pauseImageV3.hidden = YES;
+    
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self resignFirstResponder];
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)remoteControlReceivedWithEvent:(UIEvent *)receivedEvent {
+    
+    if (receivedEvent.type == UIEventTypeRemoteControl) {
+        switch (receivedEvent.subtype) {
+            case UIEventSubtypeRemoteControlPlay:
+                [self musicPlay];
+                break;
+            case UIEventSubtypeRemoteControlPause:
+                [self musicPause];
+                break;
+            case UIEventSubtypeRemoteControlNextTrack:
+                [self loadMusic];
+                break;
+            case UIEventSubtypeRemoteControlTogglePlayPause:
+                if (_moviePlayer.playbackState == MPMoviePlaybackStatePlaying) {
+                    [self musicPause];
+                }
+                else {
+                    [self musicPlay];
+                }
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
