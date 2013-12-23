@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Muse/PlayerViewController.m"
-            timestampString = "409158852.84201"
+            timestampString = "409475779.291742"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "-loadMusic"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
+            landmarkName = "-loadMusicWithIdentifier:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Muse/PlayerViewController.m"
-            timestampString = "409158976.598055"
+            timestampString = "409475779.291742"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "-loadMusic"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
+            landmarkName = "-loadMusicWithIdentifier:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Muse/PlayerViewController.m"
+            timestampString = "409475127.203453"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
+            landmarkName = "-setDisplayView"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

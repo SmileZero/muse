@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *signInBtn;
 @property (weak, nonatomic) IBOutlet UITextField *emailView;
 @property (weak, nonatomic) IBOutlet UITextField *passwordView;
-@property (weak, nonatomic) IBOutlet UIButton *cancelBtn;
 @property (weak, nonatomic) IBOutlet UIView *signUpView;
 - (IBAction)backToSignIn:(id)sender;
 - (IBAction)showSignUpView:(id)sender;
@@ -27,6 +26,8 @@
 
 - (IBAction)signIn:(id)sender;
 - (IBAction)signUp:(id)sender;
+- (IBAction)closeViewEdit:(id)sender;
+
 @end
 
 @implementation SignInViewController
@@ -54,7 +55,6 @@
     _signUpView.backgroundColor = [UIColor colorWithWhite:0.18f alpha:1.0f];
     _signUpView.layer.cornerRadius = 5;
     _signUpView.layer.masksToBounds = YES;
-    _cancelBtn.layer.cornerRadius = 5;
     _signInBtn.layer.cornerRadius = 5;
     //_signUpView.layer.borderColor = [UIColor colorWithWhite:0.1f alpha:1.0f].CGColor;
     //_signUpView.layer.borderWidth = 7.0f;
@@ -100,9 +100,50 @@
     
 }
 
+- (void)resumeView
+{
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
+    
+    float Y = 0.00f;
+    CGRect rect = CGRectMake(0.0f, Y, width, height);
+    self.view.frame = rect;
+    [UIView commitAnimations];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    [self resumeView];
+    return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    float screenWidth = screenRect.size.width;
+    float screenHeight = screenRect.size.height;
+    
+    NSLog(@"screen width: %f, height: %f", screenWidth, screenHeight);
+    
+    
+    float Y = -10.0f;
+    if (screenHeight <= 481) {
+        Y = -100.0f;
+    }
+    CGRect rect = CGRectMake(0.0f, Y, width, height);
+    self.view.frame = rect;
+    [UIView commitAnimations];
+    
     return YES;
 }
 
@@ -113,7 +154,21 @@
     CGRect rect = _signUpView.frame;
     _signUpView.frame = CGRectMake(rect.origin.x, 1136+rect.origin.y/2 , rect.size.width, rect.size.height);
     [UIView commitAnimations];
+    
+    [self hideKeyboard];
+
     //_signUpView.hidden = YES;
+}
+
+- (void) hideKeyboard
+{
+    [_emailView resignFirstResponder];
+    [_passwordView resignFirstResponder];
+    [_emailSignUp resignFirstResponder];
+    [_pwdSignUp resignFirstResponder];
+    [_pwdConfirmSignUp resignFirstResponder];
+    [_nameSignUp resignFirstResponder];
+    [self resumeView];
 }
 
 - (IBAction)showSignUpView:(id)sender {
@@ -211,5 +266,9 @@
         }
     }
 
+}
+
+- (IBAction)closeViewEdit:(id)sender{
+    [self hideKeyboard];
 }
 @end

@@ -63,14 +63,26 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
     
+    [[UIApplication sharedApplication] setStatusBarHidden:YES
+                                            withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     if ([User getUser]) {
         if ([[User getUser] signinWithRememberToken]) {
-            [Tag getAll];
-            [self performSegueWithIdentifier:@"jumpToPlay" sender:self];
+            if ([Tag getAll]) {
+                [self performSegueWithIdentifier:@"jumpToPlay" sender:self];
+            } else {
+                UIAlertView * alert =
+                [[UIAlertView alloc] initWithTitle:@"Error"
+                message:@"Can not connect to the server."
+                delegate:nil
+                cancelButtonTitle:nil
+                otherButtonTitles:@"OK", nil];
+                
+                [alert show];
+            }
         }
         else{
             NSLog(@"remember_token is incorrent");
@@ -86,6 +98,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 @end

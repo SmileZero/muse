@@ -12,7 +12,7 @@
 
 //#define SERVER_URL @"http://172.30.4.19/musics/"
 //#define SERVER_URL_MUSIC @"http://localhost:3000/musics/"
-#define SERVER_URL_MUSIC @"http://192.168.1.10:3000/musics/"
+#define SERVER_URL_MUSIC @"http://192.168.2.104:3000/musics/"
 
 @implementation XiamiConnection
 
@@ -25,30 +25,34 @@
     
     NSData * data = [ServerConnection getRequestToURL:url];
     
-    NSError * error = NULL;
-    NSDictionary * feedData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    NSDictionary * dic = [feedData objectForKey:@"music"];
+    XiamiObject * musicInfo = NULL;
     
-    
-    XiamiObject * musicInfo = [[XiamiObject alloc] init];
-    
-    
-    
-    NSString * coverDefaultSizeURL = [dic objectForKey:@"cover_url"];
-    int length = [coverDefaultSizeURL length];
-    NSString * coverHeader = [coverDefaultSizeURL substringToIndex: length - 4];
-    NSString * coverType = [coverDefaultSizeURL substringWithRange:NSMakeRange(length - 4, 4)];
-    
-    NSString * coverURL = [NSString stringWithFormat:@"%@%@%@", coverHeader, @"_2", coverType];
-    
-    //NSLog(@"%@", coverURL);
-    
-    musicInfo.identifier = [dic objectForKey:@"id"];
-    musicInfo.title = [dic objectForKey:@"name"];
-    musicInfo.musicURL = [dic objectForKey:@"location"];
-    musicInfo.cover = [self getCoverWithURL:coverURL];
-    musicInfo.artist = [dic objectForKey:@"artist_name"];
-    musicInfo.mark = [NSString stringWithFormat: @"%@", [dic objectForKey:@"mark"]];
+    if (data) {
+        NSError * error = NULL;
+        NSDictionary * feedData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        NSDictionary * dic = [feedData objectForKey:@"music"];
+        
+        
+        musicInfo = [[XiamiObject alloc] init];
+        
+        
+        
+        NSString * coverDefaultSizeURL = [dic objectForKey:@"cover_url"];
+        int length = [coverDefaultSizeURL length];
+        NSString * coverHeader = [coverDefaultSizeURL substringToIndex: length - 4];
+        NSString * coverType = [coverDefaultSizeURL substringWithRange:NSMakeRange(length - 4, 4)];
+        
+        NSString * coverURL = [NSString stringWithFormat:@"%@%@%@", coverHeader, @"_2", coverType];
+        
+        //NSLog(@"%@", coverURL);
+        
+        musicInfo.identifier = [dic objectForKey:@"id"];
+        musicInfo.title = [dic objectForKey:@"name"];
+        musicInfo.musicURL = [dic objectForKey:@"location"];
+        musicInfo.cover = [self getCoverWithURL:coverURL];
+        musicInfo.artist = [dic objectForKey:@"artist_name"];
+        musicInfo.mark = [NSString stringWithFormat: @"%@", [dic objectForKey:@"mark"]];
+    }
     
     //NSLog(@"%@", musicInfo.musicURL);
     
@@ -60,16 +64,23 @@
 {
     NSString * url = [NSString stringWithFormat: @"%@/song_graphs.json", SERVER_URL_MUSIC];
     NSData * rcdData = [ServerConnection getRequestToURL:url];
-    NSError * error = nil;
-    NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:rcdData options:0 error: &error];
     
-    if ([dic[@"status"] isEqualToString:@"ok"]) {
-        return [self getMusicWithIdentifier:dic[@"music_id"]];
-    } else {
-        srand((int)rcdData);
-        NSString * randomId = [NSString stringWithFormat:@"%d", rand() % 5000];
-        return [self getMusicWithIdentifier:randomId];
+    
+    
+    if (rcdData) {
+        NSError * error = nil;
+        NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:rcdData options:0 error: &error];
+        
+        if ([dic[@"status"] isEqualToString:@"ok"]) {
+            return [self getMusicWithIdentifier:dic[@"music_id"]];
+        } else {
+            srand((int)rcdData);
+            NSString * randomId = [NSString stringWithFormat:@"%d", rand() % 5000];
+            return [self getMusicWithIdentifier:randomId];
+        }
     }
+    
+    return nil;
 }
 
 - (UIImage *) getCoverWithURL:(NSString *) url

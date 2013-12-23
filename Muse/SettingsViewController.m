@@ -30,8 +30,6 @@
 @property (nonatomic, strong) UIImageView *cover;
 @property (nonatomic, strong) UIButton *playBtn;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
-- (IBAction)showRecogView:(id)sender;
-- (IBAction)signOut:(id)sender;
 @property BOOL animating;
 @end
 
@@ -99,9 +97,9 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.view.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
-    self.tableView.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
-    self.tableView.separatorColor = [UIColor colorWithWhite:0.15f alpha:0.2f];
+    //self.view.backgroundColor = [UIColor colorWithWhite:0.17f alpha:1.0f];
+    //self.tableView.backgroundColor = [UIColor colorWithWhite:0.17f alpha:1.0f];
+    //self.tableView.separatorColor = [UIColor colorWithWhite:0.17f alpha:1.0f];
     self.config = [GNConfig init:@"4388096-F18341100713290DF7B092A14D9627E6"];
     
     
@@ -248,6 +246,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //where indexPath.row is the selected cell
+    if (indexPath.row==1) {
+        [self.view.window addSubview:_containerView];
+        
+        NSError *error = nil;
+        AVAudioSession * audioSession = [AVAudioSession sharedInstance];
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
+        [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+        
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
+        [audioSession setActive:YES error: &error];
+        
+        //[Player stopMoviePlayer];
+        PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
+        
+        [playViewController musicPause];
+    }
+    else if (indexPath.row == 2){
+        if ([[User getUser] signout]) {
+            PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
+            [playViewController musicPause];
+            [self performSegueWithIdentifier:@"signOut" sender:self];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Sign out failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+    }
 }
 
 - (void)sessionDidInterrupt:(NSNotification *)notification
@@ -295,7 +320,8 @@
     
     if (resultId != NULL) {
         [playViewController loadMusicWithIdentifier:resultId];
-
+        
+        [self.revealViewController setFrontViewPosition:FrontViewPositionLeft animated:YES];
     }
 }
 
@@ -314,6 +340,10 @@
     if (playViewController.currentPlayStatus == 1) {
         [playViewController musicPlay];
     }
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 /*
@@ -366,33 +396,4 @@
 }
 
  */
-
-- (IBAction)showRecogView:(id)sender {
-    [self.view.window addSubview:_containerView];
-    
-    NSError *error = nil;
-    AVAudioSession * audioSession = [AVAudioSession sharedInstance];
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
-    [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-    
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
-    [audioSession setActive:YES error: &error];
-    
-    //[Player stopMoviePlayer];
-    PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
-    
-    [playViewController musicPause];
-}
-
-- (IBAction)signOut:(id)sender {
-    if ([[User getUser] signout]) {
-        PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
-        [playViewController musicPause];
-        [self performSegueWithIdentifier:@"signOut" sender:self];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Sign out failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    }
-}
 @end

@@ -16,4 +16,7 @@
 
 
 - (void)realoadTableData;
+
+
+@property int currentIndex; 
 @end

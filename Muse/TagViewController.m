@@ -36,6 +36,9 @@
 {
     [super viewDidLoad];
     [self loadAllTagInfo];
+
+    
+    _currentIndex = 0;
 }
 
 
@@ -105,9 +108,15 @@
     
     UILabel * tagNameLabel = (UILabel *)[cell viewWithTag:101];
     UILabel * countMusicOfThisTagLabel = (UILabel *)[cell viewWithTag:102];
+    UIImageView * currentLabelImageView = (UIImageView *) [cell viewWithTag:211];
     
     
     
+    if (indexPath.row == _currentIndex) {
+        currentLabelImageView.hidden = NO;
+    } else {
+        currentLabelImageView.hidden = YES;
+    }
     
     if (indexPath.row == 0) {
         tagNameLabel.text = @"Guess";
@@ -117,11 +126,35 @@
         NSDictionary * dic = _tagArray[indexPath.row - 1];
         NSArray * musicIds = dic[@"MusicIds"];
         
+        int count = [musicIds count];
+        
+        
         tagNameLabel.text = dic[@"Name"];
-        countMusicOfThisTagLabel.text = [NSString stringWithFormat:@"%d", [musicIds count]];
+        countMusicOfThisTagLabel.text = [NSString stringWithFormat:@"%d", count];
     }
     
     return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UILabel * tagNameLabel = (UILabel *)[cell viewWithTag:101];
+    UILabel * countMusicOfThisTagLabel = (UILabel *)[cell viewWithTag:102];
+    
+    
+    NSLog(@"%@ %@ %d", tagNameLabel.text, countMusicOfThisTagLabel.text, indexPath.row);
+    
+    if ([countMusicOfThisTagLabel.text isEqualToString:@"0"]) {
+        [cell setUserInteractionEnabled:NO];
+        tagNameLabel.textColor = [UIColor darkGrayColor];
+        countMusicOfThisTagLabel.textColor = [UIColor darkGrayColor];
+    } else {
+        [cell setUserInteractionEnabled:YES];
+        tagNameLabel.textColor = [UIColor whiteColor];
+        countMusicOfThisTagLabel.textColor = [UIColor whiteColor];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -158,7 +191,22 @@
     
     PlayerViewController * palyViewController =  (PlayerViewController *)self.revealViewController.frontViewController;
     
+    UITableViewCell * cell_before = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:indexPath.section]];
+    UIImageView * beforeLabelImageView = (UIImageView *) [cell_before viewWithTag:211];
+    beforeLabelImageView.hidden = YES;
+    
+    _currentIndex = indexPath.row;
+    
+    UITableViewCell * cell_after = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:indexPath.section]];
+    UIImageView * afterLabelImageView = (UIImageView *) [cell_after viewWithTag:211];
+    afterLabelImageView.hidden = NO;
+    
     [palyViewController loadMusic];
+}
+
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 

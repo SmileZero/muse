@@ -557,21 +557,6 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
     [self _setFrontViewPosition:initialPosition withDuration:0.0];
 }
 
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    NSError *activationError = nil;
-    AVAudioSession *mySession = [AVAudioSession sharedInstance];
-    [mySession setCategory: AVAudioSessionCategoryPlayback error: &activationError];
-    if (activationError) { /* handle the error condition */ }
-    [mySession setActive: YES error: &activationError];
-    if (activationError) { /* handle the error condition */ }
-    
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:NULL];
-}
-
 
 
 - (void)viewDidAppear:(BOOL)animated

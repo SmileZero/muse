@@ -28,11 +28,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *loveButton;
 @property (weak, nonatomic) IBOutlet UIButton *hateButton;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
+@property (weak, nonatomic) IBOutlet UIImageView *loadingImageNegative;
+@property (weak, nonatomic) IBOutlet UIImageView *loadingImageMask;
+@property (weak, nonatomic) IBOutlet UILabel *loadingText;
+
 @property (weak, nonatomic) IBOutlet UIImageView *pauseImageV3;
 @property (weak, nonatomic) IBOutlet UIImageView *pauseImageV2;
 @property (weak, nonatomic) IBOutlet UILabel *musicTimeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *disloveButton;
 
+@property (weak, nonatomic) IBOutlet UIImageView *loveAnimationImageView;
 
 @end
 
@@ -71,6 +76,7 @@
 - (void)rotateLoadPicture
 {
     [_loadingImage setTransform:CGAffineTransformMakeRotation(degreesToRadians(_rotated))];
+    [_loadingImageNegative setTransform:CGAffineTransformMakeRotation(degreesToRadians(-_rotated))];
     
     _rotated += 1;
     
@@ -120,6 +126,127 @@
     }
 }
 
+- (void)setDisplayView
+{
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    float screenWidth = screenRect.size.width;
+    float screenHeight = screenRect.size.height;
+    
+    NSLog(@"screen width: %f, height: %f", screenWidth, screenHeight);
+    
+    
+    if (screenHeight <= 481) {
+        
+        float PIC_Y_POS_DELTA = 20;
+        float PLAY_Y_BUTTON_POS_DELTA = 40;
+        float NAME_Y_LABEL_DELTA = 60;
+        float ARTIST_Y_LABEL_DELTA = 70;
+        float SETTING_Y_BUTTON_DELTA = 0;
+        float LOVE_Y_BUTTON_DELTA = 80;
+        
+        
+        CGRect loveAnimationImageViewFrame = _loveAnimationImageView.frame;
+        loveAnimationImageViewFrame.origin.y -= LOVE_Y_BUTTON_DELTA;
+        [_loveAnimationImageView setFrame:loveAnimationImageViewFrame];
+    
+        CGRect loadingImageNegativeFrame = _loadingImageNegative.frame;
+        loadingImageNegativeFrame.origin.y -= PIC_Y_POS_DELTA;
+        [_loadingImageNegative setFrame:loadingImageNegativeFrame];
+        
+        CGRect loadingImageMaskFrame = _loadingImageMask.frame;
+        loadingImageMaskFrame.origin.y -= PIC_Y_POS_DELTA;
+        [_loadingImageMask setFrame:loadingImageMaskFrame];
+        
+        CGRect loadingTextFrame = _loadingText.frame;
+        loadingTextFrame.origin.y -= PIC_Y_POS_DELTA;
+        [_loadingText setFrame:loadingTextFrame];
+        
+        
+        CGRect musicPictureImageViewFrame = _musicPictureImageView.frame;
+        musicPictureImageViewFrame.origin.y -= PIC_Y_POS_DELTA;
+        [_musicPictureImageView setFrame:musicPictureImageViewFrame];
+        
+        CGRect musicPictureMaskImageViewFrame = _musicPictureMaskImageView.frame;
+        musicPictureMaskImageViewFrame.origin.y -= PIC_Y_POS_DELTA;
+        [_musicPictureMaskImageView setFrame:musicPictureMaskImageViewFrame];
+        
+        CGRect musicPictureBorderImageViewFrame = _musicPictureBorderImageView.frame;
+        musicPictureBorderImageViewFrame.origin.y -= PIC_Y_POS_DELTA;
+        [_musicPictureBorderImageView setFrame:musicPictureBorderImageViewFrame];
+        
+        CGRect menuButtonFrame = _menuButton.frame;
+        menuButtonFrame.origin.y -= SETTING_Y_BUTTON_DELTA;
+        [_menuButton setFrame:menuButtonFrame];
+        
+        CGRect settingButtonFrame = _settingButton.frame;
+        settingButtonFrame.origin.y -= SETTING_Y_BUTTON_DELTA;
+        [_settingButton setFrame:settingButtonFrame];
+        
+        CGRect nextButtonFrame = _nextButton.frame;
+        nextButtonFrame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
+        [_nextButton setFrame:nextButtonFrame];
+        
+        CGRect lastButtonFrame = _lastButton.frame;
+        lastButtonFrame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
+        [_lastButton setFrame:lastButtonFrame];
+        
+        CGRect pasueButtonFrame = _pasueButton.frame;
+        pasueButtonFrame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
+        [_pasueButton setFrame:pasueButtonFrame];
+        
+        CGRect musicNameLabelFrame = _musicNameLabel.frame;
+        musicNameLabelFrame.origin.y -= NAME_Y_LABEL_DELTA;
+        [_musicNameLabel setFrame:musicNameLabelFrame];
+        
+        CGRect artistNameLabelFrame = _artistNameLabel.frame;
+        artistNameLabelFrame.origin.y -= ARTIST_Y_LABEL_DELTA;
+        [_artistNameLabel setFrame:artistNameLabelFrame];
+        
+        CGRect loveButtonFrame = _loveButton.frame;
+        loveButtonFrame.origin.y -= LOVE_Y_BUTTON_DELTA;
+        [_loveButton setFrame:loveButtonFrame];
+        
+        CGRect hateButtonFrame = _hateButton.frame;
+        hateButtonFrame.origin.y -= LOVE_Y_BUTTON_DELTA;
+        [_hateButton setFrame:hateButtonFrame];
+        
+        CGRect loadingImageFrame = _loadingImage.frame;
+        loadingImageFrame.origin.y -= PIC_Y_POS_DELTA;
+        [_loadingImage setFrame:loadingImageFrame];
+        
+        CGRect pauseImageV3Frame = _pauseImageV3.frame;
+        pauseImageV3Frame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
+        [_pauseImageV3 setFrame:pauseImageV3Frame];
+        
+        CGRect pauseImageV2Frame = _pauseImageV2.frame;
+        pauseImageV2Frame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
+        [_pauseImageV2 setFrame:pauseImageV2Frame];
+        
+        CGRect musicTimeLabelFrame = _musicTimeLabel.frame;
+        musicTimeLabelFrame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
+        [_musicTimeLabel setFrame:musicTimeLabelFrame];
+        
+        CGRect disloveButtonFrame = _disloveButton.frame;
+        disloveButtonFrame.origin.y -= LOVE_Y_BUTTON_DELTA;
+        [_disloveButton setFrame:disloveButtonFrame];
+    }
+    
+    
+    NSMutableArray * loveAnimationImages = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < 12; i++) {
+        NSString * imageName = [NSString stringWithFormat:@"am_love_000%02d.png", i];
+        [loveAnimationImages addObject:[UIImage imageNamed:imageName]];
+    }
+    _loveAnimationImageView.animationImages = loveAnimationImages;
+    _loveAnimationImageView.animationDuration = 0.4f;
+    _loveAnimationImageView.animationRepeatCount = 1;
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)setMarkButtonWithStatus: (BOOL) status
 {
     if (status) {
@@ -156,14 +283,18 @@
 
 }
 
-
 - (void)loadMusic
 {
-    
+    [self showLoadingView];
+    [self disableButton];
+    [self performSelectorInBackground:@selector(loadMusicInTheBackgroundThread) withObject:nil];
+}
+
+
+- (void)loadMusicInTheBackgroundThread
+{
     XiamiConnection * conn = [[XiamiConnection alloc] init];
     srand((int)conn);
-    
-    
     
     XiamiObject * music = NULL;
     
@@ -184,19 +315,49 @@
     _currentMusic = music;
     [Player setCurrentMusic:_currentMusic];
     
-    _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
+    //[self loadCurrentMusicInformation];
     
-    [self loadCurrentMusicInformation];
-    
-    [self.moviePlayer play];
+    //[self.moviePlayer play];
     
     
     NSLog(@"%@", music);
     
-    _currentPlayStatus = 1;
-    
     [Player setCurrentPlayStatus:_currentPlayStatus];
+    
+    [self performSelectorOnMainThread:@selector(hideLoadingView)withObject:nil waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(enableButton)withObject:nil waitUntilDone:YES];
+    
+    if (_currentMusic) {
+        [self performSelectorOnMainThread:@selector(loadCurrentMusicInformation) withObject:nil waitUntilDone:YES];
+
+        [self performSelectorOnMainThread:@selector(startPlayer) withObject:nil waitUntilDone:YES];
+
+       
+    } else {
+        [self performSelectorOnMainThread:@selector(internetErrorAlert)withObject:nil waitUntilDone:YES];
+    }
+
 }
+
+- (void) internetErrorAlert
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+     message:@"Can not connect to the server."
+     delegate:nil
+     cancelButtonTitle:nil
+     otherButtonTitles:@"OK", nil
+     ];
+    
+    [alert show];
+}
+
+- (void) startPlayer
+{
+    self.moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
+    [self.moviePlayer play];
+    _currentPlayStatus = 1;
+}
+
 - (IBAction)unLoveMusicButtonClicked:(id)sender {
     
     XiamiConnection * conn = [[XiamiConnection alloc] init];
@@ -230,6 +391,7 @@
     if (result) {
         [self setMarkButtonWithStatus:NO];
         [self updateTagView];
+        [self.loveAnimationImageView startAnimating];
     }
 }
 
@@ -280,6 +442,8 @@
     
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
+    
+    [self setDisplayView];
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -315,18 +479,6 @@
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:   self
-     name:          MPMoviePlayerPlaybackDidFinishNotification
-     object         :_moviePlayer];
-    
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:   self
-     name:          MPMoviePlayerPlaybackStateDidChangeNotification
-     object:        _moviePlayer];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -372,8 +524,9 @@
     //NSLog(@"moviePlaybackStateDidChange = %f", [_moviePlayer currentPlaybackTime]);
     
     int isPlay = [_moviePlayer playbackState];
+    float playTime = [_moviePlayer currentPlaybackTime];
     
-    if (isPlay == 2) {
+    if (isPlay == 2 && playTime > 1) {
         _pauseImageV2.hidden = YES;
         _pauseImageV3.hidden = NO;
         
@@ -385,7 +538,7 @@
     
     NSLog(@"C: %d M:%d", _currentPlayStatus, isPlay);
     
-    if (isPlay == 2 && _currentPlayStatus == 1) {
+    if (isPlay == 2 && _currentPlayStatus == 1 && playTime > 2) {
         NSLog(@"try once!");
         
         [self performSelector: @selector(moviePlay) withObject:nil afterDelay:5];
@@ -402,8 +555,6 @@
     [tagViewController realoadTableData];
 
 }
-
-
 
 
 - (void)moviePlay
@@ -423,6 +574,9 @@
 - (void)musicPlay
 {
     if ([_moviePlayer playbackState] == 2) {
+        
+        //[self enableButton];
+        
         self.currentPlayStatus = 1;
         [Player setCurrentPlayStatus:_currentPlayStatus];
         [_moviePlayer play];
@@ -432,11 +586,48 @@
 - (void)musicPause
 {
     if ([_moviePlayer playbackState] == 1) {
+        
+        //[self disableButton];
+        
         self.currentPlayStatus = 0;
         [Player setCurrentPlayStatus:_currentPlayStatus];
         [_moviePlayer pause];
     }
 }
 
+
+- (void) showLoadingView
+{
+    //_loadingImage.hidden = NO;
+    _loadingImageMask.hidden = NO;
+    _loadingImageNegative.hidden = NO;
+    _loadingText.hidden = NO;
+}
+
+- (void) hideLoadingView
+{
+    //_loadingImage.hidden = YES;
+    _loadingImageMask.hidden = YES;
+    _loadingImageNegative.hidden = YES;
+    _loadingText.hidden = YES;
+}
+
+- (void) disableButton
+{
+    _pasueButton.enabled = NO;
+    _nextButton.enabled = NO;
+    _loveButton.enabled = NO;
+    _hateButton.enabled = NO;
+    _disloveButton.enabled = NO;
+}
+
+- (void) enableButton
+{
+    _pasueButton.enabled = YES;
+    _nextButton.enabled = YES;
+    _loveButton.enabled = YES;
+    _hateButton.enabled = YES;
+    _disloveButton.enabled = YES;
+}
 
 @end
