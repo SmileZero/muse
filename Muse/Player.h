@@ -27,8 +27,9 @@
 
 + (void) setPlayType: (int) type;
 + (int) getPlayType;
-+ (void) setPlayList: (NSArray *) list;
++ (void) setPlayList: (NSArray *) list : (int) index;
 + (NSArray *) getPlayList;
++ (void) updatePlayListDataToFav;
 
 
 @end

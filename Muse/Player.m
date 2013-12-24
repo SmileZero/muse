@@ -14,6 +14,7 @@
 static MPMoviePlayerController * moviePlayer = NULL;
 static XiamiObject * currentMusic = NULL;
 static int currentPlayStatus = 0;
+static int currentIndex = -1;
 
 static NSArray * playList = NULL;
 
@@ -61,9 +62,10 @@ static int playType = 0;
     playType = type;
 }
 
-+ (void) setPlayList: (NSArray *) list
++ (void) setPlayList: (NSArray *) list : (int) index
 {
     playList = list;
+    currentIndex = index;
 }
 
 + (int) getPlayType
@@ -87,6 +89,31 @@ static int playType = 0;
     [moviePlayer play];
 }
 
+
++ (void) updatePlayListDataToFav
+{
+    if (currentIndex != 1) {
+        return ;
+    }
+    
+    NSString *errorDesc = nil;
+    NSPropertyListFormat format;
+    NSString *plistPath;
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    plistPath = [rootPath stringByAppendingPathComponent:@"TagSource.plist"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+        plistPath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
+    }
+    NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
+    NSArray * tagArray = (NSArray *)[NSPropertyListSerialization
+                            propertyListFromData:plistXML
+                            mutabilityOption:NSPropertyListMutableContainersAndLeaves
+                            format:&format
+                            errorDescription:&errorDesc];
+    
+    [Player setPlayList:tagArray[1][@"MusicIds"] : 1];
+}
 
 
 @end

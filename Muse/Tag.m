@@ -7,6 +7,7 @@
 //
 
 #import "Tag.h"
+#import "Player.h"
 
 @implementation Tag
 
@@ -66,6 +67,8 @@
             [plistData writeToFile:plistPath atomically:YES];
             return YES;
         }
+        
+        [Player updatePlayListDataToFav];
     }
     
     return NO;

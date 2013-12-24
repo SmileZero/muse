@@ -40,13 +40,13 @@ static User *current_user;
             return nil;
         }
         else{
-            [self userWithEmail:[temp objectForKey:@"Email"] password:nil name:[temp objectForKey:@"Name"] avatar:[temp objectForKey:@"Avatar"] remembrer_token:[temp objectForKey:@"Remember_token"] user_id:[temp objectForKey:@"User_id"]];
+            [self userWithEmail:[temp objectForKey:@"Email"] password:nil name:[temp objectForKey:@"Name"] avatar:[temp objectForKey:@"Avatar"] remembrer_token:[temp objectForKey:@"Remember_token"] resource_id:[temp objectForKey:@"Resource_id"] user_id:[temp objectForKey:@"User_id"]];
             return current_user;
         }
     }
 }
 
-+ (User *)userWithEmail:(NSString *)email password:(NSString *)password name:(NSString *)name avatar:(NSString *)avatar remembrer_token:(NSString *)remembrer_token user_id:(NSNumber *)user_id
++ (User *)userWithEmail:(NSString *)email password:(NSString *)password name:(NSString *)name avatar:(NSString *)avatar remembrer_token:(NSString *)remembrer_token resource_id:(NSNumber*)resource_id user_id:(NSNumber *)user_id
 {
     if (current_user) {
         current_user.email = email;
@@ -55,6 +55,7 @@ static User *current_user;
         current_user.avatar = avatar;
         current_user.remembrer_token = remembrer_token;
         current_user.user_id = user_id;
+        current_user.resource_id = resource_id;
     }
     else{
         current_user= [[User alloc] init];
@@ -64,18 +65,19 @@ static User *current_user;
         current_user.avatar = avatar;
         current_user.remembrer_token = remembrer_token;
         current_user.user_id = user_id;
+        current_user.resource_id = resource_id;
     }
     return current_user;
 }
 
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password name:(NSString *)name
 {
-    return [User userWithEmail:email password:password name:name avatar:nil remembrer_token:nil user_id:nil];
+    return [User userWithEmail:email password:password name:name avatar:nil remembrer_token:nil resource_id:0 user_id:nil];
 }
 
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password
 {
-    return [User userWithEmail:email password:password name:nil avatar:nil remembrer_token:nil user_id:nil];
+    return [User userWithEmail:email password:password name:nil avatar:nil remembrer_token:nil resource_id:0 user_id:nil];
 }
 
 -(BOOL)getCSRFToken
@@ -114,13 +116,14 @@ static User *current_user;
         current_user.name = userDictionary[@"user"][@"name"];
         current_user.avatar = userDictionary[@"user"][@"avatar"][@"url"];
         current_user.remembrer_token = userDictionary[@"user"][@"remember_token"];
+        current_user.resource_id = userDictionary[@"user"][@"resource_id"];
         current_user.password = nil;
         NSString *error;
         NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];
         NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:
-                                   [NSArray arrayWithObjects: current_user.user_id, current_user.name, current_user.email,current_user.avatar, current_user.remembrer_token, nil]
-                                                              forKeys:[NSArray arrayWithObjects: @"User_id", @"Name", @"Email",@"Avatar", @"Remember_token", nil]];
+                                   [NSArray arrayWithObjects: current_user.user_id, current_user.name, current_user.email,current_user.avatar, current_user.remembrer_token,current_user.resource_id, nil]
+                                                              forKeys:[NSArray arrayWithObjects: @"User_id", @"Name", @"Email",@"Avatar", @"Remember_token",@"Resource_id", nil]];
         NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistDict
                                                                        format:NSPropertyListXMLFormat_v1_0
                                                              errorDescription:&error];
@@ -157,13 +160,14 @@ static User *current_user;
             current_user.name = userDictionary[@"user"][@"name"];
             current_user.avatar = userDictionary[@"user"][@"avatar"][@"url"];
             current_user.remembrer_token = userDictionary[@"user"][@"remember_token"];
+            current_user.resource_id = userDictionary[@"user"][@"resource_id"];
             current_user.password = nil;
             NSString *error;
             NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];
             NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:
-                                       [NSArray arrayWithObjects: current_user.user_id, current_user.name, current_user.email,current_user.avatar, current_user.remembrer_token, nil]
-                                                                  forKeys:[NSArray arrayWithObjects: @"User_id", @"Name", @"Email",@"Avatar", @"Remember_token", nil]];
+                                       [NSArray arrayWithObjects: current_user.user_id, current_user.name, current_user.email,current_user.avatar, current_user.remembrer_token,current_user.resource_id, nil]
+                                                                  forKeys:[NSArray arrayWithObjects: @"User_id", @"Name", @"Email",@"Avatar", @"Remember_token", @"Resource_id" , nil]];
             NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistDict
                                                                            format:NSPropertyListXMLFormat_v1_0
                                                                  errorDescription:&error];
@@ -177,6 +181,11 @@ static User *current_user;
             return @"ok";
         }
         else{
+            if ([[User getUser].resource_id isEqual:[NSNumber numberWithInt:1]])
+            {
+                [self signout];
+                current_user = nil;
+            }
             return @"Remember_token is incorrect";
         }
     }
@@ -188,7 +197,13 @@ static User *current_user;
     NSLog(@"--- signUp %@ %@", current_user.email, current_user.name);
     [self getCSRFToken];
     NSError *error = nil;
-    NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/users.json", SERVER_URL] method:@"POST" JSONObject:@{@"user": @{@"email" : current_user.email, @"password_hash" : current_user.password, @"name": current_user.name}, @"authenticity_token": CSRFToken}];
+    NSData *data = nil;
+    if ([current_user.resource_id isEqualToNumber: [NSNumber numberWithInt:0]] ) {
+        data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/users.json", SERVER_URL] method:@"POST" JSONObject:@{@"user": @{@"email" : current_user.email, @"password_hash" : current_user.password, @"name": current_user.name}, @"authenticity_token": CSRFToken}];
+    }
+    else{
+        data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/users.json", SERVER_URL] method:@"POST" JSONObject:@{@"user": @{@"email" : current_user.email, @"password_hash" : current_user.password, @"name": current_user.name, @"resource_id": current_user.resource_id}, @"authenticity_token": CSRFToken}];
+    }
     NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     if ([userDictionary[@"status"]  isEqual: @"ok"]) {
         current_user.user_id = userDictionary[@"user"][@"id"];
@@ -199,8 +214,8 @@ static User *current_user;
         NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];
         NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:
-                                   [NSArray arrayWithObjects: current_user.user_id, current_user.name, current_user.email,current_user.avatar, current_user.remembrer_token, nil]
-                                                              forKeys:[NSArray arrayWithObjects: @"User_id", @"Name", @"Email",@"Avatar", @"Remember_token", nil]];
+                                   [NSArray arrayWithObjects: current_user.user_id, current_user.name, current_user.email,current_user.avatar, current_user.remembrer_token,current_user.resource_id, nil]
+                                                              forKeys:[NSArray arrayWithObjects: @"User_id", @"Name", @"Email",@"Avatar", @"Remember_token",@"Resource_id", nil]];
         NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistDict
                                                                        format:NSPropertyListXMLFormat_v1_0
                                                              errorDescription:&error];
@@ -217,6 +232,56 @@ static User *current_user;
         NSLog(@"%@",userDictionary[@"msg"]);
         return userDictionary[@"msg"];
     }
+}
+
+- (NSString *)signinWithFB
+{
+    if ([current_user.resource_id isEqualToNumber: [NSNumber numberWithInt:1]]) {
+        NSLog(@"--- signinWithToken %@ %@", current_user.email, current_user.remembrer_token);
+        if (![self getCSRFToken]) {
+            return @"Network connection error";
+        }
+        NSError *error = nil;
+        NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signin", SERVER_URL] method:@"POST" JSONObject:@{@"session": @{@"email" : current_user.email,@"password" : current_user.password, @"resource_id" : current_user.resource_id}, @"authenticity_token": CSRFToken}];
+        if (!data) {
+            return @"Network connection error";
+        }
+        // set todo_id
+        NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if ([userDictionary[@"status"]  isEqual: @"ok"]) {
+            current_user.user_id = userDictionary[@"user"][@"id"];
+            current_user.name = userDictionary[@"user"][@"name"];
+            current_user.avatar = userDictionary[@"user"][@"avatar"][@"url"];
+            current_user.remembrer_token = userDictionary[@"user"][@"remember_token"];
+            current_user.resource_id = userDictionary[@"user"][@"resource_id"];
+            current_user.password = nil;
+            NSString *error;
+            NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];
+            NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:
+                                       [NSArray arrayWithObjects: current_user.user_id, current_user.name, current_user.email,current_user.avatar, current_user.remembrer_token,current_user.resource_id, nil]
+                                                                  forKeys:[NSArray arrayWithObjects: @"User_id", @"Name", @"Email",@"Avatar", @"Remember_token", @"Resource_id", nil]];
+            NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistDict
+                                                                           format:NSPropertyListXMLFormat_v1_0
+                                                                 errorDescription:&error];
+            if(plistData) {
+                [plistData writeToFile:plistPath atomically:YES];
+            }
+            else {
+                NSLog(@"%@",error);
+                return @"failed";
+            }
+            return @"ok";
+        }
+        else{
+            if ([self signup]) {
+                return @"ok";
+            }
+            else
+                return @"Facebook account signup faild";
+        }
+    }
+    else return @"failed";
 }
 
 - (BOOL)signout

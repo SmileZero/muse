@@ -16,6 +16,7 @@
 #import <GracenoteMusicID/GNConfig.h>
 #import <GracenoteMusicID/GNOperations.h>
 #import <AVFoundation/AVFoundation.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface SettingsViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
@@ -266,6 +267,9 @@
         if ([[User getUser] signout]) {
             PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
             [playViewController musicPause];
+            [FBSession.activeSession closeAndClearTokenInformation];
+            [FBSession.activeSession close];
+            [FBSession setActiveSession:nil];
             [self performSegueWithIdentifier:@"signOut" sender:self];
         }else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Sign out failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

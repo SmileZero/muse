@@ -11,10 +11,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>FacebookDisplayName</key>
-	<string>Muse</string>
-	<key>FacebookAppID</key>
-	<string>755449954465467</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -47,6 +43,10 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>FacebookAppID</key>
+	<string>755449954465467</string>
+	<key>FacebookDisplayName</key>
+	<string>Muse</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationExitsOnSuspend</key>

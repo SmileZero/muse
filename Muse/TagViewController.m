@@ -182,7 +182,7 @@
                                 format:&format
                                 errorDescription:&errorDesc];
         
-        [Player setPlayList:_tagArray[indexPath.row - 1][@"MusicIds"]];
+        [Player setPlayList:_tagArray[indexPath.row - 1][@"MusicIds"]: indexPath.row];
     }
     
     //[self performSegueWithIdentifier:@"gotoPlayViewFromTagView" sender:self];
