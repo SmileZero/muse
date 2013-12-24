@@ -10,6 +10,7 @@
 #import "SWRevealViewController.h"
 #import "User.h"
 #import "Tag.h"
+#import "Reachability.h"
 
 @interface StartViewController ()
 
@@ -26,32 +27,6 @@
     return self;
 }
 
-//- (void) prepareForSegue: (UIStoryboardSegue *) segue sender: (id) sender
-//{
-//    // Set the title of navigation bar by using the menu items
-//    //NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//    //UINavigationController *destViewController = (UINavigationController*)segue.destinationViewController;
-//    //destViewController.title = [[_menuItems objectAtIndex:indexPath.row] capitalizedString];
-//    
-//    // Set the photo if it navigates to the PhotoView
-//    //    if ([segue.identifier isEqualToString:@"showSignIn"]) {
-//    //        SignInView *signin = (SignInView*)segue.destinationViewController;
-//    //    }
-//    
-//    if ( [segue isKindOfClass: [SWRevealViewControllerSegue class]] ) {
-//        SWRevealViewControllerSegue *swSegue = (SWRevealViewControllerSegue*) segue;
-//        
-//        swSegue.performBlock = ^(SWRevealViewControllerSegue* rvc_segue, UIViewController* svc, UIViewController* dvc) {
-//            
-//            UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
-//            [navController setViewControllers: @[dvc] animated: YES ];
-//            //[self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-//        };
-//        
-//    }
-//    
-//}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -67,31 +42,88 @@
                                             withAnimation:UIStatusBarAnimationFade];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)exitApplication {
+    [UIView beginAnimations:@"exitApplication" context:nil];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationTransition:(UIViewAnimationTransition)UIViewAnimationOptionCurveEaseOut forView:self.view.window cache:NO];
+    [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
+    self.view.layer.opacity = 0;
+    [UIView commitAnimations];
+}
+- (void)animationFinished:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    if ([animationID compare:@"exitApplication"] == 0) {
+        exit(0);
+    }
+}
+
+-(void)alertView:(UIAlertView*)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    switch (buttonIndex) {
+        case 0:
+            //１番目のボタンが押されたときの処理を記述する
+            NSLog(@"retry");
+            [self connectAndSignIn];
+            break;
+        case 1:
+            //２番目のボタンが押されたときの処理を記述する
+            NSLog(@"exit");
+            [self exitApplication];
+            break;
+    }
+    
+}
+
+- (void) connectAndSignIn
 {
-    if ([User getUser]) {
-        if ([[User getUser] signinWithRememberToken]) {
-            if ([Tag getAll]) {
-                [self performSegueWithIdentifier:@"jumpToPlay" sender:self];
-            } else {
-                UIAlertView * alert =
-                [[UIAlertView alloc] initWithTitle:@"Error"
-                message:@"Can not connect to the server."
-                delegate:nil
-                cancelButtonTitle:nil
-                otherButtonTitles:@"OK", nil];
-                
-                [alert show];
+    Reachability *r = [Reachability reachabilityWithHostName: SERVER_IP];
+    if ([r currentReachabilityStatus] == NotReachable) {
+        UIAlertView * alert =
+        [[UIAlertView alloc] initWithTitle:@"Error"
+                                   message:@"Network connection is not well!"
+                                  delegate:self
+                         cancelButtonTitle:nil
+                         otherButtonTitles:@"Retry",@"Exit", nil];
+        [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:false];
+    }
+    else{
+        if ([User getUser]) {
+            if ([[User getUser] signinWithRememberToken]) {
+                if ([Tag getAll]) {
+                    [self performSegueWithIdentifier:@"jumpToPlay" sender:self];
+                } else {
+                    UIAlertView * alert =
+                    [[UIAlertView alloc] initWithTitle:@"Error"
+                                               message:@"Network connection is not well!"
+                                              delegate:self
+                                     cancelButtonTitle:nil
+                                     otherButtonTitles:@"Retry",@"Exit", nil];
+                    
+                    [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:false];
+                }
+            }
+            else{
+                NSLog(@"remember_token is incorrent");
+                [self performSegueWithIdentifier:@"goToSign" sender:self];
             }
         }
         else{
-            NSLog(@"remember_token is incorrent");
             [self performSegueWithIdentifier:@"goToSign" sender:self];
         }
     }
-    else{
-        [self performSegueWithIdentifier:@"goToSign" sender:self];
-    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //[self connectAndSignIn];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self connectAndSignIn];
 }
 
 - (void)didReceiveMemoryWarning

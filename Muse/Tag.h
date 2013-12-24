@@ -16,6 +16,7 @@
 + (Tag *)tagWithName:(NSString *)name tag_id:(NSNumber *)tag_id;
 
 + (BOOL)getAll;
++ (BOOL)reloadFav;
 
 
 @end

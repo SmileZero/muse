@@ -66,6 +66,9 @@
 		21ABB20D18587E5C00BBCA8B /* last_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ABB20C18587E5C00BBCA8B /* last_icon.png */; };
 		21ABB20F18587F1A00BBCA8B /* pause_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ABB20E18587F1A00BBCA8B /* pause_icon.png */; };
 		21D8B0D9185718950013559A /* MenuButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 21D8B0D8185718950013559A /* MenuButton.png */; };
+		7A163F3818690D7E00F3CF57 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A163F3718690D7E00F3CF57 /* Reachability.m */; };
+		7A163F3A18690DF600F3CF57 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A163F3918690DF600F3CF57 /* SystemConfiguration.framework */; };
+		7A35E26F18693B16001729FA /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A35E26E18693B16001729FA /* FacebookSDK.framework */; };
 		7A3E0005185B3EAA000F5B6C /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E0004185B3EAA000F5B6C /* SignInViewController.m */; };
 		7A3E000B185B5F49000F5B6C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E000A185B5F49000F5B6C /* User.m */; };
 		7A3E000D18613AF2000F5B6C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3E000C18613AF2000F5B6C /* AdSupport.framework */; };
@@ -166,6 +169,10 @@
 		21ABB20C18587E5C00BBCA8B /* last_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = last_icon.png; path = Muse/last_icon.png; sourceTree = "<group>"; };
 		21ABB20E18587F1A00BBCA8B /* pause_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_icon.png; path = Muse/pause_icon.png; sourceTree = "<group>"; };
 		21D8B0D8185718950013559A /* MenuButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MenuButton.png; path = Muse/MenuButton.png; sourceTree = "<group>"; };
+		7A163F3618690D7E00F3CF57 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		7A163F3718690D7E00F3CF57 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		7A163F3918690DF600F3CF57 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		7A35E26E18693B16001729FA /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Muse/FacebookSDK.framework; sourceTree = "<group>"; };
 		7A3E0003185B3EAA000F5B6C /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		7A3E0004185B3EAA000F5B6C /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		7A3E0009185B5F49000F5B6C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -199,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A163F3A18690DF600F3CF57 /* SystemConfiguration.framework in Frameworks */,
 				214D6D09186207FF00BDCF0B /* GracenoteMusicID.framework in Frameworks */,
 				7A3E001918613B40000F5B6C /* libsqlite3.dylib in Frameworks */,
 				7A3E001718613B37000F5B6C /* libstdc++.dylib in Frameworks */,
@@ -211,6 +219,7 @@
 				21ABB1FC1857736100BBCA8B /* CoreVideo.framework in Frameworks */,
 				21ABB1F818576C9300BBCA8B /* AVFoundation.framework in Frameworks */,
 				21371F8B1850956700BB2A4F /* CoreGraphics.framework in Frameworks */,
+				7A35E26F18693B16001729FA /* FacebookSDK.framework in Frameworks */,
 				21371F8D1850956700BB2A4F /* UIKit.framework in Frameworks */,
 				21371F891850956700BB2A4F /* Foundation.framework in Frameworks */,
 			);
@@ -273,6 +282,8 @@
 		21371F871850956700BB2A4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7A35E26E18693B16001729FA /* FacebookSDK.framework */,
+				7A163F3918690DF600F3CF57 /* SystemConfiguration.framework */,
 				214D6D08186207FF00BDCF0B /* GracenoteMusicID.framework */,
 				7A3E001818613B40000F5B6C /* libsqlite3.dylib */,
 				7A3E001618613B37000F5B6C /* libstdc++.dylib */,
@@ -371,6 +382,8 @@
 		215C384D185ABB42007D3452 /* ServerConnection */ = {
 			isa = PBXGroup;
 			children = (
+				7A163F3618690D7E00F3CF57 /* Reachability.h */,
+				7A163F3718690D7E00F3CF57 /* Reachability.m */,
 				215C3851185ABC09007D3452 /* ServerConnection.h */,
 				215C3852185ABC09007D3452 /* ServerConnection.m */,
 				7A3E0009185B5F49000F5B6C /* User.h */,
@@ -602,6 +615,7 @@
 				7A3E003A1863D22E000F5B6C /* StartViewController.m in Sources */,
 				215C3863185DA908007D3452 /* XiamiObject.m in Sources */,
 				214D6D0C1862BA7300BDCF0B /* TagViewController.m in Sources */,
+				7A163F3818690D7E00F3CF57 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,6 +746,7 @@
 					/Users/yan_runchen/Downloads/GN_Music_SDK_iOS_3_3_0_14,
 					/Users/Downloads/GN_Music_SDK_iOS_3_3_0_14,
 					/Users/zhu_peijun/github/muse/Muse,
+					/Users/yan_runchen/iPhoneWorks/Muse/muse/Muse,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Muse/Muse-Prefix.pch";
@@ -750,6 +765,7 @@
 					/Users/yan_runchen/Downloads/GN_Music_SDK_iOS_3_3_0_14,
 					/Users/Downloads/GN_Music_SDK_iOS_3_3_0_14,
 					/Users/zhu_peijun/github/muse/Muse,
+					/Users/yan_runchen/iPhoneWorks/Muse/muse/Muse,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Muse/Muse-Prefix.pch";

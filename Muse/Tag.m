@@ -18,6 +18,59 @@
     return tag;
 }
 
++ (BOOL)reloadFav
+{
+    NSString *errorDesc = nil;
+    NSPropertyListFormat format;
+    NSString *plistPath;
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    plistPath = [rootPath stringByAppendingPathComponent:@"TagSource.plist"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+        plistPath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
+    }
+    NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
+    NSArray* tagArray = (NSArray *)[NSPropertyListSerialization
+                            propertyListFromData:plistXML
+                            mutabilityOption:NSPropertyListMutableContainersAndLeaves
+                            format:&format
+                            errorDescription:&errorDesc];
+    if (!tagArray) {
+        return NO;
+    }
+    else{
+        NSMutableArray* newTagArray = [tagArray mutableCopy];
+        NSDictionary* liked = tagArray[0];
+        NSMutableDictionary* newLiked = [liked mutableCopy];
+        NSData *data = [ServerConnection getRequestToURL:[NSString stringWithFormat:@"%@/fav.json", SERVER_URL]];
+        if (!data) {
+            return NO;
+        }
+        NSError* error = nil;
+        NSDictionary* resultDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if (!resultDictionary) {
+            NSLog(@"NSJSONSerialization error:%@ ", error);
+            return NO;
+        }
+        if ([resultDictionary[@"status"]  isEqual: @"ok"]) {
+            [newLiked removeObjectForKey:@"MusicIds"];
+            [newLiked setObject:resultDictionary[@"tag"][@"music_list"] forKey:@"MusicIds"];
+            [newTagArray removeObjectAtIndex:0];
+            [newTagArray insertObject:newLiked atIndex:0];
+            
+            NSString* errorStr = nil;
+            NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:newTagArray
+                                                                           format:NSPropertyListXMLFormat_v1_0
+                                                                 errorDescription:&errorStr];
+            
+            [plistData writeToFile:plistPath atomically:YES];
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 + (BOOL)getAll
 {
     NSData *data = [ServerConnection getRequestToURL:[NSString stringWithFormat:@"%@/tags.json", SERVER_URL]];
@@ -110,5 +163,7 @@
         return NO;
     }
 }
+
+
 
 @end

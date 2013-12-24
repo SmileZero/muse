@@ -377,6 +377,7 @@
     
     if (result) {
         [self loadMusic];
+        [self updateTagView];
     }
     
 }
@@ -548,7 +549,7 @@
 
 - (void) updateTagView
 {
-    [Tag getAll];
+    [Tag reloadFav];
     
     TagViewController * tagViewController = (TagViewController * ) self.revealViewController.rearViewController;
     
