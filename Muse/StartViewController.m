@@ -78,6 +78,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 - (void) connectAndSignIn
 {
     Reachability *r = [Reachability reachabilityWithHostName: SERVER_IP];
+    NSLog(@"%d",[r currentReachabilityStatus]);
     if ([r currentReachabilityStatus] == NotReachable) {
         UIAlertView * alert =
         [[UIAlertView alloc] initWithTitle:@"Error"
@@ -89,7 +90,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     }
     else{
         if ([User getUser]) {
-            if ([[User getUser] signinWithRememberToken]) {
+            NSString *result = [[User getUser] signinWithRememberToken];
+            if ([result isEqual:@"ok"]) {
                 if ([Tag getAll]) {
                     [self performSegueWithIdentifier:@"jumpToPlay" sender:self];
                 } else {
@@ -104,7 +106,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                 }
             }
             else{
-                NSLog(@"remember_token is incorrent");
+                NSLog(@"%@",result);
                 [self performSegueWithIdentifier:@"goToSign" sender:self];
             }
         }
@@ -117,7 +119,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //[self connectAndSignIn];
 }
 
 - (void)viewDidAppear:(BOOL)animated

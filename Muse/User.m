@@ -78,28 +78,34 @@ static User *current_user;
     return [User userWithEmail:email password:password name:nil avatar:nil remembrer_token:nil user_id:nil];
 }
 
--(void)getCSRFToken
+-(BOOL)getCSRFToken
 {
     NSData *data = [ServerConnection getRequestToURL:[NSString stringWithFormat:@"%@/getCSRFToken.json", SERVER_URL]];
     if (!data) {
-        return;
+        return NO;
     }
     
     NSError *error = nil;
     NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     if (!userDictionary) {
         NSLog(@"NSJSONSerialization error:%@ ", error);
-        return;
+        return NO;
     }
     CSRFToken = userDictionary[@"csrf_token"];
+    return YES;
 }
 
--(BOOL)signin
+-(NSString *)signin
 {
     NSLog(@"--- signIn %@ %@", current_user.email, current_user.password);
-    [self getCSRFToken];
+    if (![self getCSRFToken]) {
+        return @"Network connection error";
+    }
     NSError *error = nil;
     NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signin", SERVER_URL] method:@"POST" JSONObject:@{@"session": @{@"email" : current_user.email, @"password" : current_user.password}, @"authenticity_token": CSRFToken}];
+    if (!data) {
+        return @"Network connection error";
+    }
     // set todo_id
     
     NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
@@ -123,21 +129,27 @@ static User *current_user;
         }
         else {
             NSLog(@"%@",error);
+            return @"failed";
         }
-        return YES;
+        return @"ok";
     }
     else{
-        return NO;
+        return @"Email/Password Incorrect";
     }
 }
 
--(BOOL)signinWithRememberToken
+-(NSString *)signinWithRememberToken
 {
     if (current_user.remembrer_token) {
         NSLog(@"--- signinWithToken %@ %@", current_user.email, current_user.remembrer_token);
-        [self getCSRFToken];
+        if (![self getCSRFToken]) {
+            return @"Network connection error";
+        }
         NSError *error = nil;
         NSData *data = [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signin", SERVER_URL] method:@"POST" JSONObject:@{@"session": @{@"remember_token" : current_user.remembrer_token}, @"authenticity_token": CSRFToken}];
+        if (!data) {
+            return @"Network connection error";
+        }
         // set todo_id
         NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
         if ([userDictionary[@"status"]  isEqual: @"ok"]) {
@@ -160,14 +172,15 @@ static User *current_user;
             }
             else {
                 NSLog(@"%@",error);
+                return @"failed";
             }
-            return YES;
+            return @"ok";
         }
         else{
-            return NO;
+            return @"Remember_token is incorrect";
         }
     }
-    else return NO;
+    else return @"failed";
 }
 
 - (NSString *)signup
@@ -209,8 +222,9 @@ static User *current_user;
 - (BOOL)signout
 {
     NSLog(@"--- signOut %@ %@", current_user.email, current_user.name);
-    [self getCSRFToken];
-    [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signout.json", SERVER_URL] method:@"DELETE" JSONObject:@{@"authenticity_token": CSRFToken}];
+    if ([self getCSRFToken]) {
+        [ServerConnection sendRequestToURL:[NSString stringWithFormat:@"%@/signout.json", SERVER_URL] method:@"DELETE" JSONObject:@{@"authenticity_token": CSRFToken}];
+    }
     
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserProfile.plist"];

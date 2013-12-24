@@ -22,7 +22,8 @@
     }
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
-                                    [NSURL URLWithString:url]];
+                                    [NSURL URLWithString:url] cachePolicy: NSURLRequestReloadIgnoringCacheData
+                                                       timeoutInterval:10.0];
     [request setHTTPMethod:method];
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:requestData];
@@ -41,7 +42,8 @@
 + (NSData *)getRequestToURL:(NSString *)url {
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
-                                    [NSURL URLWithString:url]];
+                                    [NSURL URLWithString:url] cachePolicy: NSURLRequestReloadIgnoringCacheData
+                                                       timeoutInterval:10.0];
     NSHTTPURLResponse *response = nil;
     NSError *error = nil;
     
@@ -51,4 +53,5 @@
     }
     return data;
 }
+
 @end

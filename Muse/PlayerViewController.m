@@ -121,7 +121,7 @@
         [dict setObject:_currentMusic.artist forKey:MPMediaItemPropertyArtist];
         [dict setObject:[[MPMediaItemArtwork alloc] initWithImage:_currentMusic.cover] forKey:MPMediaItemPropertyArtwork];
         
-        [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:nil];
+        //[[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:nil];
         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
     }
 }

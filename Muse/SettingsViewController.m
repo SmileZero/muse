@@ -256,7 +256,6 @@
         [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
         
         [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
-        [audioSession setActive:YES error: &error];
         
         //[Player stopMoviePlayer];
         PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
@@ -311,7 +310,7 @@
     NSLog(@"play");
     [self musicInfoHide];
     [_containerView removeFromSuperview];
-    [[AVAudioSession sharedInstance] setActive:NO error: nil];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     //[Player playMoviePlayer];
     
     PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
@@ -330,7 +329,7 @@
     [self musicInfoHide];
     [containerView removeFromSuperview];
     //[Player playMoviePlayer];
-    [[AVAudioSession sharedInstance] setActive:NO error: nil];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     
     
     
