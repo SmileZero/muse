@@ -94,7 +94,7 @@ static int playType = 0;
 {
     int n = (int)[playList count];
     
-    srand((int)&n);
+    srand((int)playList);
     
     for(int i = 0;i < n; i++) {
         int index = rand() % (n - i);
@@ -110,8 +110,12 @@ static int playType = 0;
     
     currentPlayListIndex = (currentPlayListIndex + 1) % n;
     
-    if (currentPlayListIndex == n - 1) {
+    if (currentPlayListIndex == 1) {
         [self shuffle];
+        
+        for (int i = 0; i < n; i++) {
+            NSLog(@"%@", playList[i]);
+        }
     }
     
     return [NSString stringWithFormat:@"%@", playList[currentPlayListIndex]];
