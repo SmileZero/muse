@@ -32,12 +32,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    UIGraphicsBeginImageContext(self.view.frame.size);
-    [[UIImage imageNamed:@"museStart.png"] drawInRect:self.view.bounds];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    //UIGraphicsBeginImageContext(self.view.frame.size);
+    //[[UIImage imageNamed:@"museStart.png"] drawInRect:self.view.bounds];
+    //UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    //UIGraphicsEndImageContext();
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:image];
+    //self.view.backgroundColor = [UIColor colorWithPatternImage:image];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES
                                             withAnimation:UIStatusBarAnimationFade];

@@ -54,8 +54,20 @@
     if ([User getUser] && ![[User getUser].email hasPrefix:@"#facebook#"] ) {
         _emailView.text = [User getUser].email;
     }
-    _signUpView.backgroundColor = [UIColor colorWithWhite:0.18f alpha:1.0f];
-    _signUpView.layer.cornerRadius = 5;
+    
+    _emailSignUp.layer.cornerRadius = 1;
+    
+    
+    _pwdSignUp.layer.cornerRadius = 1;
+    
+    
+    _pwdConfirmSignUp.layer.cornerRadius = 1;
+    
+    
+    _nameSignUp.layer.cornerRadius = 1;
+    
+    //_signUpView.backgroundColor = [UIColor colorWithWhite:0.18f alpha:1.0f];
+    //_signUpView.layer.cornerRadius = 5;
     _signUpView.layer.masksToBounds = YES;
     _signInBtn.layer.cornerRadius = 5;
     //_signUpView.layer.borderColor = [UIColor colorWithWhite:0.1f alpha:1.0f].CGColor;
@@ -75,6 +87,9 @@
     _signUpContainer.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
 
 }
+
+
+
 
 - (void) viewDidAppear:(BOOL)animated
 {
