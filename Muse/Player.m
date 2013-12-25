@@ -15,8 +15,9 @@ static MPMoviePlayerController * moviePlayer = NULL;
 static XiamiObject * currentMusic = NULL;
 static int currentPlayStatus = 0;
 static int currentIndex = -1;
+static int currentPlayListIndex = 0;
 
-static NSArray * playList = NULL;
+static NSMutableArray * playList = NULL;
 
 // play type
 // 0 is recommended music
@@ -64,7 +65,7 @@ static int playType = 0;
 
 + (void) setPlayList: (NSArray *) list : (int) index
 {
-    playList = list;
+    playList = [NSMutableArray arrayWithArray:list];
     currentIndex = index;
 }
 
@@ -89,31 +90,68 @@ static int playType = 0;
     [moviePlayer play];
 }
 
-
-+ (void) updatePlayListDataToFav
++ (void) shuffle
 {
-    if (currentIndex != 1) {
-        return ;
-    }
+    int n = (int)[playList count];
     
-    NSString *errorDesc = nil;
-    NSPropertyListFormat format;
-    NSString *plistPath;
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    plistPath = [rootPath stringByAppendingPathComponent:@"TagSource.plist"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
-        plistPath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
-    }
-    NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
-    NSArray * tagArray = (NSArray *)[NSPropertyListSerialization
-                            propertyListFromData:plistXML
-                            mutabilityOption:NSPropertyListMutableContainersAndLeaves
-                            format:&format
-                            errorDescription:&errorDesc];
+    srand((int)&n);
     
-    [Player setPlayList:tagArray[1][@"MusicIds"] : 1];
+    for(int i = 0;i < n; i++) {
+        int index = rand() % (n - i);
+        id music = playList[n - i - 1];
+        playList[n - i - 1] = playList[index];
+        playList[index] = music;
+    }
 }
+
++ (NSString *)getNextMusicFromPlayList
+{
+    int n = (int)[playList count];
+    
+    currentPlayListIndex = (currentPlayListIndex + 1) % n;
+    
+    if (currentPlayListIndex == n - 1) {
+        [self shuffle];
+    }
+    
+    return [NSString stringWithFormat:@"%@", playList[currentPlayListIndex]];
+}
+
++ (void) addMusicToCurrentPlayListWithIdentifier: (NSString *) identifier
+{
+    [playList addObject:identifier];
+}
+
++ (void) removeMusicFromCurrentPlayList:(XiamiObject *) music
+{
+    
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    
+    
+    int n = (int)[playList count];
+    
+    for (int i = 0; i < n; i++) {
+        NSString * playListMusicId = [NSString stringWithFormat:@"%@", playList[i]];
+        NSString * musicId = [NSString stringWithFormat:@"%@", music.identifier];
+        
+        NSLog(@"%@ %@", playListMusicId, musicId);
+        
+        if ([playListMusicId isEqualToString:musicId]) {
+            
+            [array addObject:[NSNumber numberWithInt:i]];
+        }
+    }
+    
+    int m = (int)[array count];
+    
+    for (int j = m - 1; j >= 0; j--) {
+        NSLog(@"remove: %d",(int) [array[j] integerValue]);
+        [playList removeObjectAtIndex:[array[j] integerValue]];
+    }
+    
+    NSLog(@"%d", (int)[playList count]);
+}
+
 
 
 @end

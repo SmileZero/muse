@@ -32,5 +32,6 @@
 - (void)loadMusic;
 - (void)musicPlay;
 - (void)musicPause;
+- (void)musicStop;
 
 @end

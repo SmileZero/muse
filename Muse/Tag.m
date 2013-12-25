@@ -39,7 +39,7 @@
     if (!tagArray) {
         return NO;
     }
-    else{
+    else{ 
         NSMutableArray* newTagArray = [tagArray mutableCopy];
         NSDictionary* liked = tagArray[0];
         NSMutableDictionary* newLiked = [liked mutableCopy];
@@ -67,8 +67,6 @@
             [plistData writeToFile:plistPath atomically:YES];
             return YES;
         }
-        
-        [Player updatePlayListDataToFav];
     }
     
     return NO;

@@ -72,12 +72,12 @@ static User *current_user;
 
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password name:(NSString *)name
 {
-    return [User userWithEmail:email password:password name:name avatar:nil remembrer_token:nil resource_id:0 user_id:nil];
+    return [User userWithEmail:email password:password name:name avatar:nil remembrer_token:nil resource_id:[NSNumber numberWithInt:0] user_id:nil];
 }
 
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password
 {
-    return [User userWithEmail:email password:password name:nil avatar:nil remembrer_token:nil resource_id:0 user_id:nil];
+    return [User userWithEmail:email password:password name:nil avatar:nil remembrer_token:nil resource_id:[NSNumber numberWithInt:0] user_id:nil];
 }
 
 -(BOOL)getCSRFToken

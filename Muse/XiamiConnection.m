@@ -36,17 +36,34 @@
         
         NSString * coverDefaultSizeURL = [dic objectForKey:@"cover_url"];
         int length = [coverDefaultSizeURL length];
-        NSString * coverHeader = [coverDefaultSizeURL substringToIndex: length - 4];
-        NSString * coverType = [coverDefaultSizeURL substringWithRange:NSMakeRange(length - 4, 4)];
+        
+        int k;
+        
+        for (k = length - 1; k >= 0; k--) {
+            if ([coverDefaultSizeURL characterAtIndex:k] == '.') {
+                break;
+            }
+        }
+        
+        int n = length - k;
+        
+        NSString * coverHeader = [coverDefaultSizeURL substringToIndex: length - n];
+        NSString * coverType = [coverDefaultSizeURL substringWithRange:NSMakeRange(length - n, n)];
         
         NSString * coverURL = [NSString stringWithFormat:@"%@%@%@", coverHeader, @"_2", coverType];
         
-        //NSLog(@"%@", coverURL);
+        NSLog(@"%@", coverURL);
+        NSLog(@"%d", k);
+        
+        if (k < 0 || n > 10) {
+            musicInfo.cover = [UIImage imageNamed:@"DefaultMusicPicture.png"];
+        } else {
+            musicInfo.cover = [self getCoverWithURL:coverURL];
+        }
         
         musicInfo.identifier = [dic objectForKey:@"id"];
         musicInfo.title = [dic objectForKey:@"name"];
         musicInfo.musicURL = [dic objectForKey:@"location"];
-        musicInfo.cover = [self getCoverWithURL:coverURL];
         musicInfo.artist = [dic objectForKey:@"artist_name"];
         musicInfo.mark = [NSString stringWithFormat: @"%@", [dic objectForKey:@"mark"]];
     }

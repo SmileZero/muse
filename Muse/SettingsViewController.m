@@ -266,7 +266,7 @@
     else if (indexPath.row == 2){
         if ([[User getUser] signout]) {
             PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
-            [playViewController musicPause];
+            [playViewController musicStop];
             [FBSession.activeSession closeAndClearTokenInformation];
             [FBSession.activeSession close];
             [FBSession setActiveSession:nil];

@@ -134,6 +134,8 @@
     
     NSLog(@"screen width: %f, height: %f", screenWidth, screenHeight);
     
+    _pauseImageV2.hidden = YES;
+    _pauseImageV3.hidden = NO;
     
     if (screenHeight <= 481) {
         
@@ -268,19 +270,23 @@
 
     music = [conn getMusicWithIdentifier:identifier];
     
-    _currentMusic = music;
-    [Player setCurrentMusic:_currentMusic];
     
-    _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
-    
-    [self loadCurrentMusicInformation];
-    
-    [self.moviePlayer play];
-    
-    _currentPlayStatus = 1;
-    
-    [Player setCurrentPlayStatus:_currentPlayStatus];
-
+    if (!music) {
+        [self performSelectorOnMainThread:@selector(internetErrorAlert)withObject:nil waitUntilDone:YES];
+    } else {
+        _currentMusic = music;
+        [Player setCurrentMusic:_currentMusic];
+        
+        _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
+        
+        [self loadCurrentMusicInformation];
+        
+        [self.moviePlayer play];
+        
+        _currentPlayStatus = 1;
+        
+        [Player setCurrentPlayStatus:_currentPlayStatus];
+    }
 }
 
 - (void)loadMusic
@@ -307,10 +313,23 @@
         
         _playList = ar;
         
-        int n = [_playList count];
-        srand((int) conn);
-        music = [conn getMusicWithIdentifier:_playList[rand() % n]];
+        int n = (int)[_playList count];
+        
+        if (n == 0) {
+            TagViewController * tagViewController = (TagViewController *)self.revealViewController.rearViewController;
+            
+            tagViewController.currentIndex = 0;
+            [tagViewController realoadTableData];
+            
+            [Player setPlayType: 0];
+            music = [conn getRecemmondMusic];
+            
+        } else {
+            music = [conn getMusicWithIdentifier:[Player getNextMusicFromPlayList]];
+        }
     }
+    
+    NSLog(@"%@", music.identifier);
     
     _currentMusic = music;
     [Player setCurrentMusic:_currentMusic];
@@ -376,8 +395,8 @@
     BOOL result = [conn hateSongWithIdentifier:_currentMusic.identifier];
     
     if (result) {
-        [self loadMusic];
         [self updateTagView];
+        [self loadMusic];
     }
     
 }
@@ -406,6 +425,7 @@
     [self initPlayer];
     
     if ([Player getCurrentMusic] == NULL) {
+        NSLog(@"Load new music!");
         [self loadMusic];
     } else {
         
@@ -490,7 +510,6 @@
 - (IBAction)pauseButtonClicked:(id)sender {
     
     NSLog(@"clicked");
-    
     if (self.currentPlayStatus == 0) {
         self.currentPlayStatus = 1;
         [self moviePlay];
@@ -502,10 +521,9 @@
     [Player setCurrentPlayStatus:_currentPlayStatus];
     
     NSLog(@"statuse change to %d", _currentPlayStatus);
-    
 }
 - (IBAction)nextButtonClicked:(id)sender {
-    
+    _currentPlayStatus = 0;
     [self loadMusic];
 }
 
@@ -524,10 +542,10 @@
     
     //NSLog(@"moviePlaybackStateDidChange = %f", [_moviePlayer currentPlaybackTime]);
     
-    int isPlay = [_moviePlayer playbackState];
+    int isPlay = (int)[_moviePlayer playbackState];
     float playTime = [_moviePlayer currentPlaybackTime];
     
-    if (isPlay == 2 && playTime > 1) {
+    if (isPlay == 2) {
         _pauseImageV2.hidden = YES;
         _pauseImageV3.hidden = NO;
         
@@ -537,9 +555,9 @@
     }
     
     
-    NSLog(@"C: %d M:%d", _currentPlayStatus, isPlay);
+    NSLog(@"C: %d M:%d T: %f", _currentPlayStatus, isPlay, playTime);
     
-    if (isPlay == 2 && _currentPlayStatus == 1 && playTime > 2) {
+    if (isPlay == 2 && _currentPlayStatus == 1 && playTime > 4) {
         NSLog(@"try once!");
         
         [self performSelector: @selector(moviePlay) withObject:nil afterDelay:5];
@@ -552,7 +570,7 @@
     [Tag reloadFav];
     
     TagViewController * tagViewController = (TagViewController * ) self.revealViewController.rearViewController;
-    
+
     [tagViewController realoadTableData];
 
 }
@@ -593,6 +611,15 @@
         self.currentPlayStatus = 0;
         [Player setCurrentPlayStatus:_currentPlayStatus];
         [_moviePlayer pause];
+    }
+}
+
+- (void)musicStop
+{
+    if ([_moviePlayer playbackState] == 1) {
+        [_moviePlayer pause];
+        self.currentPlayStatus = 0;
+        [Player setCurrentMusic:NULL];
     }
 }
 

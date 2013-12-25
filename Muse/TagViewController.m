@@ -11,6 +11,7 @@
 #import "SWRevealViewController.h"
 #import "PlayerViewController.h"
 #import "Tag.h"
+#import "TagSoucePlist.h"
 
 @interface TagViewController ()
 
@@ -45,7 +46,32 @@
 - (void)realoadTableData
 {
     UITableView * tableView = (UITableView *)[self.view viewWithTag:3001];
+    
+    
+    if (_currentIndex == 1) {
+        [Player setPlayList:[TagSoucePlist readTagSourcePlistData][0][@"MusicIds"]:1];
+    }
+    
     [tableView reloadData];
+}
+- (void)selectTagAtIndex: (int) index
+{
+}
+
+- (void) setCurrentTagIndex:(int)currentIndex
+{
+    UITableView * tableView = (UITableView *)[self.view viewWithTag:3001];
+    UITableViewCell * cell_before = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
+    UIImageView * beforeLabelImageView = (UIImageView *) [cell_before viewWithTag:211];
+    beforeLabelImageView.hidden = YES;
+    
+    NSLog(@"111: %d", _currentIndex);
+    _currentIndex = currentIndex;
+    NSLog(@"222: %d", _currentIndex);
+    
+    UITableViewCell * cell_after = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
+    UIImageView * afterLabelImageView = (UIImageView *) [cell_after viewWithTag:211];
+    afterLabelImageView.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,6 +111,8 @@
 {
     //NSString * filePath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
     //_tagArray = [NSArray arrayWithContentsOfFile:filePath];
+    
+    //NSLog(@"%d", indexPath.section);
     
     NSString *errorDesc = nil;
     NSPropertyListFormat format;
@@ -144,7 +172,7 @@
     UILabel * countMusicOfThisTagLabel = (UILabel *)[cell viewWithTag:102];
     
     
-    NSLog(@"%@ %@ %d", tagNameLabel.text, countMusicOfThisTagLabel.text, indexPath.row);
+    //NSLog(@"%@ %@ %d", tagNameLabel.text, countMusicOfThisTagLabel.text, indexPath.row);
     
     if ([countMusicOfThisTagLabel.text isEqualToString:@"0"]) {
         [cell setUserInteractionEnabled:NO];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Gqx-ex-Ecy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Gqx-ex-Ecy">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
@@ -21,7 +21,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LBI-8Q-H0N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-346" y="-106"/>
+            <point key="canvasLocation" x="-358" y="-718"/>
         </scene>
         <!--Tag View Controller-->
         <scene sceneID="bOR-14-H0R">
@@ -214,7 +214,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x8w-um-0WA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-783" y="614"/>
+            <point key="canvasLocation" x="-1119" y="626"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="G9a-Rc-iQy">
@@ -369,7 +369,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="seL-Lj-ale" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-783" y="-106"/>
+            <point key="canvasLocation" x="-775" y="-118"/>
         </scene>
         <!--Player View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -544,7 +544,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="575" y="550"/>
+            <point key="canvasLocation" x="155" y="586"/>
         </scene>
     </scenes>
     <resources>
@@ -574,7 +574,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="M2d-d5-mYs"/>
-        <segue reference="bAU-xQ-OV1"/>
+        <segue reference="jqH-Ia-gma"/>
+        <segue reference="5FC-uT-4Q7"/>
     </inferredMetricsTieBreakers>
 </document>

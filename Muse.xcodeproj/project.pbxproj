@@ -10,6 +10,7 @@
 		2104C6DD18597D4D008ED8BE /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = 2104C6DA18597D4D008ED8BE /* 58.png */; };
 		2104C6DE18597D4D008ED8BE /* 80.png in Resources */ = {isa = PBXBuildFile; fileRef = 2104C6DB18597D4D008ED8BE /* 80.png */; };
 		2104C6DF18597D4D008ED8BE /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 2104C6DC18597D4D008ED8BE /* 120.png */; };
+		211ED840186A77C200B096E7 /* TagSoucePlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 211ED83F186A77C200B096E7 /* TagSoucePlist.m */; };
 		21371F891850956700BB2A4F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21371F881850956700BB2A4F /* Foundation.framework */; };
 		21371F8B1850956700BB2A4F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21371F8A1850956700BB2A4F /* CoreGraphics.framework */; };
 		21371F8D1850956700BB2A4F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21371F8C1850956700BB2A4F /* UIKit.framework */; };
@@ -103,6 +104,8 @@
 		2104C6DA18597D4D008ED8BE /* 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 58.png; path = Muse/58.png; sourceTree = "<group>"; };
 		2104C6DB18597D4D008ED8BE /* 80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 80.png; path = Muse/80.png; sourceTree = "<group>"; };
 		2104C6DC18597D4D008ED8BE /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 120.png; path = Muse/120.png; sourceTree = "<group>"; };
+		211ED83E186A77C200B096E7 /* TagSoucePlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagSoucePlist.h; sourceTree = "<group>"; };
+		211ED83F186A77C200B096E7 /* TagSoucePlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagSoucePlist.m; sourceTree = "<group>"; };
 		21371F851850956700BB2A4F /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21371F881850956700BB2A4F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		21371F8A1850956700BB2A4F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -326,6 +329,8 @@
 				7A3E0004185B3EAA000F5B6C /* SignInViewController.m */,
 				7A3E00381863D22E000F5B6C /* StartViewController.h */,
 				7A3E00391863D22E000F5B6C /* StartViewController.m */,
+				211ED83E186A77C200B096E7 /* TagSoucePlist.h */,
+				211ED83F186A77C200B096E7 /* TagSoucePlist.m */,
 			);
 			path = Muse;
 			sourceTree = "<group>";
@@ -616,6 +621,7 @@
 				215C3863185DA908007D3452 /* XiamiObject.m in Sources */,
 				214D6D0C1862BA7300BDCF0B /* TagViewController.m in Sources */,
 				7A163F3818690D7E00F3CF57 /* Reachability.m in Sources */,
+				211ED840186A77C200B096E7 /* TagSoucePlist.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

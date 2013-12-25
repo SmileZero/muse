@@ -29,7 +29,10 @@
 + (int) getPlayType;
 + (void) setPlayList: (NSArray *) list : (int) index;
 + (NSArray *) getPlayList;
-+ (void) updatePlayListDataToFav;
++ (void) addMusicToCurrentPlayListWithIdentifier: (NSString *) identifier;
++ (void) removeMusicFromCurrentPlayList:(XiamiObject *) music;
+
++ (NSString *)getNextMusicFromPlayList;
 
 
 @end

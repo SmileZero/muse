@@ -16,7 +16,8 @@
 
 
 - (void)realoadTableData;
-
+- (void)selectTagAtIndex: (int) index;
+- (void) setCurrentTagIndex:(int)currentIndex;
 
 @property int currentIndex; 
 @end
