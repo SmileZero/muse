@@ -72,12 +72,12 @@ static User *current_user;
 
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password name:(NSString *)name
 {
-    return [User userWithEmail:email password:password name:name avatar:nil remembrer_token:nil resource_id:0 user_id:nil];
+    return [User userWithEmail:email password:password name:name avatar:nil remembrer_token:nil resource_id:[NSNumber numberWithInt:0] user_id:nil];
 }
 
 + (User *)userWithEmail:(NSString *)email password:(NSString *)password
 {
-    return [User userWithEmail:email password:password name:nil avatar:nil remembrer_token:nil resource_id:0 user_id:nil];
+    return [User userWithEmail:email password:password name:nil avatar:nil remembrer_token:nil resource_id:[NSNumber numberWithInt:0] user_id:nil];
 }
 
 -(BOOL)getCSRFToken
@@ -181,11 +181,6 @@ static User *current_user;
             return @"ok";
         }
         else{
-            if ([[User getUser].resource_id isEqual:[NSNumber numberWithInt:1]])
-            {
-                [self signout];
-                current_user = nil;
-            }
             return @"Remember_token is incorrect";
         }
     }
@@ -196,6 +191,9 @@ static User *current_user;
 {
     NSLog(@"--- signUp %@ %@", current_user.email, current_user.name);
     [self getCSRFToken];
+    if (![self getCSRFToken]) {
+        return @"Network connection error";
+    }
     NSError *error = nil;
     NSData *data = nil;
     if ([current_user.resource_id isEqualToNumber: [NSNumber numberWithInt:0]] ) {
@@ -300,6 +298,9 @@ static User *current_user;
         //TODO: Handle/Log error
         NSLog(@"UserProfile.plist can't be deleted");
     }
+    
+    current_user = nil;
+    
     return YES;
 }
 
