@@ -19,5 +19,8 @@
 - (void)selectTagAtIndex: (int) index;
 - (void) setCurrentTagIndex:(int)currentIndex;
 
++ (int) getLikeTagIndex;
++ (int) getGuessTagIndex;
+
 @property int currentIndex; 
 @end

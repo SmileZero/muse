@@ -328,7 +328,7 @@
         if (n == 0) {
             TagViewController * tagViewController = (TagViewController *)self.revealViewController.rearViewController;
             
-            tagViewController.currentIndex = 0;
+            tagViewController.currentIndex = [TagViewController getGuessTagIndex];
             [tagViewController realoadTableData];
             
             [Player setPlayType: 0];
@@ -433,6 +433,8 @@
 
     [super viewDidLoad];
     [self initPlayer];
+    
+    NSLog(@"player view did load");
     
     if ([Player getCurrentMusic] == NULL) {
         NSLog(@"Load new music!");
@@ -602,8 +604,7 @@
 
 - (void)musicPlay
 {
-    if ([_moviePlayer playbackState] == 2) {
-        
+    if (_currentPlayStatus == 0) {
         //[self enableButton];
         
         self.currentPlayStatus = 1;
@@ -614,11 +615,16 @@
 
 - (void)musicPause
 {
-    if ([_moviePlayer playbackState] == 1) {
+    
+    NSLog(@"current play status: %d", _currentPlayStatus );
+    
+    if (_currentPlayStatus == 1) {
         
         //[self disableButton];
         
-        self.currentPlayStatus = 0;
+        NSLog(@"music pause");
+        
+        _currentPlayStatus = 0;
         [Player setCurrentPlayStatus:_currentPlayStatus];
         [_moviePlayer pause];
     }

@@ -26,6 +26,18 @@
 @property (weak, nonatomic) IBOutlet UIControl *signUpContainer;
 @property (strong, nonatomic) FBLoginView *fbloginBtn;
 
+@property (weak, nonatomic) IBOutlet UIView *getPasswordView;
+@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
+@property (weak, nonatomic) IBOutlet UILabel *signUpLabel;
+
+
+//find back password part
+@property (weak, nonatomic) IBOutlet UILabel *findBackPasswordLabel;
+@property (weak, nonatomic) IBOutlet UIButton *findBackPasswordButton;
+@property (weak, nonatomic) IBOutlet UITextField *findBackEmail;
+@property (weak, nonatomic) IBOutlet UILabel *findBackPasswordPromote;
+
+
 - (IBAction)signIn:(id)sender;
 - (IBAction)signUp:(id)sender;
 - (IBAction)closeViewEdit:(id)sender;
@@ -55,9 +67,20 @@
         _emailView.text = [User getUser].email;
     }
     
+    
+    //find back password part
+    _findBackEmail.layer.cornerRadius = 1;
+    
+    
+    
+    //
+    
+    
+    _emailView.layer.cornerRadius = 1;
+    _passwordView.layer.cornerRadius = 1;
+    
     _emailSignUp.layer.cornerRadius = 1;
-    
-    
+
     _pwdSignUp.layer.cornerRadius = 1;
     
     
@@ -69,7 +92,7 @@
     //_signUpView.backgroundColor = [UIColor colorWithWhite:0.18f alpha:1.0f];
     //_signUpView.layer.cornerRadius = 5;
     _signUpView.layer.masksToBounds = YES;
-    _signInBtn.layer.cornerRadius = 5;
+    _signInBtn.layer.cornerRadius = 3;
     //_signUpView.layer.borderColor = [UIColor colorWithWhite:0.1f alpha:1.0f].CGColor;
     //_signUpView.layer.borderWidth = 7.0f;
     _signUpView.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -164,12 +187,12 @@
     NSTimeInterval animationDuration = 0.30f;
     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
     [UIView setAnimationDuration:animationDuration];
-    float width = self.view.frame.size.width;
-    float height = self.view.frame.size.height;
+    float width = _signUpContainer.frame.size.width;
+    float height = _signUpContainer.frame.size.height;
     
     float Y = 0.00f;
     CGRect rect = CGRectMake(0.0f, Y, width, height);
-    self.view.frame = rect;
+    _signUpContainer.frame = rect;
     [UIView commitAnimations];
 }
 
@@ -185,8 +208,8 @@
     NSTimeInterval animationDuration = 0.30f;
     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
     [UIView setAnimationDuration:animationDuration];
-    float width = self.view.frame.size.width;
-    float height = self.view.frame.size.height;
+    float width = _signUpContainer.frame.size.width;
+    float height = _signUpContainer.frame.size.height;
     
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     float screenWidth = screenRect.size.width;
@@ -200,14 +223,13 @@
         Y = -115.0f;
     }
     CGRect rect = CGRectMake(0.0f, Y, width, height);
-    self.view.frame = rect;
+    _signUpContainer.frame = rect;
     [UIView commitAnimations];
     
     return YES;
 }
 
 - (IBAction)backToSignIn:(id)sender {
-    
     [UIView beginAnimations:@"MoveView" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView setAnimationDuration:0.5f];
@@ -218,7 +240,17 @@
     
     [self hideKeyboard];
     
-    //_signUpView.hidden = YES;
+    [UIView animateWithDuration:0.8 delay:0.0
+                        options:0
+                     animations:^{
+                         _signUpContainer.layer.opacity = 0;
+                        }
+                     completion:^(BOOL finished) {
+                        _signUpContainer.hidden = YES;
+                         _signUpContainer.layer.opacity = 1;
+                     }];
+    
+    
 }
 
 - (void) hideKeyboard
@@ -229,19 +261,33 @@
     [_pwdSignUp resignFirstResponder];
     [_pwdConfirmSignUp resignFirstResponder];
     [_nameSignUp resignFirstResponder];
+    [_findBackEmail resignFirstResponder];
     [self resumeView];
 }
 
 - (IBAction)showSignUpView:(id)sender {
+    
+    _findBackEmail.hidden = YES;
+    _findBackPasswordButton.hidden = YES;
+    _findBackPasswordLabel.hidden = YES;
+    _findBackPasswordPromote.hidden = YES;
+    
+    _pwdConfirmSignUp.hidden = NO;
+    _pwdSignUp.hidden = NO;
+    _emailSignUp.hidden = NO;
+    _nameSignUp.hidden = NO;
+    _signUpButton.hidden = NO;
+    _signUpLabel.hidden = NO;
+    
+    
+    _signUpContainer.hidden = NO;
     [UIView beginAnimations:@"MoveView" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDuration:0.5f];
     CGRect rect = _signUpView.frame;
-    _signUpView.frame = CGRectMake(43, 142 , rect.size.width, rect.size.height);
+    _signUpView.frame = CGRectMake(20, 142 , rect.size.width, rect.size.height);
     _signUpContainer.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7f];
     [UIView commitAnimations];
-    
-
 }
 
 - (IBAction)signIn:(id)sender {
@@ -279,6 +325,31 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     return [emailTest evaluateWithObject:checkString];
 }
+- (IBAction)forgetPasswordButtonClicked:(id)sender {
+    _findBackEmail.hidden = NO;
+    _findBackPasswordButton.hidden = NO;
+    _findBackPasswordLabel.hidden = NO;
+    _findBackPasswordPromote.hidden = NO;
+    
+    _pwdConfirmSignUp.hidden = YES;
+    _pwdSignUp.hidden = YES;
+    _emailSignUp.hidden = YES;
+    _nameSignUp.hidden = YES;
+    _signUpButton.hidden = YES;
+    _signUpLabel.hidden = YES;
+    
+    
+    
+    _signUpContainer.hidden = NO;
+    [UIView beginAnimations:@"MoveView" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:0.5f];
+    CGRect rect = _signUpView.frame;
+    _signUpView.frame = CGRectMake(20, 142 , rect.size.width, rect.size.height);
+    _signUpContainer.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7f];
+    [UIView commitAnimations];
+}
+
 
 - (IBAction)signUp:(id)sender {
     if ([_emailSignUp.text isEqual:@""]) {
@@ -331,6 +402,14 @@
     }
 
 }
+
+//here is the find back password button action
+//through this action to send a new password
+//by the registered email
+- (IBAction)findBackPasswordButtonClicked:(id)sender {
+
+}
+
 
 - (IBAction)closeViewEdit:(id)sender{
     [self hideKeyboard];

@@ -12,6 +12,7 @@
 		2104C6DF18597D4D008ED8BE /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 2104C6DC18597D4D008ED8BE /* 120.png */; };
 		2108739A186AB72D0032BA36 /* BottomText.png in Resources */ = {isa = PBXBuildFile; fileRef = 21087399186AB72D0032BA36 /* BottomText.png */; };
 		2108739C186AB78C0032BA36 /* LogoImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 2108739B186AB78C0032BA36 /* LogoImage.png */; };
+		210873A2186B33240032BA36 /* SettingViewControllerFix.m in Sources */ = {isa = PBXBuildFile; fileRef = 210873A1186B33240032BA36 /* SettingViewControllerFix.m */; };
 		211ED840186A77C200B096E7 /* TagSoucePlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 211ED83F186A77C200B096E7 /* TagSoucePlist.m */; };
 		21371F891850956700BB2A4F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21371F881850956700BB2A4F /* Foundation.framework */; };
 		21371F8B1850956700BB2A4F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21371F8A1850956700BB2A4F /* CoreGraphics.framework */; };
@@ -108,6 +109,8 @@
 		2104C6DC18597D4D008ED8BE /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 120.png; path = Muse/120.png; sourceTree = "<group>"; };
 		21087399186AB72D0032BA36 /* BottomText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BottomText.png; path = Muse/BottomText.png; sourceTree = "<group>"; };
 		2108739B186AB78C0032BA36 /* LogoImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LogoImage.png; path = Muse/LogoImage.png; sourceTree = "<group>"; };
+		210873A0186B33240032BA36 /* SettingViewControllerFix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewControllerFix.h; sourceTree = "<group>"; };
+		210873A1186B33240032BA36 /* SettingViewControllerFix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewControllerFix.m; sourceTree = "<group>"; };
 		211ED83E186A77C200B096E7 /* TagSoucePlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagSoucePlist.h; sourceTree = "<group>"; };
 		211ED83F186A77C200B096E7 /* TagSoucePlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagSoucePlist.m; sourceTree = "<group>"; };
 		21371F851850956700BB2A4F /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -337,6 +340,8 @@
 				7A3E00391863D22E000F5B6C /* StartViewController.m */,
 				211ED83E186A77C200B096E7 /* TagSoucePlist.h */,
 				211ED83F186A77C200B096E7 /* TagSoucePlist.m */,
+				210873A0186B33240032BA36 /* SettingViewControllerFix.h */,
+				210873A1186B33240032BA36 /* SettingViewControllerFix.m */,
 			);
 			path = Muse;
 			sourceTree = "<group>";
@@ -623,6 +628,7 @@
 				21660584185F3A3500560812 /* Player.m in Sources */,
 				7A3E003718638966000F5B6C /* Tag.m in Sources */,
 				7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */,
+				210873A2186B33240032BA36 /* SettingViewControllerFix.m in Sources */,
 				21371F991850956700BB2A4F /* AppDelegate.m in Sources */,
 				21371F951850956700BB2A4F /* main.m in Sources */,
 				7A3E003A1863D22E000F5B6C /* StartViewController.m in Sources */,

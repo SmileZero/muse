@@ -13,11 +13,26 @@
 #import "Tag.h"
 #import "TagSoucePlist.h"
 
+
+#define LIKE_TAG_INDEX 2
+#define GUESS_TAG_INDEX 1
+
 @interface TagViewController ()
 
 @end
 
 @implementation TagViewController
+
+
++ (int) getLikeTagIndex
+{
+    return LIKE_TAG_INDEX;
+}
+
++ (int) getGuessTagIndex
+{
+    return GUESS_TAG_INDEX;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,7 +54,7 @@
     [self loadAllTagInfo];
 
     
-    _currentIndex = 0;
+    _currentIndex = 1;
 }
 
 
@@ -48,7 +63,7 @@
     UITableView * tableView = (UITableView *)[self.view viewWithTag:3001];
     
     
-    if (_currentIndex == 1) {
+    if (_currentIndex == LIKE_TAG_INDEX) {
         [Player setPlayList:[TagSoucePlist readTagSourcePlistData][0][@"MusicIds"]:1];
     }
     
@@ -103,7 +118,7 @@
                                           errorDescription:&errorDesc];
 
     
-    return [_tagArray count] + 1;
+    return [_tagArray count] + 3;
 }
 
 
@@ -114,51 +129,79 @@
     
     //NSLog(@"%d", indexPath.section);
     
-    NSString *errorDesc = nil;
-    NSPropertyListFormat format;
-    NSString *plistPath;
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    plistPath = [rootPath stringByAppendingPathComponent:@"TagSource.plist"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
-        plistPath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
-    }
-    NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
-    _tagArray = (NSArray *)[NSPropertyListSerialization
-                            propertyListFromData:plistXML
-                            mutabilityOption:NSPropertyListMutableContainersAndLeaves
-                            format:&format
-                            errorDescription:&errorDesc];
-    
-    
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier: @"TagTableCell" forIndexPath:indexPath];
-    
-    
-    UILabel * tagNameLabel = (UILabel *)[cell viewWithTag:101];
-    UILabel * countMusicOfThisTagLabel = (UILabel *)[cell viewWithTag:102];
-    UIImageView * currentLabelImageView = (UIImageView *) [cell viewWithTag:211];
-    
-    
-    
-    if (indexPath.row == _currentIndex) {
-        currentLabelImageView.hidden = NO;
-    } else {
-        currentLabelImageView.hidden = YES;
-    }
+    UITableViewCell * cell = NULL;
     
     if (indexPath.row == 0) {
-        tagNameLabel.text = @"Guess";
-        countMusicOfThisTagLabel.text = @"";
+        
+        cell = [tableView dequeueReusableCellWithIdentifier: @"TagGroupTitleTableCell" forIndexPath:indexPath];
+        
+        UILabel * label = (UILabel *)[cell viewWithTag:202];
+        label.text = @"Private";
+        
+        [cell setUserInteractionEnabled:NO];
+        
+    } else if(indexPath.row == 3) {
+        cell = [tableView dequeueReusableCellWithIdentifier: @"TagGroupTitleTableCell" forIndexPath:indexPath];
+        
+        UILabel * label = (UILabel *)[cell viewWithTag:202];
+        label.text = @"Public";
+        
+        [cell setUserInteractionEnabled:NO];
     } else {
-        
-        NSDictionary * dic = _tagArray[indexPath.row - 1];
-        NSArray * musicIds = dic[@"MusicIds"];
-        
-        int count = [musicIds count];
-        
-        
-        tagNameLabel.text = dic[@"Name"];
-        countMusicOfThisTagLabel.text = [NSString stringWithFormat:@"%d", count];
+        NSString *errorDesc = nil;
+        NSPropertyListFormat format;
+        NSString *plistPath;
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        plistPath = [rootPath stringByAppendingPathComponent:@"TagSource.plist"];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+            plistPath = [[NSBundle mainBundle] pathForResource:@"TagSource" ofType:@"plist"];
+        }
+        NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
+        _tagArray = (NSArray *)[NSPropertyListSerialization
+                                propertyListFromData:plistXML
+                                mutabilityOption:NSPropertyListMutableContainersAndLeaves
+                                format:&format
+                                errorDescription:&errorDesc];
+
+
+        cell = [tableView dequeueReusableCellWithIdentifier: @"TagTableCell" forIndexPath:indexPath];
+
+
+        UILabel * tagNameLabel = (UILabel *)[cell viewWithTag:101];
+        UILabel * countMusicOfThisTagLabel = (UILabel *)[cell viewWithTag:102];
+        UIImageView * currentLabelImageView = (UIImageView *) [cell viewWithTag:211];
+
+
+
+        if (indexPath.row == _currentIndex) {
+            currentLabelImageView.hidden = NO;
+        } else {
+            currentLabelImageView.hidden = YES;
+        }
+
+        if (indexPath.row == 1) {
+            tagNameLabel.text = @"Guess";
+            countMusicOfThisTagLabel.text = @"";
+        } else {
+            
+            int index = 0;
+            
+            if (indexPath.row <= 3) {
+                index = indexPath.row - 2;
+            } else {
+                index = indexPath.row - 3;
+            }
+            
+            NSDictionary * dic = _tagArray[index];
+            NSArray * musicIds = dic[@"MusicIds"];
+            
+            int count = [musicIds count];
+            
+            
+            tagNameLabel.text = dic[@"Name"];
+            countMusicOfThisTagLabel.text = [NSString stringWithFormat:@"%d", count];
+        }
     }
     
     return cell;
@@ -187,7 +230,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
+    
+    if (indexPath.row == 0 || indexPath.row == 3) {
+        return ;
+    }
+    
+    if (indexPath.row == GUESS_TAG_INDEX) {
         [Player setPlayType:0];
     } else {
         [Player setPlayType:1];
@@ -210,7 +258,15 @@
                                 format:&format
                                 errorDescription:&errorDesc];
         
-        [Player setPlayList:_tagArray[indexPath.row - 1][@"MusicIds"]: indexPath.row];
+        int index = 0;
+        
+        if (indexPath.row <= 3) {
+            index = indexPath.row - 2;
+        } else {
+            index = indexPath.row - 3;
+        }
+        
+        [Player setPlayList:_tagArray[index][@"MusicIds"]: index];
     }
     
     //[self performSegueWithIdentifier:@"gotoPlayViewFromTagView" sender:self];

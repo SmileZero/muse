@@ -36,9 +36,9 @@
 
 @implementation SettingsViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -175,7 +175,7 @@
     
     [self musicInfoHide];
     
-    _menuItems = @[@"user",@"recognize",@"signout"];
+    _menuItems = @[@"user",@"SettingTools",@"SettingAbout", @"SettingAccount"];
     _animating = NO;
 }
 
@@ -197,6 +197,10 @@
 {
     if (indexPath.row == 0) {
         return 103;
+    } else if(indexPath.row == 1 ) {
+        return 113;
+    } else if(indexPath.row == 2 || indexPath.row == 3) {
+        return 170;
     }
     return 52;
 }
@@ -248,33 +252,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //where indexPath.row is the selected cell
     if (indexPath.row==1) {
-        [self.view.window addSubview:_containerView];
-        
-        NSError *error = nil;
-        AVAudioSession * audioSession = [AVAudioSession sharedInstance];
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
-        [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-        
-        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
-        
-        //[Player stopMoviePlayer];
-        PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
-        
-        [playViewController musicPause];
     }
-    else if (indexPath.row == 2){
-        if ([[User getUser] signout]) {
-            PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
-            [playViewController musicStop];
-            [FBSession.activeSession closeAndClearTokenInformation];
-            [FBSession.activeSession close];
-            [FBSession setActiveSession:nil];
-            [self performSegueWithIdentifier:@"signOut" sender:self];
-        }else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Sign out failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-        }
+    else if (indexPath.row == 3){
     }
 }
 
@@ -348,6 +327,44 @@
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
+
+- (IBAction)recoganizeButtonClicked:(id)sender {
+    [self.view.window addSubview:_containerView];
+    
+    NSError *error = nil;
+    AVAudioSession * audioSession = [AVAudioSession sharedInstance];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
+    [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+    
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
+    
+    //[Player stopMoviePlayer];
+    PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
+    [playViewController musicPause];
+}
+- (IBAction)lisenceButtonClicked:(id)sender {
+}
+- (IBAction)versionButtonClicked:(id)sender {
+}
+- (IBAction)signoutButtonClicked:(id)sender {
+    if ([[User getUser] signout]) {
+        PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
+        
+        [FBSession.activeSession closeAndClearTokenInformation];
+        [FBSession.activeSession close];
+        [FBSession setActiveSession:nil];
+        [self performSegueWithIdentifier:@"signOut" sender:self];
+        
+        [playViewController musicPause];
+        [Player setCurrentMusic:NULL];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Sign out failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+
+}
+
 
 /*
 // Override to support conditional editing of the table view.

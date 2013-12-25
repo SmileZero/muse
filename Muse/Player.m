@@ -44,7 +44,6 @@ static int playType = 0;
 + (void) setCurrentMusic: (XiamiObject *) music
 {
     currentMusic = music;
-    //NSLog(@"set: %@", currentMusic.title);
 }
 
 

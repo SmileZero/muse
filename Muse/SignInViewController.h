@@ -11,4 +11,7 @@
 
 @interface SignInViewController : UIViewController <FBLoginViewDelegate>
 
+
+@property int currentView;
+
 @end
