@@ -11,6 +11,7 @@
 #import "User.h"
 #import "Tag.h"
 #import "Reachability.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface StartViewController ()
 
@@ -107,10 +108,16 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
             }
             else{
                 NSLog(@"%@",result);
+                [FBSession.activeSession closeAndClearTokenInformation];
+                [FBSession.activeSession close];
+                [FBSession setActiveSession:nil];
                 [self performSegueWithIdentifier:@"goToSign" sender:self];
             }
         }
         else{
+            [FBSession.activeSession closeAndClearTokenInformation];
+            [FBSession.activeSession close];
+            [FBSession setActiveSession:nil];
             [self performSegueWithIdentifier:@"goToSign" sender:self];
         }
     }

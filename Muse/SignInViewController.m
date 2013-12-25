@@ -76,11 +76,15 @@
 
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
     NSLog(@"%@",user.name);
     NSLog(@"%@",[user objectForKey:@"email"]);
-    if ([User getUser]) return;
     [User userWithEmail:[NSString stringWithFormat:@"#facebook#%@",[user objectForKey:@"email"]] password:[NSString stringWithFormat:@"#Facebook#%@%@#Muse#",[user objectForKey:@"email"],user.id] name:user.name];
     [User getUser].resource_id = [NSNumber numberWithInt:1];
     NSString *result = [[User getUser] signinWithFB];
@@ -102,7 +106,6 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:result delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
-
 }
 
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
