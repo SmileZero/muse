@@ -124,6 +124,16 @@
         //[[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:nil];
         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
     }
+    
+    _musicPictureImageView.layer.opacity = 0.5;
+    
+    [UIView animateWithDuration:2 delay:0.0
+            options:0
+            animations:^{
+                _musicPictureImageView.layer.opacity = 1;
+         } completion:^(BOOL finished) {
+             
+    }];
 }
 
 - (void)setDisplayView
@@ -626,6 +636,10 @@
 
 - (void) showLoadingView
 {
+    _loadingImageMask.layer.opacity = 1;
+    _loadingImageNegative.layer.opacity = 1;
+    _loadingText.layer.opacity = 1;
+    
     //_loadingImage.hidden = NO;
     _loadingImageMask.hidden = NO;
     _loadingImageNegative.hidden = NO;
@@ -635,9 +649,19 @@
 - (void) hideLoadingView
 {
     //_loadingImage.hidden = YES;
-    _loadingImageMask.hidden = YES;
-    _loadingImageNegative.hidden = YES;
-    _loadingText.hidden = YES;
+    
+    [UIView animateWithDuration:0.8 delay:0.0
+                        options:0
+                     animations:^{
+                         _loadingImageMask.layer.opacity = 0;
+                         _loadingImageNegative.layer.opacity = 0;
+                         _loadingText.layer.opacity = 0; }
+                     completion:^(BOOL finished) {
+                         _loadingImageMask.hidden = YES;
+                         _loadingImageNegative.hidden = YES;
+                         _loadingText.hidden = YES;
+    }];
+    
 }
 
 - (void) disableButton
