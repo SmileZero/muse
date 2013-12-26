@@ -502,4 +502,9 @@
     [self hideKeyboard];
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+
+
 @end
