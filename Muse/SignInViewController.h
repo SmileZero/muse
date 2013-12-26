@@ -14,4 +14,6 @@
 
 @property int currentView;
 
+@property NSString * loginResult;
+
 @end

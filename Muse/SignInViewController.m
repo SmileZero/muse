@@ -292,10 +292,26 @@
 
 - (IBAction)signIn:(id)sender {
     
+    [self hideKeyboard];
+    [self showLoadingView];
+    
+    [self performSelectorInBackground:@selector(loginInBackgroundThread) withObject:nil];
+}
+
+
+- (void) loginInBackgroundThread
+{
     User * user = [User userWithEmail:_emailView.text password:_passwordView.text];
     NSString *result = [user signin];
+    
+    [self performSelectorOnMainThread:@selector(updateDataOnMainThreadWithResult:) withObject:result waitUntilDone:YES];
+}
+
+-(void) updateDataOnMainThreadWithResult: (NSString *) result
+{
     if ([result isEqual:@"ok"]) {
         [Tag getAll];
+        
         UIView *tableView = self.revealViewController.rightViewController.view.subviews[0];
         UIImageView *imageView = (UIImageView *) [tableView viewWithTag:1];//content.subviews[0];
         UILabel *labelView = (UILabel *) [tableView viewWithTag:2];//content.subviews[1];
@@ -314,7 +330,39 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:result delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
+    
+    [self hideLoadingView];
 }
+
+-(void) showLoadingView
+{
+    UIView * loadingView = [self.view viewWithTag:999];
+    
+    loadingView.layer.opacity = 0.2f;
+    loadingView.hidden = NO;
+    [UIView animateWithDuration: 0.4f delay: 0.0f
+                        options: UIViewAnimationOptionCurveEaseInOut
+                     animations: ^{
+                         loadingView.layer.opacity = 0.8;
+                    }
+                     completion: ^(BOOL finished) {}];
+}
+
+-(void) hideLoadingView
+{
+    UIView * loadingView = [self.view viewWithTag:999];
+    
+    loadingView.layer.opacity = 0.8f;
+    [UIView animateWithDuration: 0.4f delay: 0.0f
+                        options: UIViewAnimationOptionCurveEaseInOut
+                     animations: ^{
+                         loadingView.layer.opacity = 0;
+                     }
+                     completion: ^(BOOL finished) {
+                         loadingView.hidden = YES;
+                     }];
+}
+
 
 -(BOOL) NSStringIsValidEmail:(NSString *)checkString
 {
