@@ -142,7 +142,7 @@
     
     
     _containerView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-    CGRect recogContainerRect = CGRectMake(0.0f, 40.0f, 300.0f, 300.0f);
+    CGRect recogContainerRect = CGRectMake(-10.0f, 40.0f, 300.0f, 300.0f);
     _recogContainer = [[UIView alloc] initWithFrame:recogContainerRect];
     _containerView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6f];
     
@@ -552,7 +552,10 @@
                      }
                      completion: ^(BOOL finished) {
                          recMenuView.hidden = YES;
+                         [self musicInfoHide];
+                         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
                      }];
+    //[Player playMoviePlayer];
 }
 - (IBAction)versionButtonClicked:(id)sender {
     
