@@ -295,6 +295,18 @@
 -(IBAction)recogBtnClicked:(id)sender
 {
     NSLog(@"recog");
+    
+    PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
+    [playViewController musicPause];
+    
+    NSError *error = nil;
+    AVAudioSession * audioSession = [AVAudioSession sharedInstance];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
+    [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+    
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
+    
     _tap.enabled = NO;
     UIButton *button = (UIButton *)sender;
     [button setTitle:@"RECOGNIZING..." forState:UIControlStateNormal];
@@ -310,7 +322,7 @@
     NSLog(@"play");
     [self musicInfoHide];
     [_containerView removeFromSuperview];
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    //[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     //[Player playMoviePlayer];
     
     PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
@@ -329,7 +341,7 @@
     [self musicInfoHide];
     [containerView removeFromSuperview];
     //[Player playMoviePlayer];
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    //[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     
     
     
@@ -369,14 +381,6 @@
                      completion: ^(BOOL finished) {}];
     
     //[self.view.window addSubview:_containerView];
-    
-    NSError *error = nil;
-    AVAudioSession * audioSession = [AVAudioSession sharedInstance];
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
-    [center addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-    
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error];
     
     //[Player stopMoviePlayer];
     PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
@@ -553,7 +557,6 @@
                      completion: ^(BOOL finished) {
                          recMenuView.hidden = YES;
                          [self musicInfoHide];
-                         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
                      }];
     //[Player playMoviePlayer];
 }
