@@ -11,6 +11,7 @@
 #import <GracenoteMusicID/GNSearchResultReady.h>
 #import <GracenoteMusicID/GNSearchResponse.h>
 #import <GracenoteMusicID/GNSearchResult.h>
+#import <AVFoundation/AVFoundation.h>
 
 
 @implementation FPResponse
@@ -75,6 +76,7 @@ static NSString * resultId = NULL;
     self.tap.enabled = YES;
     _recogBtn.userInteractionEnabled = YES;
     *self.animating = NO;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
 }
 
 
