@@ -28,5 +28,6 @@
 - (NSString *)signinWithFB;
 - (BOOL)signout;
 - (NSString *)signinWithRememberToken;
+- (BOOL) updatePasswordWithOldPassword: (NSString *) oldPassword NewPassword : (NSString *) newPassword;
 
 @end

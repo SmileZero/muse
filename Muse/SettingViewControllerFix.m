@@ -18,6 +18,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import <FacebookSDK/FacebookSDK.h>
 
+#define VERSION @"1.0.0"
+
+
 @interface SettingViewControllerFix ()
 @property (nonatomic, strong) NSArray *menuItems;
 @property (retain, nonatomic) GNConfig *config;
@@ -32,6 +35,13 @@
 @property (nonatomic, strong) UIButton *playBtn;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property BOOL animating;
+
+@property (weak, nonatomic) IBOutlet UITextField *aOldPasswordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *aNewPasswordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordConfirmTextField;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (weak, nonatomic) IBOutlet UITextView *licenseTextView;
+
 @end
 
 @implementation SettingViewControllerFix
@@ -101,16 +111,43 @@
     //self.view.backgroundColor = [UIColor colorWithWhite:0.17f alpha:1.0f];
     //self.tableView.backgroundColor = [UIColor colorWithWhite:0.17f alpha:1.0f];
     //self.tableView.separatorColor = [UIColor colorWithWhite:0.17f alpha:1.0f];
+    
+    
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    float screenHeight = screenRect.size.height;
+    
+    
+    CGRect licenseTextViewFrame = _licenseTextView.frame;
+    
+    if (screenHeight <= 481) {
+        licenseTextViewFrame.size.height = 390.0f;
+    } else {
+        licenseTextViewFrame.size.height = 480.0f;
+    }
+    
+    _licenseTextView.frame = licenseTextViewFrame;
+    
+    
+    
+    
     self.config = [GNConfig init:@"4388096-F18341100713290DF7B092A14D9627E6"];
     
     
+    _aOldPasswordTextField.layer.cornerRadius = 1;
+    _aNewPasswordTextField.layer.cornerRadius = 1;
+    _passwordConfirmTextField.layer.cornerRadius = 1;
+    _saveButton.layer.cornerRadius = 5;
+    
+    
+    
     _containerView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-    CGRect recogContainerRect = CGRectMake(10.0, 150.0, 300.0, 300.0);
+    CGRect recogContainerRect = CGRectMake(0.0f, 40.0f, 300.0f, 300.0f);
     _recogContainer = [[UIView alloc] initWithFrame:recogContainerRect];
     _containerView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6f];
     
     UIGraphicsBeginImageContext(self.view.frame.size);
-    [[UIImage imageNamed:@"border.png"] drawInRect:_recogContainer.bounds];
+    //[[UIImage imageNamed:@"border.png"] drawInRect:_recogContainer.bounds];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
@@ -119,7 +156,7 @@
     
     CGRect recogRect = CGRectMake(22.0, 28.0, 252.0, 250.0);
     _recogView = [[UIView alloc] initWithFrame:recogRect];
-    _recogView.backgroundColor = [UIColor colorWithWhite:0.18f alpha:1.0f];
+    _recogView.backgroundColor = [UIColor colorWithWhite:0.18f alpha:0.0f];
     _recogView.layer.cornerRadius = 5;
     [_recogContainer addSubview:_recogView];
     
@@ -133,7 +170,7 @@
                                  ); // position in the parent view and set the size of the button
     //_recogBtn.backgroundColor= [UIColor colorWithWhite:1.0f alpha:0.5f];
     _recogBtn.layer.cornerRadius = 107;//half of the width
-    [_recogBtn setTitleColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
+    [_recogBtn setTitleColor:[UIColor colorWithRed:0.33f green:0.33f blue:0.33f alpha:1.0] forState:UIControlStateNormal];
     [_recogBtn setTitle:@"TOUCH TO BEGIN" forState:UIControlStateNormal];
     [_recogBtn.titleLabel setFont:[UIFont fontWithName:@"Copperplate" size:20]];
     // add targets and actions
@@ -143,13 +180,13 @@
     
     _musicName = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 30)];
     _musicName.text = @"Music Title";
-    [_musicName setTextColor:[UIColor colorWithWhite:0.5f alpha:1]];
+    [_musicName setTextColor:[UIColor colorWithWhite:0.33f alpha:1]];
     _musicName.font = [UIFont fontWithName:@"Copperplate" size:20];
     [_recogView addSubview:_musicName];
     
     _artistName = [[UILabel alloc] initWithFrame:CGRectMake(23, 25, 200, 30)];
     _artistName.text = @"Artist Name";
-    [_artistName setTextColor:[UIColor colorWithWhite:0.5f alpha:1]];
+    [_artistName setTextColor:[UIColor colorWithWhite:0.33f alpha:1]];
     _artistName.font = [UIFont fontWithName:@"Copperplate" size:16];
     [_recogView addSubview:_artistName];
     
@@ -309,7 +346,29 @@
 }
 
 - (IBAction)recognizeButtonClicked:(id)sender {
-    [self.view.window addSubview:_containerView];
+    
+    UIView * recMenuView = [self.view viewWithTag:909];
+    
+    [recMenuView addSubview:_recogContainer];
+    
+    
+    CGRect beforeViewFrame  = recMenuView.frame;
+    beforeViewFrame.origin.x = 320;
+    recMenuView.frame = beforeViewFrame;
+    
+    recMenuView.hidden = NO;
+    [UIView animateWithDuration: 0.7f delay: 0.0f
+                        options: UIViewAnimationOptionCurveEaseInOut
+                     animations: ^{
+                         CGRect afterViewFrame  = recMenuView.frame;
+                         afterViewFrame = recMenuView.frame;
+                         afterViewFrame.origin.x = 54;
+                         recMenuView.frame = afterViewFrame;
+                         
+                     }
+                     completion: ^(BOOL finished) {}];
+    
+    //[self.view.window addSubview:_containerView];
     
     NSError *error = nil;
     AVAudioSession * audioSession = [AVAudioSession sharedInstance];
@@ -323,6 +382,10 @@
     PlayerViewController * playViewController = (PlayerViewController *)self.revealViewController.frontViewController;
     [playViewController musicPause];
 }
+
+
+
+
 - (IBAction)licenseButtonClicked:(id)sender {
     
     UIView * view = [self.view viewWithTag:901];
@@ -365,6 +428,9 @@
 }
 
 - (IBAction)updatePasswordViewCloseButtonClicked:(id)sender {
+    
+    [self hideKeyBoard];
+    
     UIView * view = [self.view viewWithTag:902];
     
     [UIView animateWithDuration: 0.6f delay: 0.0f
@@ -417,10 +483,82 @@
                      }];
 }
 
+- (void) hideKeyBoard
+{
+    [_aNewPasswordTextField resignFirstResponder];
+    [_aOldPasswordTextField resignFirstResponder];
+    [_passwordConfirmTextField resignFirstResponder];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (IBAction)passwordChangeButtonClicked:(id)sender {
+    
+    
+    [self hideKeyBoard];
+    
+    NSString * oldPassword = _aOldPasswordTextField.text;
+    NSString * newPassword = _aNewPasswordTextField.text;
+    NSString * confirmPassword = _passwordConfirmTextField.text;
+    
+    UIAlertView * alert = NULL;
+    
+    
+    
+    
+    if ([newPassword isEqualToString:confirmPassword] == NO) {
+        
+        alert = [[UIAlertView alloc] initWithTitle:@"Error Message" message: @"The two password not matched." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+        
+        [alert show];
+    } else if([newPassword length] < 6) {
+        
+        alert = [[UIAlertView alloc] initWithTitle:@"Error Message" message: @"Password is less than 6 characters" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+        
+        [alert show];
+        
+    } else {
+    
+        User * user = [User getUser];
+        
+        if (!user) {
+            alert = [[UIAlertView alloc] initWithTitle:@"Update Failed" message: @"Login information have been invalid. Please login again." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+            
+            [alert show];
+        } else {
+            [user updatePasswordWithOldPassword:oldPassword NewPassword:newPassword];
+        }
+    }
+}
+
+- (IBAction)recoganizeViewCloseButtonClicked:(id)sender {
+    
+    UIView * recMenuView = [self.view viewWithTag:909];
+    
+    recMenuView.hidden = NO;
+    
+    [UIView animateWithDuration: 0.6f delay: 0.0f
+                        options: UIViewAnimationOptionCurveEaseInOut
+                     animations: ^{
+                         CGRect afterViewFrame  = recMenuView.frame;
+                         afterViewFrame = recMenuView.frame;
+                         afterViewFrame.origin.x = 320;
+                         recMenuView.frame = afterViewFrame;
+                         
+                     }
+                     completion: ^(BOOL finished) {
+                         recMenuView.hidden = YES;
+                     }];
+}
+- (IBAction)versionButtonClicked:(id)sender {
+    
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Version" message: VERSION delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+    
+    [alert show];
 }
 
 

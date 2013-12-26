@@ -97,6 +97,9 @@ static User *current_user;
     return YES;
 }
 
+
+
+
 -(NSString *)signin
 {
     NSLog(@"--- signIn %@ %@", current_user.email, current_user.password);
@@ -139,6 +142,50 @@ static User *current_user;
     else{
         return @"Email/Password Incorrect";
     }
+}
+
+- (BOOL) updatePasswordWithOldPassword: (NSString *) oldPassword NewPassword : (NSString *) newPassword
+{
+    
+    NSString * url = [NSString stringWithFormat:@"%@/users/%@/%@", SERVER_URL, [self user_id], @"update_password"];
+    
+    
+    
+    NSString * auth_token = [ServerConnection getCSRFToken];
+    
+    if (!auth_token) {
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error Message" message: @"Can not connect to the server." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+        
+        [alert show];
+        
+    } else {
+        id jsonObject = @{ @"user" : @{ @"email": [self email], @"old_pwd": oldPassword, @"new_pwd" : newPassword}, @"authenticity_token": auth_token };
+        
+        NSData * feedbackData = [ServerConnection sendRequestToURL:url method:@"post"JSONObject:jsonObject];
+        
+        NSError * error = NULL;
+        
+        UIAlertView * alert = NULL;
+        
+        if (!feedbackData) {
+            
+            alert = [[UIAlertView alloc] initWithTitle:@"Error Message" message: @"Can not connect to the server." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+            
+        } else {
+            NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:feedbackData options:0 error: &error];
+            
+            NSString * result = dic[@"status"];
+            
+            if ([result isEqualToString:@"ok"]) {
+                alert = [[UIAlertView alloc] initWithTitle:@"Message" message: @"Password has been updated." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+            } else {
+                alert = [[UIAlertView alloc] initWithTitle:@"Error Message" message: dic[@"msg"] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+            }
+        }
+        [alert show];
+    }
+    return YES;
 }
 
 -(NSString *)signinWithRememberToken

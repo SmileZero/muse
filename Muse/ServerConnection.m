@@ -54,4 +54,20 @@
     return data;
 }
 
++ (NSString *) getCSRFToken
+{
+    NSData *data = [ServerConnection getRequestToURL:[NSString stringWithFormat:@"%@/getCSRFToken.json", SERVER_URL]];
+    if (!data) {
+        return nil;
+    }
+    
+    NSError *error = nil;
+    NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    if (!userDictionary) {
+        NSLog(@"NSJSONSerialization error:%@ ", error);
+        return nil;
+    }
+    return userDictionary[@"csrf_token"];
+}
+
 @end

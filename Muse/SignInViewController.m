@@ -408,6 +408,45 @@
 //by the registered email
 - (IBAction)findBackPasswordButtonClicked:(id)sender {
 
+    NSString * url = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/users/forgot_password"];
+    
+    
+    
+    NSString * auth_token = [ServerConnection getCSRFToken];
+    
+    if (!auth_token) {
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error Message" message: @"Can not connect to the server." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+        
+        [alert show];
+        
+    } else {
+        id jsonObject = @{ @"user" : @{ @"email": _findBackEmail.text}, @"authenticity_token": auth_token };
+
+        NSData * feedbackData = [ServerConnection sendRequestToURL:url method:@"post"JSONObject:jsonObject];
+
+        NSError * error = NULL;
+        
+        UIAlertView * alert = NULL;
+        
+        if (!feedbackData) {
+            
+            alert = [[UIAlertView alloc] initWithTitle:@"Error Message" message: @"Can not connect to the server." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+            
+        } else {
+            NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:feedbackData options:0 error: &error];
+
+            NSString * result = dic[@"status"];
+            
+            if ([result isEqualToString:@"ok"]) {
+                alert = [[UIAlertView alloc] initWithTitle:@"Message" message: @"Password updated, please check the email." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+            } else {
+                alert = [[UIAlertView alloc] initWithTitle:@"Error Message" message: dic[@"msg"] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",  nil];
+            }
+        }
+
+        [alert show];
+    }
 }
 
 

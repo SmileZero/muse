@@ -101,6 +101,10 @@
     //self.view.backgroundColor = [UIColor colorWithWhite:0.17f alpha:1.0f];
     //self.tableView.backgroundColor = [UIColor colorWithWhite:0.17f alpha:1.0f];
     //self.tableView.separatorColor = [UIColor colorWithWhite:0.17f alpha:1.0f];
+    
+    
+    
+    
     self.config = [GNConfig init:@"4388096-F18341100713290DF7B092A14D9627E6"];
     
     

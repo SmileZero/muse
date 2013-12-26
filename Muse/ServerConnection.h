@@ -10,8 +10,8 @@
 
 //#define SERVER_IP @"172.30.4.19"
 //#define SERVER_IP @"192.168.1.10"
-//#define SERVER_IP @"192.168.200.233"
-#define SERVER_IP @"192.168.2.103"
+#define SERVER_IP @"192.168.201.28"
+//#define SERVER_IP @"muse-01.rackbox.net"
 #define SERVER_PORT @":3000"
 //#define SERVER_PORT @""
 #define SERVER_URL @"http://" SERVER_IP SERVER_PORT
@@ -20,4 +20,6 @@
 @interface ServerConnection : NSObject
 + (NSData *)sendRequestToURL:(NSString *)url method:(NSString *)method JSONObject:(id)jsonObject;
 + (NSData *)getRequestToURL:(NSString *)url;
++ (NSString *) getCSRFToken;
+
 @end
