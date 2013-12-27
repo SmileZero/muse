@@ -125,25 +125,15 @@
     NSLog(@"%@",[user objectForKey:@"email"]);
     [User userWithEmail:[NSString stringWithFormat:@"#facebook#%@",[user objectForKey:@"email"]] password:[NSString stringWithFormat:@"#Facebook#%@%@#Muse#",[user objectForKey:@"email"],user.id] name:user.name];
     [User getUser].resource_id = [NSNumber numberWithInt:1];
+    
+    [self performSelectorInBackground:@selector(signinWithFacebookInBackgroundThread) withObject:nil];
+}
+
+- (void) signinWithFacebookInBackgroundThread
+{
     NSString *result = [[User getUser] signinWithFB];
-    if ([result isEqual:@"ok"]) {
-        [Tag getAll];
-        UIView *tableView = self.revealViewController.rightViewController.view.subviews[0];
-        UIImageView *imageView = (UIImageView *) [tableView viewWithTag:1];//content.subviews[0];
-        UILabel *labelView = (UILabel *) [tableView viewWithTag:2];//content.subviews[1];
-        
-        NSData *data = [ServerConnection getRequestToURL:[NSString stringWithFormat:@"%@/%@", SERVER_URL, [User getUser].avatar]];
-        UIImage *avatar = [UIImage imageWithData:data];
-        imageView.image = avatar;
-        labelView.text = [User getUser].name;
-        
-        [self performSegueWithIdentifier:@"backToPlayer" sender:self];
-    }
-    else{
-        NSLog(@"failed");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:result delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    }
+    
+    [self performSelectorOnMainThread:@selector(updateDataOnMainThreadWithResult:) withObject:result waitUntilDone:YES];
 }
 
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
@@ -425,30 +415,49 @@
         [alert show];
     }
     else{
-        User* new_user = [User userWithEmail:_emailSignUp.text password:_pwdSignUp.text name:_nameSignUp.text];
-        NSString* result = [new_user signup];
-        if ([result isEqual: @"ok"]) {
-            [Tag getAll];
-            UIView *tableView = self.revealViewController.rightViewController.view.subviews[0];
-            UIImageView *imageView = (UIImageView *) [tableView viewWithTag:1];//content.subviews[0];
-            UILabel *labelView = (UILabel *) [tableView viewWithTag:2];//content.subviews[1];
-            
-            if ([User getUser]) {
-                NSData *data = [ServerConnection getRequestToURL:[NSString stringWithFormat:@"%@/%@", SERVER_URL, [User getUser].avatar]];
-                UIImage *avatar = [UIImage imageWithData:data];
-                imageView.image = avatar;
-                labelView.text = [User getUser].name;
-            }
-            
-            [Tag getAll];
-            [self performSegueWithIdentifier:@"backToPlayer" sender:self];
-        }
-        else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:result delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-        }
+        [self hideKeyboard];
+        [self showLoadingView];
+        
+        [self performSelectorInBackground:@selector(signupInBackgroundThread) withObject:nil];
     }
+}
 
+//
+//signup in the background thread
+//
+
+- (void) signupInBackgroundThread
+{
+    User* new_user = [User userWithEmail:_emailSignUp.text password:_pwdSignUp.text name:_nameSignUp.text];
+    NSString* result = [new_user signup];
+    
+    [self performSelectorOnMainThread:@selector(signupUpdateDataOnMainThreadWithResult:) withObject:result waitUntilDone:YES];
+}
+
+- (void) signupUpdateDataOnMainThreadWithResult: (NSString *) result
+{
+    if ([result isEqual: @"ok"]) {
+        [Tag getAll];
+        UIView *tableView = self.revealViewController.rightViewController.view.subviews[0];
+        UIImageView *imageView = (UIImageView *) [tableView viewWithTag:1];//content.subviews[0];
+        UILabel *labelView = (UILabel *) [tableView viewWithTag:2];//content.subviews[1];
+        
+        if ([User getUser]) {
+            NSData *data = [ServerConnection getRequestToURL:[NSString stringWithFormat:@"%@/%@", SERVER_URL, [User getUser].avatar]];
+            UIImage *avatar = [UIImage imageWithData:data];
+            imageView.image = avatar;
+            labelView.text = [User getUser].name;
+        }
+        
+        [Tag getAll];
+        [self performSegueWithIdentifier:@"backToPlayer" sender:self];
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:result delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    [self hideLoadingView];
 }
 
 //here is the find back password button action
