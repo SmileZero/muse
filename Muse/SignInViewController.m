@@ -117,12 +117,27 @@
     [super viewDidAppear:animated];
 }
 
+- (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error
+{
+    [self performSelectorOnMainThread:@selector(showErrorMessageWindowWithMessage:) withObject:@"Facebook login failed!" waitUntilDone:YES];
+}
+
+- (void) showErrorMessageWindowWithMessage: message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Message" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
+    [self showLoadingView];
+    
     NSLog(@"%@",user.name);
     NSLog(@"%@",[user objectForKey:@"email"]);
     [User userWithEmail:[NSString stringWithFormat:@"#facebook#%@",[user objectForKey:@"email"]] password:[NSString stringWithFormat:@"#Facebook#%@%@#Muse#",[user objectForKey:@"email"],user.id] name:user.name];
     [User getUser].resource_id = [NSNumber numberWithInt:1];
+    
+    
     
     [self performSelectorInBackground:@selector(signinWithFacebookInBackgroundThread) withObject:nil];
 }
@@ -130,6 +145,7 @@
 - (void) signinWithFacebookInBackgroundThread
 {
     NSString *result = [[User getUser] signinWithFB];
+    
     
     [self performSelectorOnMainThread:@selector(updateDataOnMainThreadWithResult:) withObject:result waitUntilDone:YES];
 }
