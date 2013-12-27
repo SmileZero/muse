@@ -91,6 +91,7 @@
 		7A3E003C1863D76A000F5B6C /* museStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A3E003B1863D76A000F5B6C /* museStart.png */; };
 		7A3EFFFC185B0C57000F5B6C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */; };
 		7A3EFFFF185B2C67000F5B6C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */; };
+		7AE9EC2F186D33CF00982419 /* FacebookLoginButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE9EC2E186D33CF00982419 /* FacebookLoginButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,6 +210,8 @@
 		7A3EFFFB185B0C57000F5B6C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		7A3EFFFD185B2C67000F5B6C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		7A3EFFFE185B2C67000F5B6C /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		7AE9EC2D186D33CF00982419 /* FacebookLoginButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookLoginButton.h; sourceTree = "<group>"; };
+		7AE9EC2E186D33CF00982419 /* FacebookLoginButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookLoginButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -342,6 +345,8 @@
 				211ED83F186A77C200B096E7 /* TagSoucePlist.m */,
 				210873A0186B33240032BA36 /* SettingViewControllerFix.h */,
 				210873A1186B33240032BA36 /* SettingViewControllerFix.m */,
+				7AE9EC2D186D33CF00982419 /* FacebookLoginButton.h */,
+				7AE9EC2E186D33CF00982419 /* FacebookLoginButton.m */,
 			);
 			path = Muse;
 			sourceTree = "<group>";
@@ -636,6 +641,7 @@
 				214D6D0C1862BA7300BDCF0B /* TagViewController.m in Sources */,
 				7A163F3818690D7E00F3CF57 /* Reachability.m in Sources */,
 				211ED840186A77C200B096E7 /* TagSoucePlist.m in Sources */,
+				7AE9EC2F186D33CF00982419 /* FacebookLoginButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
