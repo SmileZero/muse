@@ -11,6 +11,7 @@
 #import "User.h"
 #import "ServerConnection.h"
 #import "Tag.h"
+#import "FacebookLoginButton.h"
 
 @interface SignInViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *signInBtn;
@@ -24,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *pwdConfirmSignUp;
 @property (weak, nonatomic) IBOutlet UITextField *nameSignUp;
 @property (weak, nonatomic) IBOutlet UIControl *signUpContainer;
-@property (strong, nonatomic) FBLoginView *fbloginBtn;
+@property (weak, nonatomic) FBLoginView *fbloginBtn;
 
 @property (weak, nonatomic) IBOutlet UIView *getPasswordView;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
@@ -103,16 +104,13 @@
     CGRect rect = _signUpView.frame;
     _signUpView.frame = CGRectMake(rect.origin.x, 1136+rect.origin.y/2 , rect.size.width, rect.size.height);
     
-    FBLoginView *fbloginBtn = [[FBLoginView alloc] initWithReadPermissions:@[@"basic_info", @"email"]];
-    fbloginBtn.frame = CGRectMake(66, 345, 196, 45);
-    fbloginBtn.delegate = self;
-    [self.view insertSubview:fbloginBtn atIndex:0];
+    _fbloginBtn = [FacebookLoginButton getFacebookButton];
+    _fbloginBtn.frame = CGRectMake(66, 345, 196, 45);
+    _fbloginBtn.delegate = self;
+    [self.view insertSubview:_fbloginBtn atIndex:0];
     _signUpContainer.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
 
 }
-
-
-
 
 - (void) viewDidAppear:(BOOL)animated
 {
