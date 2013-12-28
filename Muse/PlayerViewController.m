@@ -114,7 +114,7 @@
     //NSLog(@"%@", isLike);
     
     [self setMarkButtonWithStatus:[isLike isEqualToString:@"0"]];
-    
+   
     if (NSClassFromString(@"MPNowPlayingInfoCenter")) {
         NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
         [dict setObject:_currentMusic.title forKey:MPMediaItemPropertyTitle];
@@ -134,6 +134,7 @@
          } completion:^(BOOL finished) {
              
     }];
+    
 }
 
 - (void)setDisplayView
@@ -286,10 +287,12 @@
     } else {
         _currentMusic = music;
         [Player setCurrentMusic:_currentMusic];
-        
+        //_moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
         _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
         
         [self loadCurrentMusicInformation];
+        
+        
         
         [self.moviePlayer play];
         
@@ -301,6 +304,10 @@
 
 - (void)loadMusic
 {
+    self.currentloadingState = 1;
+    
+    [_moviePlayer stop];
+    
     [self showLoadingView];
     [self disableButton];
     [self performSelectorInBackground:@selector(loadMusicInTheBackgroundThread) withObject:nil];
@@ -365,7 +372,8 @@
     } else {
         [self performSelectorOnMainThread:@selector(internetErrorAlert)withObject:nil waitUntilDone:YES];
     }
-
+    
+    _currentloadingState = 0;
 }
 
 - (void) internetErrorAlert
@@ -382,8 +390,15 @@
 
 - (void) startPlayer
 {
+    
+    NSLog(@"%d", _moviePlayer.playbackState);
+    //[_moviePlayer pause];
+    //_moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
+    
     self.moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
-    [self.moviePlayer play];
+    
+    [_moviePlayer play];
+    
     _currentPlayStatus = 1;
 }
 
@@ -429,12 +444,14 @@
 
 - (void)viewDidLoad
 {
-    //[Tag getAll];
+    //[Tag getAll]
 
     [super viewDidLoad];
     [self initPlayer];
     
     NSLog(@"player view did load");
+    
+    _currentloadingState = 0;
     
     if ([Player getCurrentMusic] == NULL) {
         NSLog(@"Load new music!");
@@ -542,6 +559,11 @@
 
 - (void)moviePlaybackDidFinish:(NSNotification *)notification {
     NSLog(@"moviePlaybackDidFinish = %@",[notification userInfo]);
+    
+    if (_currentloadingState == 1) {
+        return ;
+    }
+    
     if ([[[notification userInfo] objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] intValue] == MPMoviePlaybackStateStopped) {
         [self loadMusic];
     }
@@ -637,6 +659,11 @@
         self.currentPlayStatus = 0;
         [Player setCurrentMusic:NULL];
     }
+}
+
+- (void)stopMusic
+{
+    [_moviePlayer stop];
 }
 
 

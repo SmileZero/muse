@@ -24,6 +24,7 @@
 
 @property int rotated;
 @property int currentPlayStatus;
+@property int currentloadingState;
 
 @property (weak, nonatomic) NSArray * playList;
 

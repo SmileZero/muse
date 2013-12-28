@@ -30,6 +30,7 @@ static int playType = 0;
 {
     if (moviePlayer == NULL) {
         moviePlayer = [[MPMoviePlayerController alloc] init];
+        moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
         //[moviePlayer prepareToPlay];
         NSLog(@"player init");
     }

@@ -540,6 +540,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "zhu peijun";
 				TargetAttributes = {
+					21371F841850956700BB2A4F = {
+						DevelopmentTeam = 4E224ZL4QB;
+					};
 					21371FA51850956700BB2A4F = {
 						TestTargetID = 21371F841850956700BB2A4F;
 					};
@@ -779,6 +782,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/yan_runchen/Downloads/GN_Music_SDK_iOS_3_3_0_14,
@@ -790,6 +795,7 @@
 				GCC_PREFIX_HEADER = "Muse/Muse-Prefix.pch";
 				INFOPLIST_FILE = "Muse/Muse-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -798,6 +804,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/yan_runchen/Downloads/GN_Music_SDK_iOS_3_3_0_14,
@@ -809,6 +817,7 @@
 				GCC_PREFIX_HEADER = "Muse/Muse-Prefix.pch";
 				INFOPLIST_FILE = "Muse/Muse-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
