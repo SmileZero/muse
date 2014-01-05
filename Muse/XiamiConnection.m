@@ -76,7 +76,8 @@
 
 - (XiamiObject *)getRecemmondMusic
 {
-    NSString * url = [NSString stringWithFormat: @"%@/song_graphs.json", SERVER_URL_MUSIC];
+    NSString * url = [NSString stringWithFormat: @"%@/song_graphs.json", SERVER_URL];
+    NSLog(@"%@", url);
     NSData * rcdData = [ServerConnection getRequestToURL:url];
     
     
@@ -85,7 +86,10 @@
         NSError * error = nil;
         NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:rcdData options:0 error: &error];
         
+        NSLog(@"return status: %@", dic[@"status"]);
+        
         if ([dic[@"status"] isEqualToString:@"ok"]) {
+            NSLog(@"music_id: ##########%@##########", dic[@"music_id"]);
             return [self getMusicWithIdentifier:dic[@"music_id"]];
         } else {
             srand((int)rcdData);

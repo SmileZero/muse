@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+//#define SERVER_IP @"localhost"
 //#define SERVER_IP @"172.30.4.19"
 //#define SERVER_IP @"192.168.1.10"
 //#define SERVER_IP @"192.168.201.28"

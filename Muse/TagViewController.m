@@ -181,7 +181,7 @@
         }
 
         if (indexPath.row == 1) {
-            tagNameLabel.text = @"Guess";
+            tagNameLabel.text = @"Just listen";
             countMusicOfThisTagLabel.text = @"";
         } else {
             

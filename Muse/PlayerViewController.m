@@ -355,6 +355,7 @@
     
     //[self.moviePlayer play];
     
+    _currentloadingState = 0;
     
     NSLog(@"%@", music);
     
@@ -372,8 +373,6 @@
     } else {
         [self performSelectorOnMainThread:@selector(internetErrorAlert)withObject:nil waitUntilDone:YES];
     }
-    
-    _currentloadingState = 0;
 }
 
 - (void) internetErrorAlert
