@@ -76,7 +76,7 @@
     [_rotateTimer fire];
     
     
-    self.currentPlayStatus = 0;
+    self.currentPlayStatus = 0 ;
 }
 
 
@@ -171,14 +171,14 @@
     float scale = 1.0f;
     
     //iphone: 3.5 inch
-    if(screenHeight - 480.0f < 0.01f) {
+    if(fabsf(screenHeight - 480.0f) < 0.01f) {
         center = _musicPictureImageView.center;
         center.y -= 23;
         scale = 0.9f;
     }
     
     //iphone: 4.0 inch
-    if (screenHeight - 568.0f < 0.01f) {
+    if (fabsf(screenHeight - 568.0f) < 0.01f) {
         center = _musicPictureImageView.center;
         center.y += 5;
         scale = 1.0f;
@@ -352,9 +352,6 @@
         _moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
         
         [self loadCurrentMusicInformation];
-        
-        
-        
         [self.moviePlayer play];
         
         _currentPlayStatus = 1;
@@ -468,7 +465,6 @@
     //_moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
     
     self.moviePlayer.contentURL = [NSURL URLWithString:_currentMusic.musicURL];
-    
     [_moviePlayer play];
     
     _currentPlayStatus = 1;
@@ -788,6 +784,10 @@
     _loveButton.enabled = YES;
     _hateButton.enabled = YES;
     _disloveButton.enabled = YES;
+}
+
+- (void) playIt {
+    [_moviePlayer play];
 }
 
 @end
