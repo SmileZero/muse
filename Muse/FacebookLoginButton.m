@@ -25,4 +25,10 @@ static FBLoginView *fbloginBtn = NULL;
     return fbloginBtn;
 }
 
+
++ (void) setFacebookButton: (id) button
+{
+    fbloginBtn = button;
+}
+
 @end

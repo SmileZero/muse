@@ -11,5 +11,6 @@
 @interface FacebookLoginButton : NSObject
 
 + (id) getFacebookButton;
++ (void) setFacebookButton: (id) button;
 
 @end

@@ -327,6 +327,7 @@
 		21371F8E1850956700BB2A4F /* Muse */ = {
 			isa = PBXGroup;
 			children = (
+				2165BB9D187BBD5D00B9E18D /* iPad */,
 				214D6D0A1862BA7300BDCF0B /* TagViewController.h */,
 				214D6D0B1862BA7300BDCF0B /* TagViewController.m */,
 				7A3E001C18613C43000F5B6C /* SoundRecognize */,
@@ -441,6 +442,13 @@
 				215C3866185DA927007D3452 /* XiamiConnection.m */,
 			);
 			name = XiamiConnection;
+			sourceTree = "<group>";
+		};
+		2165BB9D187BBD5D00B9E18D /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
 			sourceTree = "<group>";
 		};
 		21ABB203185873BF00BBCA8B /* icon */ = {
@@ -794,8 +802,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Muse/Muse-Prefix.pch";
 				INFOPLIST_FILE = "Muse/Muse-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -816,8 +826,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Muse/Muse-Prefix.pch";
 				INFOPLIST_FILE = "Muse/Muse-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -39,6 +39,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *loveAnimationImageView;
 
+@property (weak, nonatomic) IBOutlet UIImageView *bluredBackgroundImageView;
+
 @end
 
 @implementation PlayerViewController
@@ -61,6 +63,11 @@
      name:          MPMoviePlayerPlaybackStateDidChangeNotification
      object:        _moviePlayer];
     
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(movieLoadStateDidChange:)
+     name:MPMoviePlayerLoadStateDidChangeNotification object:_moviePlayer];
+    
     _timer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(updateTimeLine) userInfo:nil repeats:true];
     [_timer fire];
     
@@ -78,7 +85,7 @@
     [_loadingImage setTransform:CGAffineTransformMakeRotation(degreesToRadians(_rotated))];
     [_loadingImageNegative setTransform:CGAffineTransformMakeRotation(degreesToRadians(-_rotated))];
     
-    _rotated += 1;
+    _rotated += 2;
     
     if (_rotated > 360) {
         _rotated = 0;
@@ -148,103 +155,6 @@
     _pauseImageV2.hidden = YES;
     _pauseImageV3.hidden = NO;
     
-    if (screenHeight <= 481) {
-        
-        float PIC_Y_POS_DELTA = 20;
-        float PLAY_Y_BUTTON_POS_DELTA = 40;
-        float NAME_Y_LABEL_DELTA = 60;
-        float ARTIST_Y_LABEL_DELTA = 70;
-        float SETTING_Y_BUTTON_DELTA = 0;
-        float LOVE_Y_BUTTON_DELTA = 80;
-        
-        
-        CGRect loveAnimationImageViewFrame = _loveAnimationImageView.frame;
-        loveAnimationImageViewFrame.origin.y -= LOVE_Y_BUTTON_DELTA;
-        [_loveAnimationImageView setFrame:loveAnimationImageViewFrame];
-    
-        CGRect loadingImageNegativeFrame = _loadingImageNegative.frame;
-        loadingImageNegativeFrame.origin.y -= PIC_Y_POS_DELTA;
-        [_loadingImageNegative setFrame:loadingImageNegativeFrame];
-        
-        CGRect loadingImageMaskFrame = _loadingImageMask.frame;
-        loadingImageMaskFrame.origin.y -= PIC_Y_POS_DELTA;
-        [_loadingImageMask setFrame:loadingImageMaskFrame];
-        
-        CGRect loadingTextFrame = _loadingText.frame;
-        loadingTextFrame.origin.y -= PIC_Y_POS_DELTA;
-        [_loadingText setFrame:loadingTextFrame];
-        
-        
-        CGRect musicPictureImageViewFrame = _musicPictureImageView.frame;
-        musicPictureImageViewFrame.origin.y -= PIC_Y_POS_DELTA;
-        [_musicPictureImageView setFrame:musicPictureImageViewFrame];
-        
-        CGRect musicPictureMaskImageViewFrame = _musicPictureMaskImageView.frame;
-        musicPictureMaskImageViewFrame.origin.y -= PIC_Y_POS_DELTA;
-        [_musicPictureMaskImageView setFrame:musicPictureMaskImageViewFrame];
-        
-        CGRect musicPictureBorderImageViewFrame = _musicPictureBorderImageView.frame;
-        musicPictureBorderImageViewFrame.origin.y -= PIC_Y_POS_DELTA;
-        [_musicPictureBorderImageView setFrame:musicPictureBorderImageViewFrame];
-        
-        CGRect menuButtonFrame = _menuButton.frame;
-        menuButtonFrame.origin.y -= SETTING_Y_BUTTON_DELTA;
-        [_menuButton setFrame:menuButtonFrame];
-        
-        CGRect settingButtonFrame = _settingButton.frame;
-        settingButtonFrame.origin.y -= SETTING_Y_BUTTON_DELTA;
-        [_settingButton setFrame:settingButtonFrame];
-        
-        CGRect nextButtonFrame = _nextButton.frame;
-        nextButtonFrame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
-        [_nextButton setFrame:nextButtonFrame];
-        
-        CGRect lastButtonFrame = _lastButton.frame;
-        lastButtonFrame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
-        [_lastButton setFrame:lastButtonFrame];
-        
-        CGRect pasueButtonFrame = _pasueButton.frame;
-        pasueButtonFrame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
-        [_pasueButton setFrame:pasueButtonFrame];
-        
-        CGRect musicNameLabelFrame = _musicNameLabel.frame;
-        musicNameLabelFrame.origin.y -= NAME_Y_LABEL_DELTA;
-        [_musicNameLabel setFrame:musicNameLabelFrame];
-        
-        CGRect artistNameLabelFrame = _artistNameLabel.frame;
-        artistNameLabelFrame.origin.y -= ARTIST_Y_LABEL_DELTA;
-        [_artistNameLabel setFrame:artistNameLabelFrame];
-        
-        CGRect loveButtonFrame = _loveButton.frame;
-        loveButtonFrame.origin.y -= LOVE_Y_BUTTON_DELTA;
-        [_loveButton setFrame:loveButtonFrame];
-        
-        CGRect hateButtonFrame = _hateButton.frame;
-        hateButtonFrame.origin.y -= LOVE_Y_BUTTON_DELTA;
-        [_hateButton setFrame:hateButtonFrame];
-        
-        CGRect loadingImageFrame = _loadingImage.frame;
-        loadingImageFrame.origin.y -= PIC_Y_POS_DELTA;
-        [_loadingImage setFrame:loadingImageFrame];
-        
-        CGRect pauseImageV3Frame = _pauseImageV3.frame;
-        pauseImageV3Frame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
-        [_pauseImageV3 setFrame:pauseImageV3Frame];
-        
-        CGRect pauseImageV2Frame = _pauseImageV2.frame;
-        pauseImageV2Frame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
-        [_pauseImageV2 setFrame:pauseImageV2Frame];
-        
-        CGRect musicTimeLabelFrame = _musicTimeLabel.frame;
-        musicTimeLabelFrame.origin.y -= PLAY_Y_BUTTON_POS_DELTA;
-        [_musicTimeLabel setFrame:musicTimeLabelFrame];
-        
-        CGRect disloveButtonFrame = _disloveButton.frame;
-        disloveButtonFrame.origin.y -= LOVE_Y_BUTTON_DELTA;
-        [_disloveButton setFrame:disloveButtonFrame];
-    }
-    
-    
     NSMutableArray * loveAnimationImages = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < 12; i++) {
@@ -254,6 +164,157 @@
     _loveAnimationImageView.animationImages = loveAnimationImages;
     _loveAnimationImageView.animationDuration = 0.4f;
     _loveAnimationImageView.animationRepeatCount = 1;
+    _loveAnimationImageView.center = _loveButton.center;
+    
+    
+    CGPoint center = _musicPictureImageView.center;
+    float scale = 1.0f;
+    
+    //iphone: 3.5 inch
+    if(screenHeight - 480.0f < 0.01f) {
+        center = _musicPictureImageView.center;
+        center.y -= 23;
+        scale = 0.9f;
+    }
+    
+    //iphone: 4.0 inch
+    if (screenHeight - 568.0f < 0.01f) {
+        center = _musicPictureImageView.center;
+        center.y += 5;
+        scale = 1.0f;
+    }
+    
+    //ipad
+    if(screenWidth > 767.0f) {
+        center = self.view.center;
+        center.y -= 100;
+        scale = 0.9f;
+    }
+    
+    
+    _musicPictureImageView.frame = CGRectMake(center.x, center.y, _musicPictureImageView.frame.size.width * scale * screenWidth / 320.0f , _musicPictureImageView.frame.size.height * scale * screenWidth / 320.0f);
+    _musicPictureImageView.center = center;
+    
+    _musicPictureMaskImageView.frame = CGRectMake(center.x, center.y, _musicPictureMaskImageView.frame.size.width * scale * screenWidth / 320.0f , _musicPictureMaskImageView.frame.size.height * scale * screenWidth / 320.0f);
+    
+    _musicPictureMaskImageView.center = center;
+    
+    _musicPictureBorderImageView.frame = CGRectMake(center.x, center.y, _musicPictureBorderImageView.frame.size.width * scale * screenWidth / 320.0f , _musicPictureBorderImageView.frame.size.height * scale * screenWidth / 320.0f);
+    
+    _musicPictureBorderImageView.center = center;
+    
+    _loadingImageMask.frame = CGRectMake(center.x, center.y, _loadingImageMask.frame.size.width * scale * screenWidth / 320.0f , _loadingImageMask.frame.size.height * scale * screenWidth / 320.0f);
+    
+    _loadingImageMask.center = center;
+    
+    _loadingText.frame = CGRectMake(center.x, center.y, _loadingText.frame.size.width * scale * screenWidth / 320.0f , _loadingText.frame.size.height * scale * screenWidth / 320.0f);
+    
+    _loadingText.center = center;
+    
+    _loadingImageNegative.frame = CGRectMake(center.x, center.y, _loadingImageNegative.frame.size.width * scale * screenWidth / 320.0f , _loadingImageNegative.frame.size.height * scale * screenWidth / 320.0f);
+    
+    _loadingImageNegative.center = center;
+    
+    return;
+    
+    int k = 0;
+    
+    float PIC_Y_POS_DELTA[1] = { 20 };
+    float PLAY_Y_BUTTON_POS_DELTA[1] = { 40 };
+    float NAME_Y_LABEL_DELTA[1] = { 60 };
+    float ARTIST_Y_LABEL_DELTA[1] = { 70 };
+    float SETTING_Y_BUTTON_DELTA[1] = { 0 };
+    float LOVE_Y_BUTTON_DELTA[1] = { screenHeight - 80 };
+    
+    if (screenHeight <= 481) {
+        k = 0;
+    }
+    
+        
+    CGRect loveAnimationImageViewFrame = _loveAnimationImageView.frame;
+    loveAnimationImageViewFrame.origin.y = LOVE_Y_BUTTON_DELTA[k];
+    [_loveAnimationImageView setFrame:loveAnimationImageViewFrame];
+
+    CGRect loadingImageNegativeFrame = _loadingImageNegative.frame;
+    loadingImageNegativeFrame.origin.y = PIC_Y_POS_DELTA[k];
+    [_loadingImageNegative setFrame:loadingImageNegativeFrame];
+    
+    CGRect loadingImageMaskFrame = _loadingImageMask.frame;
+    loadingImageMaskFrame.origin.y = PIC_Y_POS_DELTA[k];
+    [_loadingImageMask setFrame:loadingImageMaskFrame];
+    
+    CGRect loadingTextFrame = _loadingText.frame;
+    loadingTextFrame.origin.y = PIC_Y_POS_DELTA[k];
+    [_loadingText setFrame:loadingTextFrame];
+    
+    
+    CGRect musicPictureImageViewFrame = _musicPictureImageView.frame;
+    musicPictureImageViewFrame.origin.y = PIC_Y_POS_DELTA[k];
+    [_musicPictureImageView setFrame:musicPictureImageViewFrame];
+    
+    CGRect musicPictureMaskImageViewFrame = _musicPictureMaskImageView.frame;
+    musicPictureMaskImageViewFrame.origin.y = PIC_Y_POS_DELTA[k];
+    [_musicPictureMaskImageView setFrame:musicPictureMaskImageViewFrame];
+    
+    CGRect musicPictureBorderImageViewFrame = _musicPictureBorderImageView.frame;
+    musicPictureBorderImageViewFrame.origin.y = PIC_Y_POS_DELTA[k];
+    [_musicPictureBorderImageView setFrame:musicPictureBorderImageViewFrame];
+    
+    CGRect menuButtonFrame = _menuButton.frame;
+    menuButtonFrame.origin.y = SETTING_Y_BUTTON_DELTA[k];
+    [_menuButton setFrame:menuButtonFrame];
+    
+    CGRect settingButtonFrame = _settingButton.frame;
+    settingButtonFrame.origin.y = SETTING_Y_BUTTON_DELTA[k];
+    [_settingButton setFrame:settingButtonFrame];
+    
+    CGRect nextButtonFrame = _nextButton.frame;
+    nextButtonFrame.origin.y = PLAY_Y_BUTTON_POS_DELTA[k];
+    [_nextButton setFrame:nextButtonFrame];
+    
+    CGRect lastButtonFrame = _lastButton.frame;
+    lastButtonFrame.origin.y = PLAY_Y_BUTTON_POS_DELTA[k];
+    [_lastButton setFrame:lastButtonFrame];
+    
+    CGRect pasueButtonFrame = _pasueButton.frame;
+    pasueButtonFrame.origin.y = PLAY_Y_BUTTON_POS_DELTA[k];
+    [_pasueButton setFrame:pasueButtonFrame];
+    
+    CGRect musicNameLabelFrame = _musicNameLabel.frame;
+    musicNameLabelFrame.origin.y = NAME_Y_LABEL_DELTA[k];
+    [_musicNameLabel setFrame:musicNameLabelFrame];
+    
+    CGRect artistNameLabelFrame = _artistNameLabel.frame;
+    artistNameLabelFrame.origin.y = ARTIST_Y_LABEL_DELTA[k];
+    [_artistNameLabel setFrame:artistNameLabelFrame];
+    
+    CGRect loveButtonFrame = _loveButton.frame;
+    loveButtonFrame.origin.y = LOVE_Y_BUTTON_DELTA[k];
+    [_loveButton setFrame:loveButtonFrame];
+    
+    CGRect hateButtonFrame = _hateButton.frame;
+    hateButtonFrame.origin.y = LOVE_Y_BUTTON_DELTA[k];
+    [_hateButton setFrame:hateButtonFrame];
+    
+    CGRect loadingImageFrame = _loadingImage.frame;
+    loadingImageFrame.origin.y = PIC_Y_POS_DELTA[k];
+    [_loadingImage setFrame:loadingImageFrame];
+    
+    CGRect pauseImageV3Frame = _pauseImageV3.frame;
+    pauseImageV3Frame.origin.y = PLAY_Y_BUTTON_POS_DELTA[k];
+    [_pauseImageV3 setFrame:pauseImageV3Frame];
+    
+    CGRect pauseImageV2Frame = _pauseImageV2.frame;
+    pauseImageV2Frame.origin.y = PLAY_Y_BUTTON_POS_DELTA[k];
+    [_pauseImageV2 setFrame:pauseImageV2Frame];
+    
+    CGRect musicTimeLabelFrame = _musicTimeLabel.frame;
+    musicTimeLabelFrame.origin.y = PLAY_Y_BUTTON_POS_DELTA[k];
+    [_musicTimeLabel setFrame:musicTimeLabelFrame];
+    
+    CGRect disloveButtonFrame = _disloveButton.frame;
+    disloveButtonFrame.origin.y = LOVE_Y_BUTTON_DELTA[k];
+    [_disloveButton setFrame:disloveButtonFrame];
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle{
@@ -304,13 +365,25 @@
 
 - (void)loadMusic
 {
-    self.currentloadingState = 1;
-    
-    [_moviePlayer stop];
-    
-    [self showLoadingView];
-    [self disableButton];
-    [self performSelectorInBackground:@selector(loadMusicInTheBackgroundThread) withObject:nil];
+    int k = 0;
+    while (k < 6) {
+        @try {
+            self.currentloadingState = 1;
+
+            [_moviePlayer stop];
+
+            [self showLoadingView];
+            [self disableButton];
+            [self performSelectorInBackground:@selector(loadMusicInTheBackgroundThread) withObject:nil];
+            break;
+        }
+
+        @catch (NSException *exception) {
+            NSLog(@"[$$$$$$$$$$$$$$$#ERROR#$$$$$$$$$$$$$$]\nexception[%@]", exception);
+        }
+        
+        k++;
+    }
 }
 
 
@@ -390,7 +463,7 @@
 - (void) startPlayer
 {
     
-    NSLog(@"%d", _moviePlayer.playbackState);
+    //NSLog(@"%d", _moviePlayer.playbackState);
     //[_moviePlayer pause];
     //_moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
     
@@ -568,6 +641,9 @@
     }
 }
 
+- (void)movieLoadStateDidChange:(NSNotification *)notification {
+    NSLog(@"load state did change!");
+}
 
 - (void)moviePlaybackStateDidChange:(NSNotification *)notification {
     

@@ -64,6 +64,7 @@
     
     // Set the gesture
     //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
     if ([User getUser] && ![[User getUser].email hasPrefix:@"#facebook#"] ) {
         _emailView.text = [User getUser].email;
     }
@@ -104,10 +105,16 @@
     CGRect rect = _signUpView.frame;
     _signUpView.frame = CGRectMake(rect.origin.x, 1136+rect.origin.y/2 , rect.size.width, rect.size.height);
     
+    NSLog(@"%f", _emailView.frame.origin.y);
+    
+    UIView * loginView = [self.view viewWithTag:1024];
+    
+    
     _fbloginBtn = [FacebookLoginButton getFacebookButton];
-    _fbloginBtn.frame = CGRectMake(66, 345, 196, 45);
+    _fbloginBtn.frame = CGRectMake(_signInBtn.frame.origin.x, _signInBtn.frame.origin.y + 100, _signInBtn.frame.size.width, _fbloginBtn.frame.size.height);
     _fbloginBtn.delegate = self;
-    [self.view insertSubview:_fbloginBtn atIndex:0];
+    
+    [loginView insertSubview:_fbloginBtn atIndex:0];
     _signUpContainer.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
 
 }
@@ -222,9 +229,9 @@
     NSLog(@"screen width: %f, height: %f", screenWidth, screenHeight);
     
     
-    float Y = -30.0f;
+    float Y = -50.0f;
     if (screenHeight <= 481) {
-        Y = -115.0f;
+        Y = -100.0f;
     }
     CGRect rect = CGRectMake(0.0f, Y, width, height);
     _signUpContainer.frame = rect;
@@ -289,7 +296,7 @@
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDuration:0.5f];
     CGRect rect = _signUpView.frame;
-    _signUpView.frame = CGRectMake(20, 142 , rect.size.width, rect.size.height);
+    _signUpView.frame = CGRectMake(self.view.center.x - _signUpView.frame.size.width / 2, self.view.center.y - _signUpView.frame.size.height / 2, rect.size.width, rect.size.height);
     _signUpContainer.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7f];
     [UIView commitAnimations];
 }
@@ -397,7 +404,7 @@
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDuration:0.5f];
     CGRect rect = _signUpView.frame;
-    _signUpView.frame = CGRectMake(20, 142 , rect.size.width, rect.size.height);
+    _signUpView.frame = CGRectMake(self.view.center.x - _signUpView.frame.size.width / 2, self.view.center.y - _signUpView.frame.size.height / 2 , rect.size.width, rect.size.height);
     _signUpContainer.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7f];
     [UIView commitAnimations];
 }

@@ -120,11 +120,11 @@
     
     CGRect licenseTextViewFrame = _licenseTextView.frame;
     
-    if (screenHeight <= 481) {
+    /*if (screenHeight <= 481) {
         licenseTextViewFrame.size.height = 390.0f;
     } else {
         licenseTextViewFrame.size.height = 480.0f;
-    }
+    }*/
     
     _licenseTextView.frame = licenseTextViewFrame;
     
@@ -433,6 +433,7 @@
 
 - (IBAction)updatePasswordViewCloseButtonClicked:(id)sender {
     
+   //NSLog(@"AAAAAAAAAAAAAAAAAAAAA");
     [self hideKeyBoard];
     
     UIView * view = [self.view viewWithTag:902];
@@ -567,6 +568,9 @@
     [alert show];
 }
 
-
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cell.backgroundColor = [UIColor clearColor];
+}
 
 @end

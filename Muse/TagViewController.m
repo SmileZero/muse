@@ -18,6 +18,7 @@
 #define GUESS_TAG_INDEX 1
 
 @interface TagViewController ()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -226,6 +227,8 @@
         tagNameLabel.textColor = [UIColor whiteColor];
         countMusicOfThisTagLabel.textColor = [UIColor whiteColor];
     }
+    
+    cell.backgroundColor = [UIColor clearColor];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
